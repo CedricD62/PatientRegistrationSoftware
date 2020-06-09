@@ -1,2 +1,2 @@
 # PatientRegistrationSoftware
-School project for creation of a school registration software
+School project for creation of a patient registration software
