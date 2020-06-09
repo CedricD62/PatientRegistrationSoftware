@@ -13,9 +13,10 @@ import patient_Informatise.Patient;
 public class ExaminationFunction 
 {
 
-	private static ArrayList<Examen> temporaryList = new ArrayList<Examen>();
+	public static ArrayList<Examen> temporaryList = new ArrayList<Examen>();
 	
-	public static void creatExamination (JList list,ArrayList<Patient> arrayPatient,ArrayList<Examen> arrayExamination,JTextField patientNumberExamPanelField,
+	
+	public static void creatExamination (JList listExaminationPanel,JList listBookingRoomPannel,ArrayList<Patient> arrayPatient,ArrayList<Examen> arrayExamination,JTextField patientNumberExamPanelField,
 										 JComboBox examinationTypeSelection,JTextField examinationDateField){
 		int id = Integer.parseInt(patientNumberExamPanelField.getText());
 		
@@ -34,7 +35,8 @@ public class ExaminationFunction
 			Examen examen = new Examen(patient,examinationType,examinationDate);
 			arrayExamination.add(examen);	
 			
-			list.setListData(arrayExamination.toArray());
+			listExaminationPanel.setListData(arrayExamination.toArray());
+			listBookingRoomPannel.setListData(arrayExamination.toArray());
 			examinationDateField.setText("");
 			patientNumberExamPanelField.setText("");
 			examinationTypeSelection.setModel(new DefaultComboBoxModel(new String[] {"Liste d'examens ", "Arthroscopie", "Alcool\u00E9mie", "Appendicectomie", "Arthroscanner", "Audiogramme",

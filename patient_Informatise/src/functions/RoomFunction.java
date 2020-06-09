@@ -2,6 +2,7 @@ package functions;
 
 import java.util.ArrayList;
 
+
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -15,8 +16,9 @@ import patient_Informatise.Patient;
 
 public class RoomFunction 
 {
+	
+	private static ArrayList<Chambre> temporaryListRoom = new ArrayList<Chambre>();
 
-	private static ArrayList<Chambre> temporaryList = new ArrayList<Chambre>();
 
 	
 	public static void creatRoomIfFileIsEmpty(JList list,ArrayList<Chambre>arrayRoom) {
@@ -93,19 +95,20 @@ public class RoomFunction
 		list.setListData(arrayRoom.toArray());
 	}
 	
-	public void updateAvailableRoomFromSelection(JList list,ArrayList<Chambre> arrayRoom,ArrayList<Patient> arrayPatient ,JTextField patientNumberBookingRoomPanelField,
+	public void updateAvailableRoomFromSelection(JList list,ArrayList<Chambre> arrayRoom,ArrayList<Patient> arrayPatient, ArrayList<Examen>arrayExamination,JTextField patientNumberBookingRoomPanelField,
 												 JComboBox lengthOfStaySelectionList,JRadioButton withRoomRButton,JRadioButton withoutRoomRButton,JRadioButton withoutAccompanyingRButton,
 												 JRadioButton withAccompangyingRButton,ButtonGroup accompanyingGroup) {
 		
-		int id = Integer.parseInt(patientNumberBookingRoomPanelField.getText());
+		int idPatient = Integer.parseInt(patientNumberBookingRoomPanelField.getText());
 		
-		Patient patient = PatientFunction.extractPatientFromArray(arrayPatient,id);
-		
-		if(patient == null) {
+		if(PatientFunction.checkIfExist(arrayPatient, idPatient) == false) {
 			patientNumberBookingRoomPanelField.setText("Patient introuvable");
+		} else {
+			if(withoutRoomRButton.isSelected()) {
+				arrayRoom.add(noBookingRoom(list, arrayRoom,arrayExamination,idPatient,patientNumberBookingRoomPanelField, lengthOfStaySelectionList, withRoomRButton, withoutRoomRButton, 
+											withoutAccompanyingRButton, withAccompangyingRButton, accompanyingGroup));
+			}
 		}
-		
-		
 		
 		
 		
@@ -144,6 +147,15 @@ public class RoomFunction
 			deleteBookingRoomButton.setEnabled(true);
 		}
 	}
+	
+	public static Chambre noBookingRoom (JList list,ArrayList<Chambre> arrayRoom,ArrayList<Examen>arrayExamination,int idPatient,JTextField patientNumberBookingRoomPanelField,
+									  JComboBox lengthOfStaySelectionList,JRadioButton withRoomRButton,JRadioButton withoutRoomRButton,
+									  JRadioButton withoutAccompanyingRButton,JRadioButton withAccompangyingRButton,ButtonGroup accompanyingGroup) {
+		Chambre room = null;
+		
+		return room;
+	}
+	
 	
 	
 }
