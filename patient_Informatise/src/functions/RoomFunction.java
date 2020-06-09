@@ -27,9 +27,11 @@ public class RoomFunction
 		Examen examination = null;
 		int cpt = 0;
 		
-		for(int i = 0; i < 40; i++) {
+		for(int i = 0; i < 42; i++) {
 			
-			if(i <= 15) {
+			if(cpt == 21) 
+				cpt = 0;
+			if(i < 15) {
 				
 				boolean accompanying = false;
 				boolean alone = true;
@@ -43,7 +45,7 @@ public class RoomFunction
 				room = new Chambre(entryDate,releaseDate,roomNumber,alone,accompanying,examination,availble,numberOfBed,bookingRoom);
 				arrayRoom.add(room);
 				
-			}else if (i > 15 && i < 20) {
+			}else if (i >= 15 && i <= 20) {
 				
 				boolean accompanying = true;
 				boolean alone = false;
@@ -57,7 +59,7 @@ public class RoomFunction
 				room = new Chambre(entryDate,releaseDate,roomNumber,alone,accompanying,examination,availble,numberOfBed,bookingRoom);
 				arrayRoom.add(room);
 				
-			}else if (i >= 20 && i <= 35 ) {
+			}else if (i >= 21 && i <= 35 ) {
 				
 				boolean accompanying = false;
 				boolean alone = true;
@@ -87,8 +89,6 @@ public class RoomFunction
 				
 			}
 			cpt++;
-			if(cpt == 20) 
-				cpt = 0;
 			
 		}
 		
@@ -100,9 +100,9 @@ public class RoomFunction
 	}*/
 	
 	
-	public static void updateAvailableRoomFromSelection(JList list,ArrayList<Chambre> arrayRoom,ArrayList<Patient> arrayPatient, ArrayList<Examen>arrayExamination,JTextField patientNumberBookingRoomPanelField,
-												 JComboBox lengthOfStaySelectionList,JRadioButton withRoomRButton,JRadioButton withoutRoomRButton,JRadioButton withoutAccompanyingRButton,
-												 JRadioButton withAccompangyingRButton,ButtonGroup accompanyingGroup) {
+	public static void updateAvailableRoomFromSelection(JList list,ArrayList<Chambre> arrayRoom,ArrayList<Patient> arrayPatient,JTextField patientNumberBookingRoomPanelField,
+												 JComboBox lengthOfStaySelectionList,JRadioButton withRoomRButton,JRadioButton withoutAccompanyingRButton,
+												 JRadioButton withAccompangyingRButton) {
 		
 		int idPatient = Integer.parseInt(patientNumberBookingRoomPanelField.getText());
 		
@@ -112,11 +112,7 @@ public class RoomFunction
 			if(withRoomRButton.isSelected()) {
 				filterRoomWithSelection(list,arrayRoom,lengthOfStaySelectionList, withAccompangyingRButton, withoutAccompanyingRButton);
 			}
-		}
-		
-		
-		
-			
+		}	
 	}
 	
 	public static void disableActionOnJRadio (JRadioButton withoutAccompanyingRButton, JComboBox lengthOfStayTypeSelection, JRadioButton withAccompangyingRButton,JRadioButton withoutRoomRButton,
@@ -162,7 +158,7 @@ public class RoomFunction
 		return room;
 	}
 	
-	public static void filterRoomWithSelection(JList list,ArrayList<Chambre> arrayRoom,JComboBox LengthOfStaySelectionBox,JRadioButton withAccompangyingRButton,JRadioButton withoutAccompanyingRButton) {
+	private static void filterRoomWithSelection(JList list,ArrayList<Chambre> arrayRoom,JComboBox LengthOfStaySelectionBox,JRadioButton withAccompangyingRButton,JRadioButton withoutAccompanyingRButton) {
 		
 		String lengthOfStay = "courte";
 		int selection = LengthOfStaySelectionBox.getSelectedIndex();
@@ -186,7 +182,7 @@ public class RoomFunction
 	}
 	
 	
-	public static void selectRoomShorStaytAccompanying(JList list,ArrayList<Chambre> arrayRoom) {
+	private static void selectRoomShorStaytAccompanying(JList list,ArrayList<Chambre> arrayRoom) {
 		
 		Chambre room = null;
 		temporaryListRoom.clear();
@@ -203,7 +199,7 @@ public class RoomFunction
 	
 	}
 	
-	public static void selectRoomLongStaytAccompanying(JList list,ArrayList<Chambre> arrayRoom) {
+	private static void selectRoomLongStaytAccompanying(JList list,ArrayList<Chambre> arrayRoom) {
 		
 		Chambre room = null;
 		temporaryListRoom.clear();
@@ -220,7 +216,7 @@ public class RoomFunction
 		
 	}
 	
-	public static void selectRoomShorStayAlone(JList list,ArrayList<Chambre> arrayRoom) {
+	private static void selectRoomShorStayAlone(JList list,ArrayList<Chambre> arrayRoom) {
 		
 		Chambre room = null;
 		temporaryListRoom.clear();
@@ -237,7 +233,7 @@ public class RoomFunction
 		
 	}
 	
-	public static void selectRoomLongStayAlone(JList list,ArrayList<Chambre> arrayRoom) {
+	private static void selectRoomLongStayAlone(JList list,ArrayList<Chambre> arrayRoom) {
 		
 		Chambre room = null;
 		temporaryListRoom.clear();

@@ -102,7 +102,7 @@ public class PatientFunction
 	}
 	
 	
-	public static void serchPatientMale(JList list,ArrayList<Patient> arrayPatient) {
+	private static void serchPatientMale(JList list,ArrayList<Patient> arrayPatient) {
 		
 		
 		Patient patient;
@@ -120,7 +120,7 @@ public class PatientFunction
 		list.setListData(temporaryList.toArray());
 	}
 	
-	public static void searchPatientFemale(JList list,ArrayList<Patient> arrayPatient) {
+	private static void searchPatientFemale(JList list,ArrayList<Patient> arrayPatient) {
 			
 	
 		Patient patient;
@@ -138,7 +138,7 @@ public class PatientFunction
 		list.setListData(temporaryList.toArray());
 	}
 	
-	public static void searchPatientOtherInfo(JList list,ArrayList<Patient> arrayPatient, String text) {
+	private static void searchPatientOtherInfo(JList list,ArrayList<Patient> arrayPatient, String text) {
 	
 		Patient patient;
 		temporaryList.clear();
@@ -164,7 +164,7 @@ public class PatientFunction
 		}
 	}
 	
-	public static void showPatientArrayPatient(JList list,ArrayList<Patient> arrayPatient,JTextField idField,JRadioButton maleRButton,JRadioButton femaleRButton, 
+	private static void showPatientArrayPatient(JList list,ArrayList<Patient> arrayPatient,JTextField idField,JRadioButton maleRButton,JRadioButton femaleRButton, 
 										JTextField nameField,JTextField fNameField,JTextField addressField,JTextField areaCodeField,JTextField townField, 
 										JTextField ssnField,JTextField eMailField,JTextField phoneField,JTextField cellphoneField,JTextField birthdateField,
 										JTextField patientNumberExamPanelField) {
@@ -193,7 +193,7 @@ public class PatientFunction
 		
 	}
 	
-	public static void showPatientTemporaryList(JList list, JTextField idField,JRadioButton maleRButton, JRadioButton femaleRButton, 
+	private static void showPatientTemporaryList(JList list, JTextField idField,JRadioButton maleRButton, JRadioButton femaleRButton, 
 			JTextField nameField, JTextField fNameField,JTextField addressField, JTextField areaCodeField, JTextField townField, 
 			JTextField ssnField,JTextField eMailField, JTextField phoneField, JTextField cellphoneField, JTextField birthdateField,
 			JTextField patientNumberExamPanelField) {
@@ -221,7 +221,7 @@ public class PatientFunction
 			patientNumberExamPanelField.setText(""+patient.getId());
 	}
 	
-	public static void changePatientArrayPatient (JList list,ArrayList<Patient> arrayPatient,String id,boolean male,boolean female,String name,String fName,String address,String cp,
+	private static void changePatientArrayPatient (JList list,ArrayList<Patient> arrayPatient,String id,boolean male,boolean female,String name,String fName,String address,String cp,
 												  String town,String ssn,String mail,String phone,String cellPhone,String birthDate) {
 		
 		int idPatient = list.getSelectedIndex();
@@ -249,7 +249,7 @@ public class PatientFunction
 		
 	}
 	
-	public static void changePatientTemporaryList (JList list,ArrayList<Patient> arrayPatient,String id,boolean male,boolean female,String name,String fName,String address,String cp,
+	private static void changePatientTemporaryList (JList list,ArrayList<Patient> arrayPatient,String id,boolean male,boolean female,String name,String fName,String address,String cp,
 			  									  String town,String ssn,String mail,String phone,String cellPhone,String birthDate,JTextField text) {
 
 		int idPatient = list.getSelectedIndex();
@@ -310,7 +310,7 @@ public class PatientFunction
 		return exist;
 	}
 	
-	public static void deleteFromArrayPatient(JList list,ArrayList<Patient> arrayPatient, int idPatient, JTextField idField,ButtonGroup button, 
+	private static void deleteFromArrayPatient(JList list,ArrayList<Patient> arrayPatient, int idPatient, JTextField idField,ButtonGroup button, 
 			   JTextField nameField, JTextField fNameField,JTextField addressField, JTextField areaCodeField, JTextField townField, 
 			   JTextField ssnField,JTextField eMailField, JTextField phoneField, JTextField cellphoneField, JTextField birthdateField)  {
 		
@@ -336,7 +336,7 @@ public class PatientFunction
 		
 	}
 	
-	public static void deleteFromTemporaryList(JList list,ArrayList<Patient> arrayPatient, int idPatient, JTextField idField,ButtonGroup button, 
+	private static void deleteFromTemporaryList(JList list,ArrayList<Patient> arrayPatient, int idPatient, JTextField idField,ButtonGroup button, 
 			   JTextField nameField, JTextField fNameField,JTextField addressField, JTextField areaCodeField, JTextField townField, 
 			   JTextField ssnField,JTextField eMailField, JTextField phoneField, JTextField cellphoneField, JTextField birthdateField)  {
 		

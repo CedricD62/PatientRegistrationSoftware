@@ -343,7 +343,8 @@ public class InterfaceEnregistrementPatient {
 		showRoomButton = new JButton("Afficher Chambres");
 		showRoomButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				RoomFunction.filterRoomWithSelection(switchRoomAndExaminationList, arrayRoom, LengthOfStaySelectionBox, withAccompangyingRButton, withoutAccompanyingRButton);
+				RoomFunction.updateAvailableRoomFromSelection(switchRoomAndExaminationList,arrayRoom,arrayPatient,patientNumberBookingRoomPanelField,
+															  LengthOfStaySelectionBox,withRoomRButton,withoutAccompanyingRButton,withAccompangyingRButton);
 			}
 		});
 		showRoomButton.setBounds(178, 171, 166, 23);

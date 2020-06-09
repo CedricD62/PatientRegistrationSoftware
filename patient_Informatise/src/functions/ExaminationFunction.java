@@ -123,7 +123,7 @@ public class ExaminationFunction
 		}
 	}
 	
-	public static void showExaminationFromArrayExamination(JList list,ArrayList<Examen> arrayExamination,JTextField patientNumberExamPanelField,JComboBox examinationTypeSelection,
+	private static void showExaminationFromArrayExamination(JList list,ArrayList<Examen> arrayExamination,JTextField patientNumberExamPanelField,JComboBox examinationTypeSelection,
 														   JTextField examinationDateField) {
 		
 		int idExamination = list.getSelectedIndex();
@@ -139,7 +139,7 @@ public class ExaminationFunction
 		
 	}
 	
-	public static void showExaminationFronTemporaryList(JList list,JTextField patientNumberExamPanelField,JComboBox examinationTypeSelection,JTextField examinationDateField) {
+	private static void showExaminationFronTemporaryList(JList list,JTextField patientNumberExamPanelField,JComboBox examinationTypeSelection,JTextField examinationDateField) {
 
 		int idExamination = list.getSelectedIndex();
 		
@@ -153,7 +153,7 @@ public class ExaminationFunction
 		examinationDateField.setText(examination.getDateExamen());	
 	}
 	
-	public static void deleteFromArrayExamination(JList list,ArrayList<Examen> arrayExamination,int indexSelection,JTextField patientNumberExamPanelField,JComboBox examinationTypeSelection,
+	private static void deleteFromArrayExamination(JList list,ArrayList<Examen> arrayExamination,int indexSelection,JTextField patientNumberExamPanelField,JComboBox examinationTypeSelection,
 												  JTextField examinationDateField) {
 		arrayExamination.remove(indexSelection);
 		
@@ -167,7 +167,7 @@ public class ExaminationFunction
 		list.setListData(arrayExamination.toArray());
 	}
 	
-	public static void deleteFromTemporaryList(JList list,ArrayList<Examen> arrayExamination,int indexSelection,JTextField patientNumberExamPanelField,JComboBox examinationTypeSelection,
+	private static void deleteFromTemporaryList(JList list,ArrayList<Examen> arrayExamination,int indexSelection,JTextField patientNumberExamPanelField,JComboBox examinationTypeSelection,
 											   JTextField examinationDateField) {
 		
 		Examen examinationTest = temporaryList.get(indexSelection);
@@ -193,7 +193,7 @@ public class ExaminationFunction
 		
 	}
 	
-	public static void changeInfoExaminationFronArrayExamination (JList list,ArrayList<Examen> arrayExamination,JTextField patientNumberExamPanelField,JComboBox examinationTypeSelection,
+	private static void changeInfoExaminationFronArrayExamination (JList list,ArrayList<Examen> arrayExamination,JTextField patientNumberExamPanelField,JComboBox examinationTypeSelection,
 			 													  JTextField examinationDateField) {
 		
 		int selection = list.getSelectedIndex();
@@ -210,7 +210,7 @@ public class ExaminationFunction
 	}
 	
 	
-	public static void changeInfoExaminationFromTemporaryList (JList list,ArrayList<Examen> arrayExamination,JTextField patientNumberExamPanelField,JComboBox examinationTypeSelection,JTextField examinationDateField) {
+	private static void changeInfoExaminationFromTemporaryList (JList list,ArrayList<Examen> arrayExamination,JTextField patientNumberExamPanelField,JComboBox examinationTypeSelection,JTextField examinationDateField) {
 
 		int selection = list.getSelectedIndex();
 		if(selection == -1)
@@ -227,47 +227,4 @@ public class ExaminationFunction
 		list.setListData(arrayExamination.toArray());
 		
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 }
