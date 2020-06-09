@@ -42,6 +42,10 @@ public class InterfaceEnregistrementPatient {
 	private JList examinationList;
 	private JList summaryExaminationList;
 	private JList switchRoomAndExaminationList;
+	private JScrollPane scrollPane;
+	private JScrollPane scrollPane_1;
+	private JScrollPane scrollPane_2;
+	private JScrollPane scrollPane_3;
 	private JLabel nameText;
 	private JLabel fNameText;
 	private JLabel addressText;
@@ -101,7 +105,7 @@ public class InterfaceEnregistrementPatient {
 	private JTextField summaryEntryDateField;
 	private JTextField summaryReleaseDateField;
 	private JComboBox examinationTypeSelection;
-	private JComboBox lengthOfStaySelectionList;
+	private JComboBox LengthOfStaySelectionBox;
 	private JComboBox summaryRoomselectionSectorList;
 	private JRadioButton maleRButton;
 	private JRadioButton femaleRButton;
@@ -134,9 +138,7 @@ public class InterfaceEnregistrementPatient {
 	private ArrayList<Patient>arrayPatient;
 	private ArrayList<Chambre>arrayRoom;
 	private ArrayList<Examen>arrayExamination;
-	private JScrollPane scrollPane;
-	private JScrollPane scrollPane_1;
-	private JScrollPane scrollPane_3;
+
 	
 	/**
 	 * Launch the application.
@@ -180,10 +182,6 @@ public class InterfaceEnregistrementPatient {
 		tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 		tabbedPane.setBounds(10, 283, 1197, 233);
 		frame.getContentPane().add(tabbedPane);
-		
-		accompanyingGroup = new ButtonGroup();
-		
-		bookingGroup = new ButtonGroup();
 		
 		addExaminationPanel = new JPanel();
 		tabbedPane.addTab("Ajouter examen", null, addExaminationPanel, null);
@@ -331,11 +329,6 @@ public class InterfaceEnregistrementPatient {
 		patientNumberBookingRoomPanelField.setBounds(143, 37, 201, 20);
 		bookRoomPanel.add(patientNumberBookingRoomPanelField);
 		
-		lengthOfStaySelectionList = new JComboBox();
-		lengthOfStaySelectionList.setModel(new DefaultComboBoxModel(new String[] {"courte ", "longue"}));
-		lengthOfStaySelectionList.setBounds(143, 140, 201, 20);
-		bookRoomPanel.add(lengthOfStaySelectionList);
-		
 		withoutAccompanyingRButton = new JRadioButton("Sans");
 		withoutAccompanyingRButton.setBounds(259, 105, 62, 24);
 		bookRoomPanel.add(withoutAccompanyingRButton);
@@ -343,13 +336,14 @@ public class InterfaceEnregistrementPatient {
 		withAccompangyingRButton = new JRadioButton("Avec");
 		withAccompangyingRButton.setBounds(172, 105, 71, 24);
 		bookRoomPanel.add(withAccompangyingRButton);
+		accompanyingGroup = new ButtonGroup();
 		accompanyingGroup.add(withAccompangyingRButton);
 		accompanyingGroup.add(withoutAccompanyingRButton);
 		
 		showRoomButton = new JButton("Afficher Chambres");
 		showRoomButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+				RoomFunction.filterRoomWithSelection(switchRoomAndExaminationList, arrayRoom, LengthOfStaySelectionBox, withAccompangyingRButton, withoutAccompanyingRButton);
 			}
 		});
 		showRoomButton.setBounds(178, 171, 166, 23);
@@ -380,7 +374,7 @@ public class InterfaceEnregistrementPatient {
 		withRoomRButton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				RoomFunction.ableActionOnJRadio(withoutAccompanyingRButton, lengthOfStaySelectionList, withAccompangyingRButton, withRoomRButton, bedRoomNumberField, entryDateField, releaseDateField,
+				RoomFunction.ableActionOnJRadio(withoutAccompanyingRButton, LengthOfStaySelectionBox, withAccompangyingRButton, withRoomRButton, bedRoomNumberField, entryDateField, releaseDateField,
 												showRoomButton, bookingRoomButton, deleteBookingRoomButton);
 			}
 		});
@@ -391,13 +385,14 @@ public class InterfaceEnregistrementPatient {
 		withoutRoomRButton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				RoomFunction.disableActionOnJRadio(withoutAccompanyingRButton, lengthOfStaySelectionList, withAccompangyingRButton, withoutRoomRButton, bedRoomNumberField, 
+				RoomFunction.disableActionOnJRadio(withoutAccompanyingRButton, LengthOfStaySelectionBox, withAccompangyingRButton, withoutRoomRButton, bedRoomNumberField, 
 												   entryDateField, releaseDateField, showRoomButton, bookingRoomButton, deleteBookingRoomButton);
 				
 			}
 		});
 		withoutRoomRButton.setBounds(259, 69, 56, 24);
 		bookRoomPanel.add(withoutRoomRButton);
+		bookingGroup = new ButtonGroup();
 		bookingGroup.add(withRoomRButton);
 		bookingGroup.add(withoutRoomRButton);
 		
@@ -411,9 +406,12 @@ public class InterfaceEnregistrementPatient {
 		searchBookingButtonRoom.setBounds(721, 11, 111, 23);
 		bookRoomPanel.add(searchBookingButtonRoom);
 		
+		scrollPane_2 = new JScrollPane();
+		scrollPane_2.setBounds(374, 44, 459, 149);
+		bookRoomPanel.add(scrollPane_2);
+		
 		switchRoomAndExaminationList = new JList();
-		switchRoomAndExaminationList.setBounds(374, 44, 459, 149);
-		bookRoomPanel.add(switchRoomAndExaminationList);
+		scrollPane_2.setViewportView(switchRoomAndExaminationList);
 		switchRoomAndExaminationList.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -422,6 +420,13 @@ public class InterfaceEnregistrementPatient {
 				
 			}
 		});
+		
+				RoomFunction.creatRoomIfFileIsEmpty(switchRoomAndExaminationList, arrayRoom);
+				
+		LengthOfStaySelectionBox = new JComboBox();
+		LengthOfStaySelectionBox.setModel(new DefaultComboBoxModel(new String[] {"courte", "longue"}));
+		LengthOfStaySelectionBox.setBounds(143, 139, 201, 20);
+		bookRoomPanel.add(LengthOfStaySelectionBox);
 		
 
 		staySummaryPanel = new JPanel();
@@ -738,7 +743,5 @@ public class InterfaceEnregistrementPatient {
 	
 			}
 		});
-
-		
 	}
 }

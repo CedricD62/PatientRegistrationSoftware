@@ -110,7 +110,7 @@ public class RoomFunction
 			patientNumberBookingRoomPanelField.setText("Patient introuvable");
 		} else {
 			if(withRoomRButton.isSelected()) {
-				//filterRoomWithSelection(arrayRoom,lengthOfStaySelectionList, withAccompangyingRButton, withoutAccompanyingRButton);
+				filterRoomWithSelection(list,arrayRoom,lengthOfStaySelectionList, withAccompangyingRButton, withoutAccompanyingRButton);
 			}
 		}
 		
@@ -119,13 +119,13 @@ public class RoomFunction
 			
 	}
 	
-	public static void disableActionOnJRadio (JRadioButton withoutAccompanyingRButton, JComboBox lengthOfStaySelectionList, JRadioButton withAccompangyingRButton,JRadioButton withoutRoomRButton,
+	public static void disableActionOnJRadio (JRadioButton withoutAccompanyingRButton, JComboBox lengthOfStayTypeSelection, JRadioButton withAccompangyingRButton,JRadioButton withoutRoomRButton,
 											  JTextField bedRoomNumberField,JTextField entryDateField,JTextField releaseDateField,JButton showRoomButton,JButton bookingRoomButton, 
 											  JButton deleteBookingRoomButton) {
 		
 		if(withoutRoomRButton.isSelected()) {
 			
-			lengthOfStaySelectionList.setEnabled(false);
+			lengthOfStayTypeSelection.setEnabled(false);
 			withAccompangyingRButton.setEnabled(false);
 			withoutAccompanyingRButton.setEnabled(false);
 			bedRoomNumberField.setEnabled(false);
@@ -137,12 +137,12 @@ public class RoomFunction
 		}
 	}
 	
-	public static void ableActionOnJRadio (JRadioButton withoutAccompanyingRButton, JComboBox lengthOfStaySelectionList, JRadioButton withAccompangyingRButton,JRadioButton withRoomRButton,
+	public static void ableActionOnJRadio (JRadioButton withoutAccompanyingRButton, JComboBox lengthOfStayTypeSelection, JRadioButton withAccompangyingRButton,JRadioButton withRoomRButton,
 										   JTextField bedRoomNumberField,JTextField entryDateField,JTextField releaseDateField,JButton showRoomButton,JButton bookingRoomButton, 
 										   JButton deleteBookingRoomButton) {
 		
 		if(withRoomRButton.isSelected()){
-			lengthOfStaySelectionList.setEnabled(true);
+			lengthOfStayTypeSelection.setEnabled(true);
 			withAccompangyingRButton.setEnabled(true);
 			withoutAccompanyingRButton.setEnabled(true);
 			bedRoomNumberField.setEnabled(true);
@@ -161,6 +161,114 @@ public class RoomFunction
 		
 		return room;
 	}
+	
+	public static void filterRoomWithSelection(JList list,ArrayList<Chambre> arrayRoom,JComboBox LengthOfStaySelectionBox,JRadioButton withAccompangyingRButton,JRadioButton withoutAccompanyingRButton) {
+		
+		String lengthOfStay = "courte";
+		int selection = LengthOfStaySelectionBox.getSelectedIndex();
+		if(selection == -1)
+			return;
+		
+		if(withAccompangyingRButton.isSelected()) {
+			if(selection == 0) {
+				selectRoomShorStaytAccompanying(list,arrayRoom);
+			}else{
+				selectRoomLongStaytAccompanying(list,arrayRoom);
+			}
+		}else{
+			if(selection == 0) {
+				selectRoomShorStayAlone(list,arrayRoom);
+			}else {
+				selectRoomLongStayAlone(list,arrayRoom);
+			}
+		}
+		
+	}
+	
+	
+	public static void selectRoomShorStaytAccompanying(JList list,ArrayList<Chambre> arrayRoom) {
+		
+		Chambre room = null;
+		temporaryListRoom.clear();
+		
+		for(int i = 0; i < arrayRoom.size(); i++) {
+			 room = arrayRoom.get(i);
+			
+			if(room.isAccompanying() == true && room.getRoomNumber() > 200) {
+				temporaryListRoom.add(room);
+			}
+		}
+		
+		list.setListData(temporaryListRoom.toArray());
+	
+	}
+	
+	public static void selectRoomLongStaytAccompanying(JList list,ArrayList<Chambre> arrayRoom) {
+		
+		Chambre room = null;
+		temporaryListRoom.clear();
+		
+		for(int i = 0; i < arrayRoom.size(); i++) {
+			 room = arrayRoom.get(i);
+			
+			if(room.isAccompanying() == true && room.getRoomNumber() < 200) {
+				temporaryListRoom.add(room);
+			}
+		}
+		
+		list.setListData(temporaryListRoom.toArray());
+		
+	}
+	
+	public static void selectRoomShorStayAlone(JList list,ArrayList<Chambre> arrayRoom) {
+		
+		Chambre room = null;
+		temporaryListRoom.clear();
+		
+		for(int i = 0; i < arrayRoom.size(); i++) {
+			 room = arrayRoom.get(i);
+			
+			if(room.isAlone() == true && room.getRoomNumber() > 200) {
+				temporaryListRoom.add(room);
+			}
+		}
+		
+		list.setListData(temporaryListRoom.toArray());
+		
+	}
+	
+	public static void selectRoomLongStayAlone(JList list,ArrayList<Chambre> arrayRoom) {
+		
+		Chambre room = null;
+		temporaryListRoom.clear();
+		
+		for(int i = 0; i < arrayRoom.size(); i++) {
+			 room = arrayRoom.get(i);
+			
+			if(room.isAlone() == true && room.getRoomNumber() < 200) {
+				temporaryListRoom.add(room);
+			}
+		}
+		
+		list.setListData(temporaryListRoom.toArray());
+	
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	
