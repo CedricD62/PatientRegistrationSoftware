@@ -95,7 +95,12 @@ public class RoomFunction
 		list.setListData(arrayRoom.toArray());
 	}
 	
-	public void updateAvailableRoomFromSelection(JList list,ArrayList<Chambre> arrayRoom,ArrayList<Patient> arrayPatient, ArrayList<Examen>arrayExamination,JTextField patientNumberBookingRoomPanelField,
+	/*public static void showInformationInBookingroomPanel(JList list, ArrayList<Examen>arrayExamination, ArrayList<Chambre>arrayRoom, JTextField patientNumberBookingRoomPanelField, JRadioButton ) {
+		
+	}*/
+	
+	
+	public static void updateAvailableRoomFromSelection(JList list,ArrayList<Chambre> arrayRoom,ArrayList<Patient> arrayPatient, ArrayList<Examen>arrayExamination,JTextField patientNumberBookingRoomPanelField,
 												 JComboBox lengthOfStaySelectionList,JRadioButton withRoomRButton,JRadioButton withoutRoomRButton,JRadioButton withoutAccompanyingRButton,
 												 JRadioButton withAccompangyingRButton,ButtonGroup accompanyingGroup) {
 		
@@ -104,9 +109,8 @@ public class RoomFunction
 		if(PatientFunction.checkIfExist(arrayPatient, idPatient) == false) {
 			patientNumberBookingRoomPanelField.setText("Patient introuvable");
 		} else {
-			if(withoutRoomRButton.isSelected()) {
-				arrayRoom.add(noBookingRoom(list, arrayRoom,arrayExamination,idPatient,patientNumberBookingRoomPanelField, lengthOfStaySelectionList, withRoomRButton, withoutRoomRButton, 
-											withoutAccompanyingRButton, withAccompangyingRButton, accompanyingGroup));
+			if(withRoomRButton.isSelected()) {
+				//filterRoomWithSelection(arrayRoom,lengthOfStaySelectionList, withAccompangyingRButton, withoutAccompanyingRButton);
 			}
 		}
 		
@@ -129,6 +133,7 @@ public class RoomFunction
 			releaseDateField.setEnabled(false);
 			showRoomButton.setEnabled(false);
 			deleteBookingRoomButton.setEnabled(false);
+			
 		}
 	}
 	
@@ -145,6 +150,7 @@ public class RoomFunction
 			releaseDateField.setEnabled(true);
 			showRoomButton.setEnabled(true);
 			deleteBookingRoomButton.setEnabled(true);
+			
 		}
 	}
 	
