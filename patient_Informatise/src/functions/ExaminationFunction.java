@@ -1,11 +1,13 @@
 package functions;
 
+import java.awt.Color;
 import java.util.ArrayList;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
 import javax.swing.JList;
 import javax.swing.JTextField;
+import javax.swing.border.Border;
 
 import patient_Informatise.Examen;
 import patient_Informatise.Patient;
@@ -19,14 +21,17 @@ public class ExaminationFunction
 	public static void creatExamination (JList listExaminationPanel,JList listBookingRoomPannel,ArrayList<Patient> arrayPatient,ArrayList<Examen> arrayExamination,JTextField patientNumberExamPanelField,
 										 JComboBox examinationTypeSelection,JTextField examinationDateField){
 		int id = Integer.parseInt(patientNumberExamPanelField.getText());
-		
 		Patient patient = PatientFunction.extractPatientFromArray(arrayPatient,id);
 		String examinationType="";
 		String examinationDate="";
 		
 		if(patient == null) {
 			
+			
+			
 			patientNumberExamPanelField.setText("Patient introuvable");
+			patientNumberExamPanelField.setCaretColor(Color.RED);
+			
 			
 		}else {
 			
@@ -224,7 +229,23 @@ public class ExaminationFunction
 		
 		temporaryList.clear();
 		
-		list.setListData(arrayExamination.toArray());
+		list.setListData(arrayExamination.toArray());	
+	}
+	
+	public static Examen extractExaminationFromArray(ArrayList<Examen> arrayExamination,ArrayList<Patient> arrayPatient,int idP) {
 		
+		Examen examination = null;
+		
+		if(PatientFunction.checkIfExist(arrayPatient, idP) == true) {
+			for(int i = 0; i < arrayExamination.size(); i++) {
+				Examen examinationTest = arrayExamination.get(i);
+				if(examinationTest.getPatient().getId() == idP) { 
+					examination= examinationTest;
+					break;
+				}
+			}
+		}
+			
+		return examination;
 	}
 }

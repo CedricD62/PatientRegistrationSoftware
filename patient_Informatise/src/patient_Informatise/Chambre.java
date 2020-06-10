@@ -12,8 +12,8 @@ public class Chambre
 	private boolean available= true;
 	private boolean bookingRoom = false;
 	private Examen 	examination;
-	private static final String WITH = "Avec";
-	private static final String WITHOUT = "Sans";
+	private static final String WITH = "Accompagné";
+	private static final String WITHOUT = "Sans accompagnement";
 	private static final String BOOKINGSTATUS = "pas de réservation de chambre";
 
 

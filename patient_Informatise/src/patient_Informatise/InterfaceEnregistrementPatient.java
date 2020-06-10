@@ -343,7 +343,7 @@ public class InterfaceEnregistrementPatient {
 		showRoomButton = new JButton("Afficher Chambres");
 		showRoomButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				RoomFunction.updateAvailableRoomFromSelection(switchRoomAndExaminationList,arrayRoom,arrayPatient,patientNumberBookingRoomPanelField,
+				RoomFunction.updateAvailableRoomFromSelection(switchRoomAndExaminationList,arrayRoom,arrayExamination,arrayPatient,patientNumberBookingRoomPanelField,
 															  LengthOfStaySelectionBox,withRoomRButton,withoutAccompanyingRButton,withAccompangyingRButton);
 			}
 		});
@@ -353,6 +353,8 @@ public class InterfaceEnregistrementPatient {
 		bookingRoomButton = new JButton("Valider");
 		bookingRoomButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				RoomFunction.creatRooom(switchRoomAndExaminationList, arrayRoom, arrayExamination,arrayPatient, entryDateField, releaseDateField,
+									    patientNumberBookingRoomPanelField, bedRoomNumberField, withoutRoomRButton);
 			}
 		});
 		bookingRoomButton.setBounds(887, 170, 110, 23);
@@ -416,9 +418,8 @@ public class InterfaceEnregistrementPatient {
 		switchRoomAndExaminationList.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				
-				
-				
+				RoomFunction.showInformationRoomAndExamination(switchRoomAndExaminationList, arrayRoom, arrayExamination, patientNumberBookingRoomPanelField, 
+															   bedRoomNumberField);
 			}
 		});
 		
