@@ -18,11 +18,11 @@ public class RoomFunction
 {
 	
 	public static ArrayList<Chambre> temporaryListRoom = new ArrayList<Chambre>();
+	public static ArrayList<Chambre> temporaryListNoBooking = new ArrayList<Chambre>(); 
 
 	public static void creatRoomIfFileIsEmpty(JList list,ArrayList<Chambre>arrayRoom) {
 	
 		Chambre room;
-		Examen examination = null;
 		int cpt = 0;
 		
 		for(int i = 0; i < 42; i++) {
@@ -40,7 +40,7 @@ public class RoomFunction
 				int numberOfBed = 1;
 				int roomNumber = 100 + cpt;
 				
-				room = new Chambre(entryDate,releaseDate,roomNumber,alone,accompanying,examination,availble,numberOfBed,bookingRoom);
+				room = new Chambre(entryDate,releaseDate,roomNumber,alone,accompanying,availble,numberOfBed,bookingRoom);
 				arrayRoom.add(room);
 				
 			}else if (i >= 15 && i <= 20) {
@@ -54,7 +54,7 @@ public class RoomFunction
 				int numberOfBed = 2;
 				int roomNumber = 100 + cpt;
 				
-				room = new Chambre(entryDate,releaseDate,roomNumber,alone,accompanying,examination,availble,numberOfBed,bookingRoom);
+				room = new Chambre(entryDate,releaseDate,roomNumber,alone,accompanying,availble,numberOfBed,bookingRoom);
 				arrayRoom.add(room);
 				
 			}else if (i >= 21 && i <= 35 ) {
@@ -68,7 +68,7 @@ public class RoomFunction
 				int numberOfBed = 1;
 				int roomNumber = 200 + cpt;
 				
-				room = new Chambre(entryDate,releaseDate,roomNumber,alone,accompanying,examination,availble,numberOfBed,bookingRoom);
+				room = new Chambre(entryDate,releaseDate,roomNumber,alone,accompanying,availble,numberOfBed,bookingRoom);
 				arrayRoom.add(room);
 				
 			}else {
@@ -82,7 +82,7 @@ public class RoomFunction
 				int numberOfBed = 2;
 				int roomNumber = 200 + cpt;
 				
-				room = new Chambre(entryDate,releaseDate,roomNumber,alone,accompanying,examination,availble,numberOfBed,bookingRoom);
+				room = new Chambre(entryDate,releaseDate,roomNumber,alone,accompanying,availble,numberOfBed,bookingRoom);
 				arrayRoom.add(room);
 				
 			}
@@ -94,6 +94,8 @@ public class RoomFunction
 	}
 	public static void creatRooom(JList list, ArrayList<Chambre> arrayRoom,ArrayList<Examen> arrayExamination,ArrayList<Patient> arrayPatient, JTextField entryDateField, 
 								  JTextField releaseDateField, JTextField patientNumberBookingRoomPanelField, JTextField bedRoomNumberField,JRadioButton withoutRoomRButton) {
+		
+		Chambre room = null;
 		
 		if (patientNumberBookingRoomPanelField.getText().equals("") || patientNumberBookingRoomPanelField.getText().contentEquals("Patient introuvable") ) {
 			patientNumberBookingRoomPanelField.setText("Patient introuvable");
@@ -108,16 +110,20 @@ public class RoomFunction
 		}
 		
 		Examen examination = ExaminationFunction.extractExaminationFromArray(arrayExamination, arrayPatient, idPatient);
-		Chambre room = extractRoomFromArray(arrayRoom, bedRoomNumberField);
+		
+		if(withoutRoomRButton.isSelected() == false) {
+			room = extractRoomFromArray(arrayRoom, bedRoomNumberField);
+		}
 		
 		updateRoomInformation(list,examination,room,entryDateField,releaseDateField,withoutRoomRButton);
-		
+		temporaryListRoom.clear();
+		temporaryListNoBooking.clear();
 	}
 	
 	private static void updateRoomInformation(JList list, Examen examination, Chambre room, JTextField entryDateField, JTextField releaseDateField,
 											  JRadioButton withoutRoomRButton) {
 
-		if(withoutRoomRButton.isSelected()== true) {
+		if(withoutRoomRButton.isSelected() == true) {
 			noBookingRoom(list, examination, room);
 		}else {
 			bookingRoom(list, examination, room, entryDateField, releaseDateField);
@@ -349,11 +355,10 @@ public class RoomFunction
 
 	
 	private static void noBookingRoom (JList list, Examen examination, Chambre room) {
-		
-		room.setExamination(examination);
-		room.SetAvailble(true);
-		room.setBookingRoom(false);
-		list.setListData(temporaryListRoom.toArray());
+		room = new Chambre("", "", 0, false, false, false, 0, false);
+		examination.setChambre(room);
+		temporaryListNoBooking.add(room);
+		list.setListData(temporaryListNoBooking.toArray());
 	}
 	
 	private static void bookingRoom(JList list, Examen examination, Chambre room, JTextField entryDateField, JTextField releaseDateField) {
@@ -362,6 +367,8 @@ public class RoomFunction
 		room.setBookingRoom(true);
 		room.setEntryDate(entryDateField.getText());
 		room.setReleaseDate(releaseDateField.getText());
+		examination.setChambre(room);
+		examination.getPatient().setBookingRoom(true);
 		list.setListData(temporaryListRoom.toArray());
 	}
 	

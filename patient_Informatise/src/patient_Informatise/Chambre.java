@@ -1,8 +1,10 @@
 package patient_Informatise;
 
+import javax.management.BadBinaryOpValueExpException;
+
 public class Chambre 
 {
-
+	private Examen	examination;
 	private String 	entryDate;
 	private String 	releaseDate;
 	private int 	roomNumber;
@@ -11,24 +13,42 @@ public class Chambre
 	private boolean accompanying;
 	private boolean available= true;
 	private boolean bookingRoom = false;
-	private Examen 	examination;
 	private static final String WITH = "Accompagné";
 	private static final String WITHOUT = "Sans accompagnement";
 	private static final String BOOKINGSTATUS = "pas de réservation de chambre";
 
 
 	
-	public Chambre(String pEntryDate, String pReleaseDate, int pRoomNumber, boolean pAlone, boolean pAccompanying, Examen pExamination, boolean pAvailable, int pNumberOfBed, boolean pBookingRoom) {
+	public Chambre(String pEntryDate, String pReleaseDate, int pRoomNumber, boolean pAlone, boolean pAccompanying, boolean pAvailable, int pNumberOfBed, boolean pBookingRoom) {
 	
 		this.entryDate 		= pEntryDate;
 		this.releaseDate 	= pReleaseDate;
 		this.roomNumber 	= pRoomNumber;
 		this.alone 			= pAlone;
 		this.accompanying 	= pAccompanying;
-		this.examination 	= pExamination;
 		this.available 		= pAvailable;
 		this.numberOfBed	= pNumberOfBed;
 		this.bookingRoom 	= pBookingRoom;
+	}
+	
+	public Chambre(String pEntryDate, String pReleaseDate, int pRoomNumber, boolean pAlone, boolean pAccompanying, boolean pAvailable, int pNumberOfBed, boolean pBookingRoom, Examen pExamination) {
+		
+		this.entryDate 		= pEntryDate;
+		this.releaseDate 	= pReleaseDate;
+		this.roomNumber 	= pRoomNumber;
+		this.alone 			= pAlone;
+		this.accompanying 	= pAccompanying;
+		this.available 		= pAvailable;
+		this.numberOfBed	= pNumberOfBed;
+		this.bookingRoom 	= pBookingRoom;
+		this.examination	= pExamination;
+	}
+	
+	public Examen getExamination() {
+		return examination;
+	}
+	public void setExamination (Examen pExamination) {
+		examination = pExamination;
 	}
 	
 	public boolean isBookingRoom() {
@@ -50,13 +70,6 @@ public class Chambre
 	}
 	public void setNumberOfBed(int pNumberOfBed) {
 		numberOfBed = pNumberOfBed;
-	}
-	
-	public Examen getExamination() {
-		return examination;
-	}
-	public void setExamination(Examen pExamination) {
-		examination = pExamination;
 	}
 	
 	public String getEntryDate() {
@@ -97,9 +110,8 @@ public class Chambre
 
 	@Override
 	public String toString() {
-		
 		if(isBookingRoom() == false) {
-			return getExamination().getPatient().getId()+", "+ BOOKINGSTATUS;
+			return BOOKINGSTATUS;
 		}else {
 			if(isAvailable() == true) {
 				return "Chambre N° : " + roomNumber;
@@ -114,8 +126,5 @@ public class Chambre
 			}
 		}
 	}
-
-
-	
-	
 }
+

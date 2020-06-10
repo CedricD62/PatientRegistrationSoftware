@@ -7,8 +7,8 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
 import javax.swing.JList;
 import javax.swing.JTextField;
-import javax.swing.border.Border;
 
+import patient_Informatise.Chambre;
 import patient_Informatise.Examen;
 import patient_Informatise.Patient;
 
@@ -37,7 +37,8 @@ public class ExaminationFunction
 			
 			examinationType = examinationTypeSelection.getSelectedItem().toString();
 			examinationDate = examinationDateField.getText();
-			Examen examen = new Examen(patient,examinationType,examinationDate);
+			Chambre room = null;
+			Examen examen = new Examen(patient,room,examinationType,examinationDate);
 			arrayExamination.add(examen);	
 			
 			listExaminationPanel.setListData(arrayExamination.toArray());

@@ -15,8 +15,10 @@ public class Patient
 	private String 				birthDate;
 	private boolean 			male = false;
 	private boolean 			female = false;
+	private boolean 			bookingRoom = false;
 	private static final String MALE = "Homme";
 	private static final String FEMALE = "Femme";
+	private static final String BOOKING = "Pas de chambre";
 	
 	
 	public Patient(int pId,boolean pMale,boolean pFemale,String pName,String pFirstName,String pAddress,int pCp,String pCity,String pEmail, 
@@ -36,8 +38,15 @@ public class Patient
 			birthDate 	= pBirthDate;	
 			male 		= pMale;
 			female 		= pFemale;
-		}
+			bookingRoom = pBookingRoom;
+	}
 	
+	public boolean isBookingRoom() {
+		return bookingRoom;
+	}
+	public void setBookingRoom(boolean pBookingRoom) {
+		this.bookingRoom = pBookingRoom;
+	}
 	public int getId() {
 		return id;
 	}
@@ -131,12 +140,17 @@ public class Patient
 	@Override
 	public String toString() {
 		if(isMale() == true) {
-			return "Patient [id=" + id + ", name=" + name + ", firstName=" + firstName + ", address=" + address + ", cp="+ cp + ", city=" + city + ", email=" + email + ", ssn=" + ssn + ", phone=" + phone + ", cellPhone="+ cellPhone + ", birthDate=" + birthDate + ", male=" + MALE + "]";
-	
+			if(isBookingRoom() == true) {
+				return "Patient [id=" + id + ", name=" + name + ", firstName=" + firstName + ", address=" + address + ", cp="+ cp + ", city=" + city + ", email=" + email + ", ssn=" + ssn + ", phone=" + phone + ", cellPhone="+ cellPhone + ", birthDate=" + birthDate + ", male=" + MALE+"]";
+			}else {
+				return "Patient [id=" + id + ", name=" + name + ", firstName=" + firstName + ", address=" + address + ", cp="+ cp + ", city=" + city + ", email=" + email + ", ssn=" + ssn + ", phone=" + phone + ", cellPhone="+ cellPhone + ", birthDate=" + birthDate + ", male=" + MALE+"]";
+			}
 		}else {
-			return "Patient [id=" + id + ", name=" + name + ", firstName=" + firstName + ", address=" + address + ", cp="+ cp + ", city=" + city + ", email=" + email + ", ssn=" + ssn + ", phone=" + phone + ", cellPhone="+ cellPhone + ", birthDate=" + birthDate + ", female=" + FEMALE + "]";
+			if(isBookingRoom() == true) {
+				return "Patient [id=" + id + ", name=" + name + ", firstName=" + firstName + ", address=" + address + ", cp="+ cp + ", city=" + city + ", email=" + email + ", ssn=" + ssn + ", phone=" + phone + ", cellPhone="+ cellPhone + ", birthDate=" + birthDate + ", male=" + FEMALE+"]";
+			}else {
+				return "Patient [id=" + id + ", name=" + name + ", firstName=" + firstName + ", address=" + address + ", cp="+ cp + ", city=" + city + ", email=" + email + ", ssn=" + ssn + ", phone=" + phone + ", cellPhone="+ cellPhone + ", birthDate=" + birthDate + ", male=" + FEMALE+"]";
+			}
 		}
 	}
-	
-	
 }

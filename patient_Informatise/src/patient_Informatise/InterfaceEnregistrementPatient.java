@@ -402,7 +402,7 @@ public class InterfaceEnregistrementPatient {
 		searchBookingRoomField = new JTextField();
 		searchBookingRoomField.setBounds(374, 12, 339, 20);
 		bookRoomPanel.add(searchBookingRoomField);
-		searchBookingRoomField.setColumns(10);
+		searchBookingRoomField.setColumns(20);
 		
 		
 		searchBookingButtonRoom = new JButton("Rechercher");

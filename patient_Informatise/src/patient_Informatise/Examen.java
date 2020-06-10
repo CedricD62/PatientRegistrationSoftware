@@ -6,14 +6,22 @@ public class Examen
 	private String 				typeExamen;
 	private String 				dateExamen;
 	private Patient 			patient;
-
+	private Chambre				room;
 	
-	public Examen(Patient pPatient, String pTypeExamen, String pDateExamen) {
+	public Examen(Patient pPatient,Chambre pRoom ,String pTypeExamen, String pDateExamen) {
 		
 		patient 	= pPatient;
+		room 		= pRoom;
 		typeExamen 	= pTypeExamen;
 		dateExamen 	= pDateExamen;
 	 
+	}
+	
+	public Chambre getChambre() {
+		return room;
+	}
+	public void setChambre (Chambre pRoom) {
+		this.room = pRoom;
 	}
 
 	public Patient getPatient() {
