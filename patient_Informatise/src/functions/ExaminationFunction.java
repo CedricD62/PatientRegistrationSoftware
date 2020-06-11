@@ -39,10 +39,10 @@ public class ExaminationFunction
 			examinationDate = examinationDateField.getText();
 			Chambre room = null;
 			Examen examen = new Examen(patient,room,examinationType,examinationDate);
-			arrayExamination.add(examen);	
-			
+			arrayExamination.add(examen);
+			RoomFunction.temporaryListExamination.add(examen);
 			listExaminationPanel.setListData(arrayExamination.toArray());
-			listBookingRoomPannel.setListData(arrayExamination.toArray());
+			listBookingRoomPannel.setListData(RoomFunction.temporaryListExamination.toArray());
 			examinationDateField.setText("");
 			patientNumberExamPanelField.setText("");
 			examinationTypeSelection.setModel(new DefaultComboBoxModel(new String[] {"Liste d'examens ", "Arthroscopie", "Alcool\u00E9mie", "Appendicectomie", "Arthroscanner", "Audiogramme",
@@ -101,18 +101,14 @@ public class ExaminationFunction
 
 		int idExamination = list.getSelectedIndex();
 		
-			if(idExamination == -1) 
-			return;
-			
-			if(temporaryList.isEmpty()) {
-				
-				deleteFromArrayExamination(list,arrayExamination,idExamination,patientNumberExamPanelField,examinationTypeSelection,examinationDateField);
-			
-			} else {
-				
-				deleteFromTemporaryList(list,arrayExamination,idExamination,patientNumberExamPanelField,examinationTypeSelection,examinationDateField);	
-			
-			}
+		if(idExamination == -1) 
+		return;
+		
+		if(temporaryList.isEmpty()) {
+			deleteFromArrayExamination(list,arrayExamination,idExamination,patientNumberExamPanelField,examinationTypeSelection,examinationDateField);
+		} else {
+			deleteFromTemporaryList(list,arrayExamination,idExamination,patientNumberExamPanelField,examinationTypeSelection,examinationDateField);	
+		}
 	}
 	
 	public static void changeInfoExamination(JList list,ArrayList<Examen> arrayExamination,JTextField patientNumberExamPanelField,JComboBox examinationTypeSelection,
@@ -215,7 +211,6 @@ public class ExaminationFunction
 		list.setListData(arrayExamination.toArray());
 	}
 	
-	
 	private static void changeInfoExaminationFromTemporaryList (JList list,ArrayList<Examen> arrayExamination,JTextField patientNumberExamPanelField,JComboBox examinationTypeSelection,JTextField examinationDateField) {
 
 		int selection = list.getSelectedIndex();
@@ -233,11 +228,11 @@ public class ExaminationFunction
 		list.setListData(arrayExamination.toArray());	
 	}
 	
-	public static Examen extractExaminationFromArray(ArrayList<Examen> arrayExamination,ArrayList<Patient> arrayPatient,int idP) {
+	public static Examen extractExaminationFromArray(ArrayList<Examen> arrayExamination,int idP, String examinationType) {
 		
 		Examen examination = null;
 		
-		if(PatientFunction.checkIfExist(arrayPatient, idP) == true) {
+		
 			for(int i = 0; i < arrayExamination.size(); i++) {
 				Examen examinationTest = arrayExamination.get(i);
 				if(examinationTest.getPatient().getId() == idP) { 
@@ -245,7 +240,6 @@ public class ExaminationFunction
 					break;
 				}
 			}
-		}
 			
 		return examination;
 	}

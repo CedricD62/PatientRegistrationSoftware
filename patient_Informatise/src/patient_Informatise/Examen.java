@@ -7,6 +7,7 @@ public class Examen
 	private String 				dateExamen;
 	private Patient 			patient;
 	private Chambre				room;
+	private boolean 			bookingRoom;
 	
 	public Examen(Patient pPatient,Chambre pRoom ,String pTypeExamen, String pDateExamen) {
 		
@@ -15,6 +16,14 @@ public class Examen
 		typeExamen 	= pTypeExamen;
 		dateExamen 	= pDateExamen;
 	 
+	}
+	
+	public boolean isBookingRoom() {
+		return bookingRoom;
+	}
+	public void setBookingRoom( boolean pBookingRoom)
+	{
+		this.bookingRoom = pBookingRoom;
 	}
 	
 	public Chambre getChambre() {

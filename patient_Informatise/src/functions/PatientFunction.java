@@ -101,7 +101,6 @@ public class PatientFunction
 		birthdateField.setText("");
 	}
 	
-	
 	private static void serchPatientMale(JList list,ArrayList<Patient> arrayPatient) {
 		
 		

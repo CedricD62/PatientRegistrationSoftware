@@ -19,7 +19,8 @@ public class RoomFunction
 	
 	public static ArrayList<Chambre> temporaryListRoom = new ArrayList<Chambre>();
 	public static ArrayList<Chambre> temporaryListNoBooking = new ArrayList<Chambre>(); 
-
+	public static ArrayList<Examen> temporaryListExamination = new ArrayList<Examen>();
+	
 	public static void creatRoomIfFileIsEmpty(JList list,ArrayList<Chambre>arrayRoom) {
 	
 		Chambre room;
@@ -84,74 +85,48 @@ public class RoomFunction
 				
 				room = new Chambre(entryDate,releaseDate,roomNumber,alone,accompanying,availble,numberOfBed,bookingRoom);
 				arrayRoom.add(room);
-				
 			}
-			cpt++;
-			
-		}
-		
+			cpt++;	
+		}	
 		list.setListData(arrayRoom.toArray());
 	}
-	public static void creatRooom(JList list, ArrayList<Chambre> arrayRoom,ArrayList<Examen> arrayExamination,ArrayList<Patient> arrayPatient, JTextField entryDateField, 
-								  JTextField releaseDateField, JTextField patientNumberBookingRoomPanelField, JTextField bedRoomNumberField,JRadioButton withoutRoomRButton) {
+	
+	public static void updateListOfAvailableRoom(JList list,ArrayList<Chambre> arrayRoom,JTextField patientNumberBookingRoomPanelField, JRadioButton withoutRoomRButton, JRadioButton withAccompangyingRButton, 
+										   JRadioButton withoutAccompangyingRButton, JComboBox LengthOfStaySelectionBox) {
+		Examen examination = null;
 		
+		int ligneNumber = list.getSelectedIndex();
+		
+			if(ligneNumber == -1)
+				return ;
+		
+		if(withoutRoomRButton.isSelected()) {
+			examination = temporaryListExamination.get(ligneNumber);	
+			examination.setBookingRoom(true);
+		}
+		
+		examination = temporaryListExamination.get(ligneNumber);
+		examination.setBookingRoom(true);
+		
+		filterRoomWithSelection(list, arrayRoom, LengthOfStaySelectionBox, withAccompangyingRButton, withAccompangyingRButton);
+	}
+	
+	public static void bookingAvailableRoom(JList list,JTextField entryDateField,JTextField releaseDateField, JRadioButton withoutRoomRButton, ArrayList<Examen> arrayExamination,JTextField patientNumberBookingRoomPanelField,
+											JRadioButton withRoomRButton,ButtonGroup accompanyingGroup,JComboBox LengthOfStaySelectionBox,JTextField bedRoomNumberField, ArrayList<Chambre> arrayRoom) {
 		Chambre room = null;
 		
-		if (patientNumberBookingRoomPanelField.getText().equals("") || patientNumberBookingRoomPanelField.getText().contentEquals("Patient introuvable") ) {
-			patientNumberBookingRoomPanelField.setText("Patient introuvable");
-			list.setListData(arrayExamination.toArray());
-			return;
-		}
-		int idPatient = Integer.parseInt(patientNumberBookingRoomPanelField.getText());
-		
-		if(PatientFunction.checkIfExist(arrayPatient, idPatient) == false) {
-			patientNumberBookingRoomPanelField.setText("Patient introuvable");
-			list.setListData(arrayExamination.toArray());
-		}
-		
-		Examen examination = ExaminationFunction.extractExaminationFromArray(arrayExamination, arrayPatient, idPatient);
-		
+		Examen examination = extractExaminationFromList(list);
 		if(withoutRoomRButton.isSelected() == false) {
-			room = extractRoomFromArray(arrayRoom, bedRoomNumberField);
+			room = extractRoomFromArray(list);
 		}
 		
-		updateRoomInformation(list,examination,room,entryDateField,releaseDateField,withoutRoomRButton);
-		temporaryListRoom.clear();
-		temporaryListNoBooking.clear();
+		updateRoomInformation(list, examination, room, entryDateField, releaseDateField, withoutRoomRButton);
+		updadeExaminationListForBooking(list, arrayExamination);
+		clearInformationOnPannel(patientNumberBookingRoomPanelField, withRoomRButton, accompanyingGroup, LengthOfStaySelectionBox, entryDateField, releaseDateField, bedRoomNumberField);
+		printExamination(arrayExamination);
+		printRoom(arrayRoom);
 	}
-	
-	private static void updateRoomInformation(JList list, Examen examination, Chambre room, JTextField entryDateField, JTextField releaseDateField,
-											  JRadioButton withoutRoomRButton) {
-
-		if(withoutRoomRButton.isSelected() == true) {
-			noBookingRoom(list, examination, room);
-		}else {
-			bookingRoom(list, examination, room, entryDateField, releaseDateField);
-		}
-	
-	}
-
-	
-	public static void updateAvailableRoomFromSelection(JList list,ArrayList<Chambre> arrayRoom,ArrayList<Examen> arrayExamination,ArrayList<Patient> arrayPatient,JTextField patientNumberBookingRoomPanelField,
-												 JComboBox lengthOfStaySelectionList,JRadioButton withRoomRButton,JRadioButton withoutAccompanyingRButton,
-												 JRadioButton withAccompangyingRButton) {
-		if (patientNumberBookingRoomPanelField.getText().equals("") || patientNumberBookingRoomPanelField.getText().contentEquals("Patient introuvable") ) {
-			patientNumberBookingRoomPanelField.setText("Patient introuvable");
-			list.setListData(arrayExamination.toArray());
-			return;
-		}
-		int idPatient = Integer.parseInt(patientNumberBookingRoomPanelField.getText());
-		
-		if(PatientFunction.checkIfExist(arrayPatient, idPatient) == false) {
-			patientNumberBookingRoomPanelField.setText("Patient introuvable");
-			list.setListData(arrayExamination.toArray());
-		} else {
-			if(withRoomRButton.isSelected()) {
-				filterRoomWithSelection(list,arrayRoom,lengthOfStaySelectionList, withAccompangyingRButton, withoutAccompanyingRButton);
-			}
-		}	
-	}
-	
+			
 	public static void showInformationRoomAndExamination(JList list,ArrayList<Chambre> arrayRoom,ArrayList<Examen> arrayExamination,JTextField patientNumberBookingRoomPanelField,
 														 JTextField bedRoomNumberField) {
 		
@@ -197,6 +172,17 @@ public class RoomFunction
 		}
 	}
 	
+	private static void updateRoomInformation(JList list, Examen examination, Chambre room, JTextField entryDateField, JTextField releaseDateField,
+			  JRadioButton withoutRoomRButton) {
+
+		if(withoutRoomRButton.isSelected() == true) {
+			noBookingRoom(list, examination, room);
+		}else {
+			bookingRoom(examination, room, entryDateField, releaseDateField);
+		}
+	
+	}
+	
 	private static void filterRoomWithSelection(JList list,ArrayList<Chambre> arrayRoom,JComboBox LengthOfStaySelectionBox,JRadioButton withAccompangyingRButton,JRadioButton withoutAccompanyingRButton) {
 		
 		int selection = LengthOfStaySelectionBox.getSelectedIndex();
@@ -218,7 +204,6 @@ public class RoomFunction
 		}
 		
 	}
-	
 	
 	private static void selectRoomShorStaytAccompanying(JList list,ArrayList<Chambre> arrayRoom) {
 		
@@ -297,12 +282,13 @@ public class RoomFunction
 	}
 	
 	private static void showInformationFromArrayExamination(JList list,ArrayList<Examen> arrayExamination,JTextField patientNumberBookingRoomPanelField) {
+		
 		int idExamination = list.getSelectedIndex();
 		
 			if(idExamination == -1) 
 				return;
 		
-		Examen examination = arrayExamination.get(idExamination);
+		Examen examination = temporaryListExamination.get(idExamination);
 		patientNumberBookingRoomPanelField.setText(""+examination.getPatient().getId());
 	}
 	
@@ -320,62 +306,92 @@ public class RoomFunction
 		}
 	}
 	
-	private static Chambre extractRoomFromArray(ArrayList<Chambre> arrayRoom, JTextField bedRoomNumberField) {
+	private static Examen extractExaminationFromList (JList list) {
+		Examen examination = null;
 		
-		int roomNumber = Integer.parseInt(bedRoomNumberField.getText());
-		Chambre room = null;
-		
-		if(checkIfExist(arrayRoom, roomNumber) == true) {
-			for(int i = 0; i < arrayRoom.size(); i++) {
-				Chambre roomTest = arrayRoom.get(i);
-				if(roomTest.getRoomNumber() == roomNumber) {
-					room = roomTest;
+		for(int i = 0; i < temporaryListExamination.size(); i++) {
+			examination = temporaryListExamination.get(i);
+				if(examination.isBookingRoom() == true) {
 					break;
 				}
 			}
-		}
+	
+		return examination;
+	}
+	
+	private static Chambre extractRoomFromArray(JList list) {
+		
+		Chambre room = null;
+
+		int ligneNumber = list.getSelectedIndex();
+			if(ligneNumber == -1)
+				return room;
+		
+		room = temporaryListRoom.get(ligneNumber);
+		
 		return room;
 	}
 	
-	private static boolean checkIfExist(ArrayList<Chambre> arrayRoom, int roomNumber ) {
-		
-		boolean exist = false;
-		
-		for(int i = 0; i < arrayRoom.size(); i++) {
-			Chambre room = arrayRoom.get(i);
-			if (room.getRoomNumber() == roomNumber) {
-				exist = true;
-				break;
-			}
-		}
-		
-		return exist;
-	}
-	
-
 	
 	private static void noBookingRoom (JList list, Examen examination, Chambre room) {
-		room = new Chambre("", "", 0, false, false, false, 0, false);
-		examination.setChambre(room);
-		temporaryListNoBooking.add(room);
-		list.setListData(temporaryListNoBooking.toArray());
+		
+		examination.setBookingRoom(true);
+		room = new Chambre("", "", 0, false, false, false, 0, false, examination);
 	}
 	
-	private static void bookingRoom(JList list, Examen examination, Chambre room, JTextField entryDateField, JTextField releaseDateField) {
-		room.setExamination(examination);
-		room.SetAvailble(false);
-		room.setBookingRoom(true);
+	
+	private static void bookingRoom(Examen examination, Chambre room, JTextField entryDateField, JTextField releaseDateField) {
 		room.setEntryDate(entryDateField.getText());
 		room.setReleaseDate(releaseDateField.getText());
-		examination.setChambre(room);
-		examination.getPatient().setBookingRoom(true);
-		list.setListData(temporaryListRoom.toArray());
+		room.setExamination(examination);
+		room.SetAvailble(false);
+	}
+
+	private static void updadeExaminationListForBooking(JList list,ArrayList<Examen> arrayExamination) {
+		
+		Examen examination = null;
+		temporaryListExamination.clear();
+		for(int i = 0; i < arrayExamination.size(); i++) {
+			examination = arrayExamination.get(i);
+				if(examination.isBookingRoom() != true) {
+					temporaryListExamination.add(examination);
+				}
+		}
+		
+		list.setListData(temporaryListExamination.toArray());
 	}
 	
+	private static void clearInformationOnPannel(JTextField patientNumberBookingRoomPanelField,JRadioButton withRoomRButton,ButtonGroup accompanyingGroup,JComboBox LengthOfStaySelectionBox, 
+												 JTextField entryDateField, JTextField releaseDateField,JTextField bedRoomNumberField) {
+		patientNumberBookingRoomPanelField.setText("");
+		withRoomRButton.setSelected(true);
+		accompanyingGroup.clearSelection();
+		bedRoomNumberField.setText("");
+		entryDateField.setText("");
+		releaseDateField.setText("");
+	}
 	
+	public static void printRoom(ArrayList<Chambre> arrayRoom) {
+		Chambre room = null;
+		
+		for(int i = 0; i < arrayRoom.size(); i++) {
+			room = arrayRoom.get(i);
+				if(room.getExamination() != null) {
+					System.out.println(room.toString());
+				}
+		}
+	}
 	
-	
-	
+	public static void printExamination(ArrayList<Examen> arrayExamination) {
+		Examen examination = null;
+		
+		for(int i = 0; i < arrayExamination.size(); i++) {
+			examination = arrayExamination.get(i);
+				if(examination.isBookingRoom() == true) {
+					System.out.println(examination.toString());
+				}
+		}
+	}
 	
 	
 }

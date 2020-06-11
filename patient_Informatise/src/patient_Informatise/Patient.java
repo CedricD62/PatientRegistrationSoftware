@@ -140,17 +140,9 @@ public class Patient
 	@Override
 	public String toString() {
 		if(isMale() == true) {
-			if(isBookingRoom() == true) {
-				return "Patient [id=" + id + ", name=" + name + ", firstName=" + firstName + ", address=" + address + ", cp="+ cp + ", city=" + city + ", email=" + email + ", ssn=" + ssn + ", phone=" + phone + ", cellPhone="+ cellPhone + ", birthDate=" + birthDate + ", male=" + MALE+"]";
-			}else {
-				return "Patient [id=" + id + ", name=" + name + ", firstName=" + firstName + ", address=" + address + ", cp="+ cp + ", city=" + city + ", email=" + email + ", ssn=" + ssn + ", phone=" + phone + ", cellPhone="+ cellPhone + ", birthDate=" + birthDate + ", male=" + MALE+"]";
-			}
+			return "Patient [id=" + id + ", name=" + name + ", firstName=" + firstName + ", address=" + address + ", cp="+ cp + ", city=" + city + ", email=" + email + ", ssn=" + ssn + ", phone=" + phone + ", cellPhone="+ cellPhone + ", birthDate=" + birthDate + ", " + MALE+"]";
 		}else {
-			if(isBookingRoom() == true) {
-				return "Patient [id=" + id + ", name=" + name + ", firstName=" + firstName + ", address=" + address + ", cp="+ cp + ", city=" + city + ", email=" + email + ", ssn=" + ssn + ", phone=" + phone + ", cellPhone="+ cellPhone + ", birthDate=" + birthDate + ", male=" + FEMALE+"]";
-			}else {
-				return "Patient [id=" + id + ", name=" + name + ", firstName=" + firstName + ", address=" + address + ", cp="+ cp + ", city=" + city + ", email=" + email + ", ssn=" + ssn + ", phone=" + phone + ", cellPhone="+ cellPhone + ", birthDate=" + birthDate + ", male=" + FEMALE+"]";
-			}
+			return "Patient [id=" + id + ", name=" + name + ", firstName=" + firstName + ", address=" + address + ", cp="+ cp + ", city=" + city + ", email=" + email + ", ssn=" + ssn + ", phone=" + phone + ", cellPhone="+ cellPhone + ", birthDate=" + birthDate + ", " + FEMALE+"]";
 		}
 	}
 }
