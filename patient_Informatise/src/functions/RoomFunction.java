@@ -196,6 +196,7 @@ public class RoomFunction
 		resetRoomDataToDefault(room);
 		deleteDataFromExamination(room, arrayExamination);
 		updadeExaminationListForBooking(switchRoomAndExaminationList, arrayExamination);
+		printRoomInList(bookedList, room);
 		
 	}
 	
@@ -375,7 +376,7 @@ public class RoomFunction
 		
 	}
 
-	private static void updadeExaminationListForBooking(JList list,ArrayList<Examen> arrayExamination) {
+	public static void updadeExaminationListForBooking(JList list,ArrayList<Examen> arrayExamination) {
 		
 		Examen examination = null;
 		temporaryListExamination.clear();
@@ -414,7 +415,22 @@ public class RoomFunction
 		list.setListData(bookedRoomList.toArray());
 	}
 	
-	private static void resetRoomDataToDefault(Chambre room) {
+	public static void printRoomInList(JList list, Chambre room) {
+		Chambre roomTest = null;
+		
+		//bookedRoomList.clear();
+		
+		for(int i = 0; i < bookedRoomList.size(); i++) {
+			roomTest = bookedRoomList.get(i);
+			if(roomTest.equals(room)) {
+				bookedRoomList.remove(i);
+			}
+		}
+		
+		list.setListData(bookedRoomList.toArray());
+	}
+	
+	public static void resetRoomDataToDefault(Chambre room) {
 		
 		if(room.isAccompanying() == true && room.getRoomNumber() > 200) {
 			defaultDataShorStaytAccompanying(room);
@@ -436,7 +452,8 @@ public class RoomFunction
 		room.SetAvailable(true);
 		room.setBookingRoom(true);
 		room.setEntryDate("");
-		room.setReleaseDate("");		
+		room.setReleaseDate("");
+		room.setExamination(null);
 	}
 	
 	private static void defaultDataLongStaytAccompanying(Chambre room) {	
@@ -446,6 +463,7 @@ public class RoomFunction
 		room.setBookingRoom(true);
 		room.setEntryDate("");
 		room.setReleaseDate("");
+		room.setExamination(null);
 	}
 	
 	private static void defaultDataShorStayAlone(Chambre room) {
@@ -455,6 +473,7 @@ public class RoomFunction
 		room.setBookingRoom(true);
 		room.setEntryDate("");
 		room.setReleaseDate("");
+		room.setExamination(null);
 	}
 	
 	private static void defaultDataLongStayAlone(Chambre room) {
@@ -464,16 +483,19 @@ public class RoomFunction
 		room.setBookingRoom(true);
 		room.setEntryDate("");
 		room.setReleaseDate("");
+		room.setExamination(null);
 	}
 	
 	private static void deleteDataFromExamination(Chambre room, ArrayList<Examen> arrayExamination) {
 		
 		Examen examination = null;
+		resetRoomDataToDefault(room);
 		
 		for(int i = 0; i < arrayExamination.size(); i++) {
 			examination = arrayExamination.get(i);
 			if(examination.getChambre().getRoomNumber() == room.getRoomNumber()) {
 				examination.setBookingRoom(false);
+				room = examination.getChambre();
 				examination.setChambre(null);
 				break;
 			}

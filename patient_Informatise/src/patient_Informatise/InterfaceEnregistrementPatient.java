@@ -257,8 +257,9 @@ public class InterfaceEnregistrementPatient {
 		deleteExaminationButton = new JButton("Supprimer");
 		deleteExaminationButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				ExaminationFunction.deleteExamination(examinationList,arrayExamination,patientNumberExamPanelField,examinationTypeSelection,examinationDateField);
-			}
+				ExaminationFunction.deleteExamination(examinationList,arrayExamination,patientNumberExamPanelField,examinationTypeSelection,
+													  examinationDateField,switchRoomAndExaminationList, listOfBookedRoom);
+				}
 		});
 		deleteExaminationButton.setBounds(1014, 153, 110, 23);
 		addExaminationPanel.add(deleteExaminationButton);

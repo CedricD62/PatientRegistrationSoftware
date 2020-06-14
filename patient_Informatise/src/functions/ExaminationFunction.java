@@ -97,7 +97,7 @@ public class ExaminationFunction
 	}
 	
 	public static void deleteExamination(JList list,ArrayList<Examen> arrayExamination,JTextField patientNumberExamPanelField,JComboBox examinationTypeSelection,
-										 JTextField examinationDateField) {
+										 JTextField examinationDateField,JList switchRoomAndExaminationList, JList bookedList) {
 
 		int idExamination = list.getSelectedIndex();
 		
@@ -105,9 +105,11 @@ public class ExaminationFunction
 		return;
 		
 		if(temporaryList.isEmpty()) {
-			deleteFromArrayExamination(list,arrayExamination,idExamination,patientNumberExamPanelField,examinationTypeSelection,examinationDateField);
+			deleteFromArrayExamination(list,arrayExamination,idExamination,patientNumberExamPanelField,examinationTypeSelection,examinationDateField,
+									   switchRoomAndExaminationList,bookedList);
 		} else {
-			deleteFromTemporaryList(list,arrayExamination,idExamination,patientNumberExamPanelField,examinationTypeSelection,examinationDateField);	
+			deleteFromTemporaryList(list,arrayExamination,idExamination,patientNumberExamPanelField,examinationTypeSelection,examinationDateField, 
+									switchRoomAndExaminationList,bookedList);	
 		}
 	}
 	
@@ -156,21 +158,25 @@ public class ExaminationFunction
 	}
 	
 	private static void deleteFromArrayExamination(JList list,ArrayList<Examen> arrayExamination,int indexSelection,JTextField patientNumberExamPanelField,JComboBox examinationTypeSelection,
-												  JTextField examinationDateField) {
-		arrayExamination.remove(indexSelection);
+												   JTextField examinationDateField, JList switchRoomAndExaminationList, JList bookedList) {
+		Examen examination = arrayExamination.get(indexSelection);
+		if(examination.getChambre() == null) {
+			arrayExamination.remove(indexSelection);
+		}else {
+			Chambre room = examination.getChambre();
+			RoomFunction.resetRoomDataToDefault(room);
+			arrayExamination.remove(indexSelection);
+			RoomFunction.updadeExaminationListForBooking(switchRoomAndExaminationList, arrayExamination);
+			RoomFunction.printRoomInList(bookedList, room);
+		}
 		
-		examinationDateField.setText("");
-		patientNumberExamPanelField.setText("");
-		examinationTypeSelection.setModel(new DefaultComboBoxModel(new String[] {"Liste d'examens ", "Arthroscopie", "Alcool\u00E9mie", "Appendicectomie", "Arthroscanner", "Audiogramme",
-										 "Avortement", "Bact\u00E9riologique", "Biopsie", "C\u00E9sarienne", "Coelioscopie", "ECG", "Endoscopie", "F\u00E9condation in vitro", 
-										 "Fibroscopie", "IRM", "Mammographie", "Radiographie", "S\u00E9rodiagnostic", "Tension art\u00E9rielle ", "Urographie", "Ventriculographie", 
-										 "Volum\u00E9trique "}));
+		cancelInformationBeforeAddExamination(examinationDateField, patientNumberExamPanelField, examinationTypeSelection);
 		
 		list.setListData(arrayExamination.toArray());
 	}
 	
 	private static void deleteFromTemporaryList(JList list,ArrayList<Examen> arrayExamination,int indexSelection,JTextField patientNumberExamPanelField,JComboBox examinationTypeSelection,
-											   JTextField examinationDateField) {
+											   JTextField examinationDateField,JList switchRoomAndExaminationList, JList bookedList) {
 		
 		Examen examinationTest = temporaryList.get(indexSelection);
 		
@@ -178,18 +184,20 @@ public class ExaminationFunction
 			Examen examination = arrayExamination.get(i);
 			if(examination.getPatient().getId() == examinationTest.getPatient().getId() && examination.getDateExamen().equals(examinationTest.getDateExamen()) 
 			   && examination.getTypeExamen().equals(examinationTest.getTypeExamen()) ) {
-				arrayExamination.remove(i);
+				if(examination.getChambre() == null) {
+					arrayExamination.remove(i);
+				}else {
+					Chambre room = examination.getChambre();
+					RoomFunction.resetRoomDataToDefault(room);
+					arrayExamination.remove(i);
+					RoomFunction.updadeExaminationListForBooking(switchRoomAndExaminationList, arrayExamination);
+					RoomFunction.printRoomInList(bookedList, room);
+				}
 			}
 		}
 		
 		temporaryList.remove(indexSelection);
-		
-		examinationDateField.setText("");
-		patientNumberExamPanelField.setText("");
-		examinationTypeSelection.setModel(new DefaultComboBoxModel(new String[] {"Liste d'examens ", "Arthroscopie", "Alcool\u00E9mie", "Appendicectomie", "Arthroscanner", "Audiogramme",
-										 "Avortement", "Bact\u00E9riologique", "Biopsie", "C\u00E9sarienne", "Coelioscopie", "ECG", "Endoscopie", "F\u00E9condation in vitro", 
-										 "Fibroscopie", "IRM", "Mammographie", "Radiographie", "S\u00E9rodiagnostic", "Tension art\u00E9rielle ", "Urographie", "Ventriculographie", 
-										 "Volum\u00E9trique "}));
+		cancelInformationBeforeAddExamination(examinationDateField, patientNumberExamPanelField, examinationTypeSelection);
 			
 		list.setListData(arrayExamination.toArray());
 		
