@@ -57,10 +57,7 @@ public class ExaminationFunction
 		
 		examinationDateField.setText("");
 		patientNumberExamPanelField.setText("");
-		examinationTypeSelection.setModel(new DefaultComboBoxModel(new String[] {"Liste d'examens ", "Arthroscopie", "Alcool\u00E9mie", "Appendicectomie", "Arthroscanner", "Audiogramme",
-										 "Avortement", "Bact\u00E9riologique", "Biopsie", "C\u00E9sarienne", "Coelioscopie", "ECG", "Endoscopie", "F\u00E9condation in vitro", 
-										 "Fibroscopie", "IRM", "Mammographie", "Radiographie", "S\u00E9rodiagnostic", "Tension art\u00E9rielle ", "Urographie", "Ventriculographie", 
-										 "Volum\u00E9trique "}));
+		examinationTypeSelection.setSelectedIndex(0);
 		}
 	
 	public static void searchExamination (JList list,ArrayList<Examen> arrayExamination,JTextField searchExaminationField) {
