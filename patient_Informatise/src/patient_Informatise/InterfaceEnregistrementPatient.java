@@ -41,11 +41,13 @@ public class InterfaceEnregistrementPatient {
 	private JList examinationList;
 	private JList summaryExaminationPatient;
 	private JList switchRoomAndExaminationList;
+	private JList listOfBookedRoom;
 	private JScrollPane scrollPane_1;
 	private JScrollPane scrollPane_2;
 	private JScrollPane scrollPane_3;
 	private JScrollPane scrollPane_4;
-	private JScrollPane scrollPane ;
+	private JScrollPane scrollPane_5;
+	private JScrollPane scrollPane;
 	private JLabel nameText;
 	private JLabel fNameText;
 	private JLabel addressText;
@@ -86,7 +88,6 @@ public class InterfaceEnregistrementPatient {
 	private JTextField releaseDateField;
 	private JTextField bedRoomNumberField;
 	private JTextField patientNumberBookingRoomPanelField;
-	private JTextField searchBookingRoomField;
 	private JTextField serchExaminationField;
 	private JComboBox examinationTypeSelection;
 	private JComboBox LengthOfStaySelectionBox;
@@ -101,13 +102,13 @@ public class InterfaceEnregistrementPatient {
 	private JButton addExaminationButton;
 	private JButton cancelExaminationButton;
 	private JButton changeExaminationButton;
+	private JButton deleteBookedRoom;
 	private JButton deleteExaminationButton;
 	private JButton searchExaminationListButton;
 	private JButton bookingRoomButton;
 	private JButton cancelPatientButton;
-	private JButton deleteBookingRoomButton;
+	private JButton cancelRoomDataButton;
 	private JButton showRoomButton; 
-	private JButton searchBookingButtonRoom;
 	private JButton showExaminationBookroomPannelButton;
 	private JRadioButton withRoomRButton;
 	private JRadioButton withoutRoomRButton;
@@ -161,7 +162,7 @@ public class InterfaceEnregistrementPatient {
 		frame.getContentPane().setLayout(null);
 		
 		tabbedPane = new JTabbedPane(JTabbedPane.TOP);
-		tabbedPane.setBounds(10, 283, 1197, 233);
+		tabbedPane.setBounds(10, 283, 1197, 254);
 		frame.getContentPane().add(tabbedPane);
 		
 		addExaminationPanel = new JPanel();
@@ -261,65 +262,66 @@ public class InterfaceEnregistrementPatient {
 		});
 		deleteExaminationButton.setBounds(1014, 153, 110, 23);
 		addExaminationPanel.add(deleteExaminationButton);
+		accompanyingGroup = new ButtonGroup();
+		bookingGroup = new ButtonGroup();
 		
 		bookRoomPanel = new JPanel();
 		tabbedPane.addTab("R\u00E9servation chambre", null, bookRoomPanel, null);
 		bookRoomPanel.setLayout(null);
 		
 		lengthOfStayText = new JLabel("dur\u00E9e d'hospitalisation");
-		lengthOfStayText.setBounds(10, 140, 123, 20);
+		lengthOfStayText.setBounds(10, 147, 123, 20);
 		bookRoomPanel.add(lengthOfStayText);
 		
 		releaseDateText = new JLabel("Date de sortie");
-		releaseDateText.setBounds(898, 116, 90, 24);
+		releaseDateText.setBounds(663, 119, 90, 24);
 		bookRoomPanel.add(releaseDateText);
 		
 		entryDateText = new JLabel("Date d'entr\u00E9e");
-		entryDateText.setBounds(898, 81, 90, 24);
+		entryDateText.setBounds(663, 84, 90, 24);
 		bookRoomPanel.add(entryDateText);
 		
 		accompanyingText = new JLabel("Accompagnement");
-		accompanyingText.setBounds(10, 104, 123, 20);
+		accompanyingText.setBounds(10, 90, 123, 20);
 		bookRoomPanel.add(accompanyingText);
 		
 		bedRoomNumberText = new JLabel("N\u00B0 de chambre");
-		bedRoomNumberText.setBounds(898, 46, 90, 24);
+		bedRoomNumberText.setBounds(663, 43, 90, 24);
 		bookRoomPanel.add(bedRoomNumberText);
 		
 		bookingRoomPatientNumberText = new JLabel("N\u00B0 Patient");
-		bookingRoomPatientNumberText.setBounds(10, 36, 90, 20);
+		bookingRoomPatientNumberText.setBounds(10, 15, 90, 20);
 		bookRoomPanel.add(bookingRoomPatientNumberText);
 		
 		entryDateField = new JTextField();
 		entryDateField.setColumns(10);
-		entryDateField.setBounds(998, 81, 110, 20);
+		entryDateField.setBounds(763, 84, 110, 20);
 		bookRoomPanel.add(entryDateField);
 		
 		releaseDateField = new JTextField();
 		releaseDateField.setColumns(10);
-		releaseDateField.setBounds(998, 118, 110, 20);
+		releaseDateField.setBounds(763, 121, 110, 20);
 		bookRoomPanel.add(releaseDateField);
 		
 		bedRoomNumberField = new JTextField();
 		bedRoomNumberField.setEnabled(false);
 		bedRoomNumberField.setColumns(10);
-		bedRoomNumberField.setBounds(998, 48, 110, 20);
+		bedRoomNumberField.setBounds(763, 43, 110, 20);
 		bookRoomPanel.add(bedRoomNumberField);
 		
 		patientNumberBookingRoomPanelField = new JTextField();
 		patientNumberBookingRoomPanelField.setEnabled(false);
 		patientNumberBookingRoomPanelField.setColumns(10);
-		patientNumberBookingRoomPanelField.setBounds(143, 37, 201, 20);
+		patientNumberBookingRoomPanelField.setBounds(143, 15, 201, 20);
 		bookRoomPanel.add(patientNumberBookingRoomPanelField);
 		
 		withoutAccompanyingRButton = new JRadioButton("Sans");
-		withoutAccompanyingRButton.setBounds(259, 105, 62, 24);
+		withoutAccompanyingRButton.setBounds(259, 91, 62, 24);
 		bookRoomPanel.add(withoutAccompanyingRButton);
 		
 		withAccompangyingRButton = new JRadioButton("Avec");
-		withAccompangyingRButton.setBounds(172, 105, 71, 24);
+		withAccompangyingRButton.setBounds(172, 91, 71, 24);
 		bookRoomPanel.add(withAccompangyingRButton);
-		accompanyingGroup = new ButtonGroup();
 		accompanyingGroup.add(withAccompangyingRButton);
 		accompanyingGroup.add(withoutAccompanyingRButton);
 		
@@ -329,29 +331,30 @@ public class InterfaceEnregistrementPatient {
 				RoomFunction.updateListOfAvailableRoom(switchRoomAndExaminationList, arrayRoom, patientNumberBookingRoomPanelField, withoutRoomRButton, withAccompangyingRButton, withoutAccompanyingRButton, LengthOfStaySelectionBox);
 			}
 		});
-		showRoomButton.setBounds(178, 171, 166, 23);
+		showRoomButton.setBounds(172, 178, 166, 23);
 		bookRoomPanel.add(showRoomButton);		
 		
 		bookingRoomButton = new JButton("Valider");
 		bookingRoomButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				RoomFunction.bookingAvailableRoom(switchRoomAndExaminationList, entryDateField, releaseDateField, withoutRoomRButton, arrayExamination, patientNumberBookingRoomPanelField, 
-												  withRoomRButton, accompanyingGroup, LengthOfStaySelectionBox, bedRoomNumberField, arrayRoom);
+												  withRoomRButton, accompanyingGroup, LengthOfStaySelectionBox, bedRoomNumberField, arrayRoom, listOfBookedRoom);
 			}
 		});
-		bookingRoomButton.setBounds(887, 170, 110, 23);
+		bookingRoomButton.setBounds(655, 177, 110, 23);
 		bookRoomPanel.add(bookingRoomButton);
 		
-		deleteBookingRoomButton = new JButton("Annuler");
-		deleteBookingRoomButton.addActionListener(new ActionListener() {
+		cancelRoomDataButton = new JButton("Annuler");
+		cancelRoomDataButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-			}
+				RoomFunction.cancelDataBeforeBookingRoom(switchRoomAndExaminationList,patientNumberBookingRoomPanelField,accompanyingGroup,bookingGroup,LengthOfStaySelectionBox,bedRoomNumberField,entryDateField,releaseDateField);
+				}
 		});
-		deleteBookingRoomButton.setBounds(1018, 171, 110, 23);
-		bookRoomPanel.add(deleteBookingRoomButton);	
+		cancelRoomDataButton.setBounds(786, 178, 110, 23);
+		bookRoomPanel.add(cancelRoomDataButton);	
 		
 		roomReservationText = new JLabel("Reservation");
-		roomReservationText.setBounds(10, 68, 90, 20);
+		roomReservationText.setBounds(10, 55, 90, 20);
 		bookRoomPanel.add(roomReservationText);
 		
 		
@@ -360,10 +363,10 @@ public class InterfaceEnregistrementPatient {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				RoomFunction.ableActionOnJRadio(withoutAccompanyingRButton, LengthOfStaySelectionBox, withAccompangyingRButton, withRoomRButton, bedRoomNumberField, entryDateField, releaseDateField,
-												showRoomButton, bookingRoomButton, deleteBookingRoomButton);
+												showRoomButton, bookingRoomButton, cancelRoomDataButton);
 			}
 		});
-		withRoomRButton.setBounds(172, 69, 48, 24);
+		withRoomRButton.setBounds(172, 56, 48, 24);
 		bookRoomPanel.add(withRoomRButton);
 		
 		withoutRoomRButton = new JRadioButton("Non");
@@ -371,28 +374,23 @@ public class InterfaceEnregistrementPatient {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				RoomFunction.disableActionOnJRadio(withoutAccompanyingRButton, LengthOfStaySelectionBox, withAccompangyingRButton, withoutRoomRButton, bedRoomNumberField, 
-												   entryDateField, releaseDateField, showRoomButton, bookingRoomButton, deleteBookingRoomButton);
+												   entryDateField, releaseDateField, showRoomButton, bookingRoomButton, cancelRoomDataButton);
 				
 			}
 		});
-		withoutRoomRButton.setBounds(259, 69, 56, 24);
+		withoutRoomRButton.setBounds(259, 56, 56, 24);
 		bookRoomPanel.add(withoutRoomRButton);
-		bookingGroup = new ButtonGroup();
 		bookingGroup.add(withRoomRButton);
 		bookingGroup.add(withoutRoomRButton);
 		
-		searchBookingRoomField = new JTextField();
-		searchBookingRoomField.setBounds(374, 12, 339, 20);
-		bookRoomPanel.add(searchBookingRoomField);
-		searchBookingRoomField.setColumns(20);
-		
-		
-		searchBookingButtonRoom = new JButton("Rechercher");
-		searchBookingButtonRoom.setBounds(721, 11, 111, 23);
-		bookRoomPanel.add(searchBookingButtonRoom);
+				
+		LengthOfStaySelectionBox = new JComboBox();
+		LengthOfStaySelectionBox.setModel(new DefaultComboBoxModel(new String[] {"courte", "longue"}));
+		LengthOfStaySelectionBox.setBounds(143, 146, 201, 20);
+		bookRoomPanel.add(LengthOfStaySelectionBox);
 		
 		scrollPane_2 = new JScrollPane();
-		scrollPane_2.setBounds(374, 44, 459, 149);
+		scrollPane_2.setBounds(365, 15, 253, 156);
 		bookRoomPanel.add(scrollPane_2);
 		
 		switchRoomAndExaminationList = new JList();
@@ -405,11 +403,12 @@ public class InterfaceEnregistrementPatient {
 			}
 		});
 		
-				
-		LengthOfStaySelectionBox = new JComboBox();
-		LengthOfStaySelectionBox.setModel(new DefaultComboBoxModel(new String[] {"courte", "longue"}));
-		LengthOfStaySelectionBox.setBounds(143, 139, 201, 20);
-		bookRoomPanel.add(LengthOfStaySelectionBox);
+		scrollPane_5 = new JScrollPane();
+		scrollPane_5.setBounds(929, 15, 253, 156);
+		bookRoomPanel.add(scrollPane_5);
+		
+		listOfBookedRoom = new JList();
+		scrollPane_5.setViewportView(listOfBookedRoom);
 		
 
 		staySummaryPanel = new JPanel();
@@ -469,6 +468,7 @@ public class InterfaceEnregistrementPatient {
 				PatientFunction.searchPatient(patientList, arrayPatient, searchFiel.getText());
 			}
 		});
+		
 		
 		nameText = new JLabel("Nom");
 		nameText.setBounds(230, 46, 90, 24);
@@ -639,5 +639,14 @@ public class InterfaceEnregistrementPatient {
 			}
 		});
 		RoomFunction.creatRoomIfFileIsEmpty(switchRoomAndExaminationList, arrayRoom);
+		
+		deleteBookedRoom = new JButton("Supprimer");
+		deleteBookedRoom.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				RoomFunction.deleteBookedRoom(switchRoomAndExaminationList, listOfBookedRoom, arrayExamination, arrayRoom);
+			}
+		});
+		deleteBookedRoom.setBounds(1072, 178, 110, 23);
+		bookRoomPanel.add(deleteBookedRoom);
 	}
 }

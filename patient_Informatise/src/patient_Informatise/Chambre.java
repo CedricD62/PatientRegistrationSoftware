@@ -61,7 +61,7 @@ public class Chambre
 	public boolean isAvailable() {
 		return available;
 	}	
-	public void SetAvailble (boolean pAvailable) {
+	public void SetAvailable (boolean pAvailable) {
 		available = pAvailable;
 	}	
 	
