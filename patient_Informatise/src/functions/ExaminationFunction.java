@@ -18,7 +18,8 @@ public class ExaminationFunction
 	public static ArrayList<Examen> temporaryList = new ArrayList<Examen>();
 	
 	
-	public static void creatExamination (JList listExaminationPanel,JList listBookingRoomPannel,ArrayList<Patient> arrayPatient,ArrayList<Examen> arrayExamination,JTextField patientNumberExamPanelField,
+	public static void creatExamination (JList listExaminationPanel,JList listBookingRoomPannel,ArrayList<Patient> arrayPatient,ArrayList<Examen> arrayExamination,
+										 JTextField patientNumberExamPanelField,
 										 JComboBox examinationTypeSelection,JTextField examinationDateField){
 		int id = Integer.parseInt(patientNumberExamPanelField.getText());
 		Patient patient = PatientFunction.extractPatientFromArray(arrayPatient,id);
@@ -216,7 +217,8 @@ public class ExaminationFunction
 		list.setListData(arrayExamination.toArray());
 	}
 	
-	private static void changeInfoExaminationFromTemporaryList (JList list,ArrayList<Examen> arrayExamination,JTextField patientNumberExamPanelField,JComboBox examinationTypeSelection,JTextField examinationDateField) {
+	private static void changeInfoExaminationFromTemporaryList (JList list,ArrayList<Examen> arrayExamination,JTextField patientNumberExamPanelField,JComboBox examinationTypeSelection,
+																JTextField examinationDateField) {
 
 		int selection = list.getSelectedIndex();
 		if(selection == -1)
@@ -248,4 +250,5 @@ public class ExaminationFunction
 			
 		return examination;
 	}
+
 }

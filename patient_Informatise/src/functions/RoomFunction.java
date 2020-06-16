@@ -65,7 +65,7 @@ public class RoomFunction
 				boolean bookingRoom = true;
 				String entryDate ="";
 				String releaseDate ="";
-				int numberOfBed = 1;
+				int numberOfBed = 1; 
 				int roomNumber = 200 + cpt;
 				
 				room = new Chambre(entryDate,releaseDate,roomNumber,alone,accompanying,available,numberOfBed,bookingRoom);
@@ -193,8 +193,8 @@ public class RoomFunction
 		}
 		
 		Chambre room = bookedRoomList.get(ligneNumbre);
+		deleteDataFromExamination(room);
 		resetRoomDataToDefault(room);
-		deleteDataFromExamination(room, arrayExamination);
 		updadeExaminationListForBooking(switchRoomAndExaminationList, arrayExamination);
 		printRoomInList(bookedList, room);
 		
@@ -416,13 +416,13 @@ public class RoomFunction
 	}
 	
 	public static void printRoomInList(JList list, Chambre room) {
-		Chambre roomTest = null;
 		
-		//bookedRoomList.clear();
+		
+	
 		
 		for(int i = 0; i < bookedRoomList.size(); i++) {
-			roomTest = bookedRoomList.get(i);
-			if(roomTest.equals(room)) {
+			
+			if(room.equals(bookedRoomList.get(i))) {
 				bookedRoomList.remove(i);
 			}
 		}
@@ -486,20 +486,11 @@ public class RoomFunction
 		room.setExamination(null);
 	}
 	
-	private static void deleteDataFromExamination(Chambre room, ArrayList<Examen> arrayExamination) {
+	private static void deleteDataFromExamination(Chambre room) {
 		
-		Examen examination = null;
-		resetRoomDataToDefault(room);
-		
-		for(int i = 0; i < arrayExamination.size(); i++) {
-			examination = arrayExamination.get(i);
-			if(examination.getChambre().getRoomNumber() == room.getRoomNumber()) {
-				examination.setBookingRoom(false);
-				room = examination.getChambre();
-				examination.setChambre(null);
-				break;
-			}
-		}
+		Examen examination = room.getExamination();
+		examination.setBookingRoom(false);
+		examination.setChambre(null);
 	}
 	
 	private static void deleteDataFromExamination() {

@@ -7,12 +7,16 @@ import javax.swing.JList;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
+import patient_Informatise.Chambre;
+import patient_Informatise.Examen;
 import patient_Informatise.Patient;
 
 public class PatientFunction 
 {
 	
 	private static ArrayList<Patient> temporaryList = new ArrayList<Patient>();
+	private static ArrayList<Examen> arraySummaryExamination = new ArrayList<Examen>();
+	private static ArrayList<Chambre>arraySummaryRoom = new ArrayList<Chambre>();
 	
 	public static Patient creatPatient(String id,boolean male,boolean female,String name,String fName,String address,String cp, 
 									   String town,String ssn,String mail,String phone,String cellPhone,String birthDate) {
@@ -39,17 +43,17 @@ public class PatientFunction
 		}
 	}
 	
-	public static void showPatient(JList list,ArrayList<Patient> arrayPatient, JTextField idField,JRadioButton maleRButton, JRadioButton femaleRButton, 
+	public static void showPatient(JList list,ArrayList<Patient> arrayPatient,ArrayList<Examen> arrayExamination, JTextField idField,JRadioButton maleRButton, JRadioButton femaleRButton, 
 								   JTextField nameField, JTextField fNameField,JTextField addressField, JTextField areaCodeField, JTextField townField, 
 								   JTextField ssnField,JTextField eMailField, JTextField phoneField, JTextField cellphoneField, JTextField birthdateField,
-								   JTextField patientNumberExamPanelField) {
+								   JTextField patientNumberExamPanelField,JList summaryExaminationList, JList summaryBookingroomList) {
 		
 		if(temporaryList.isEmpty()) {
-			showPatientArrayPatient(list,arrayPatient,idField,maleRButton,femaleRButton,nameField,fNameField,addressField,areaCodeField,townField,ssnField,
-									eMailField,phoneField,cellphoneField,birthdateField,patientNumberExamPanelField);
+			showPatientArrayPatient(list,arrayPatient,arrayExamination,idField,maleRButton,femaleRButton,nameField,fNameField,addressField,areaCodeField,townField,ssnField,
+									eMailField,phoneField,cellphoneField,birthdateField,patientNumberExamPanelField,summaryExaminationList, summaryBookingroomList);
 		}else {
-			showPatientTemporaryList(list,idField,maleRButton,femaleRButton,nameField,fNameField,addressField,areaCodeField,townField,ssnField,eMailField,
-									 phoneField,cellphoneField,birthdateField,patientNumberExamPanelField);
+			showPatientTemporaryList(list,arrayExamination,idField,maleRButton,femaleRButton,nameField,fNameField,addressField,areaCodeField,townField,ssnField,eMailField,
+									 phoneField,cellphoneField,birthdateField,patientNumberExamPanelField, summaryExaminationList, summaryBookingroomList);
 		}
 	}
 	
@@ -163,17 +167,17 @@ public class PatientFunction
 		}
 	}
 	
-	private static void showPatientArrayPatient(JList list,ArrayList<Patient> arrayPatient,JTextField idField,JRadioButton maleRButton,JRadioButton femaleRButton, 
+	private static void showPatientArrayPatient(JList list,ArrayList<Patient> arrayPatient,ArrayList<Examen> arrayExamination,JTextField idField,JRadioButton maleRButton,JRadioButton femaleRButton, 
 										JTextField nameField,JTextField fNameField,JTextField addressField,JTextField areaCodeField,JTextField townField, 
 										JTextField ssnField,JTextField eMailField,JTextField phoneField,JTextField cellphoneField,JTextField birthdateField,
-										JTextField patientNumberExamPanelField) {
+										JTextField patientNumberExamPanelField,JList summaryExaminationList, JList summaryBookingroomList) {
 									
-		int idPatient = list.getSelectedIndex();
+		int ligneNumber = list.getSelectedIndex();
 		
-		if(idPatient == -1)
+		if(ligneNumber == -1)
 			return;
 		
-		Patient patient = arrayPatient.get(idPatient);
+		Patient patient = arrayPatient.get(ligneNumber);
 				
 			idField.setText(""+patient.getId());
 			maleRButton.setSelected(patient.isMale());
@@ -189,20 +193,23 @@ public class PatientFunction
 			cellphoneField.setText(""+patient.getCellPhone());
 			birthdateField.setText(patient.getBirthDate());
 			patientNumberExamPanelField.setText(""+patient.getId());
-		
+			
+		if(!arrayExamination.isEmpty()) {
+			displaySummaryExamination(summaryExaminationList,summaryBookingroomList,patient,arrayExamination);
+		}
 	}
 	
-	private static void showPatientTemporaryList(JList list, JTextField idField,JRadioButton maleRButton, JRadioButton femaleRButton, 
+	private static void showPatientTemporaryList(JList list,ArrayList<Examen> arrayExamination, JTextField idField,JRadioButton maleRButton, JRadioButton femaleRButton, 
 			JTextField nameField, JTextField fNameField,JTextField addressField, JTextField areaCodeField, JTextField townField, 
 			JTextField ssnField,JTextField eMailField, JTextField phoneField, JTextField cellphoneField, JTextField birthdateField,
-			JTextField patientNumberExamPanelField) {
+			JTextField patientNumberExamPanelField,JList summaryExaminationList, JList summaryBookingroomList) {
 		
-		int idPatient = list.getSelectedIndex();
+		int ligneNumber = list.getSelectedIndex();
 		
-		if(idPatient == -1)
+		if(ligneNumber == -1)
 			return;
 		
-		Patient patient = temporaryList.get(idPatient);
+		Patient patient = temporaryList.get(ligneNumber);
 		
 			idField.setText(""+patient.getId());
 			maleRButton.setSelected(patient.isMale());
@@ -218,6 +225,10 @@ public class PatientFunction
 			cellphoneField.setText(""+patient.getCellPhone());
 			birthdateField.setText(patient.getBirthDate());
 			patientNumberExamPanelField.setText(""+patient.getId());
+			
+			if(!arrayExamination.isEmpty()) {
+				displaySummaryExamination(summaryExaminationList,summaryBookingroomList,patient,arrayExamination);
+			}
 	}
 	
 	private static void changePatientArrayPatient (JList list,ArrayList<Patient> arrayPatient,String id,boolean male,boolean female,String name,String fName,String address,String cp,
@@ -371,5 +382,26 @@ public class PatientFunction
 		list.setListData(arrayPatient.toArray());
 		temporaryList.clear();
 		
+	}
+	
+	private static void displaySummaryExamination(JList summaryExaminationList, JList summaryBookingroomList,Patient patient,ArrayList<Examen> arrayExamination) {
+		
+		Examen examination = null;
+		arraySummaryExamination.clear();
+		arraySummaryRoom.clear();
+		
+		for(int i = 0; i < arrayExamination.size(); i++) {
+			examination = arrayExamination.get(i);
+			if(examination.getPatient().equals(patient)) {
+				arraySummaryExamination.add(examination);
+				Chambre room = examination.getChambre();
+				if(room != null){
+					arraySummaryRoom.add(room);
+				}
+			}
+		}
+		
+		summaryExaminationList.setListData(arraySummaryExamination.toArray());
+		summaryBookingroomList.setListData(arraySummaryRoom.toArray());
 	}
 }

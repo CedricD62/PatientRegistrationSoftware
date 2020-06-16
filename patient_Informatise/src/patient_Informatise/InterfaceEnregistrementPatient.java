@@ -36,10 +36,10 @@ public class InterfaceEnregistrementPatient {
 	private JPanel bookRoomPanel;
 	private JPanel staySummaryPanel;
 	private JPanel showPatientPanel;
-	private JList summaryBookingroomPatient;
+	private JList summaryBookingroomList;
 	private JList patientList;
 	private JList examinationList;
-	private JList summaryExaminationPatient;
+	private JList summaryExaminationList;
 	private JList switchRoomAndExaminationList;
 	private JList listOfBookedRoom;
 	private JScrollPane scrollPane_1;
@@ -413,7 +413,7 @@ public class InterfaceEnregistrementPatient {
 		
 
 		staySummaryPanel = new JPanel();
-		tabbedPane.addTab("Informations globales", null, staySummaryPanel, null);
+		tabbedPane.addTab("Historique patient", null, staySummaryPanel, null);
 		staySummaryPanel.setLayout(null);
 		
 		patientInformationPanel = new JPanel();
@@ -449,8 +449,9 @@ public class InterfaceEnregistrementPatient {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				
-				PatientFunction.showPatient(patientList,arrayPatient,idField,maleRButton,femaleRButton,nameField,fNameField,addressField,
-											areaCodeField,townField,ssnField,eMailField,phoneField,cellphoneField,birthdateField,patientNumberExamPanelField);
+				PatientFunction.showPatient(patientList,arrayPatient,arrayExamination,idField,maleRButton,femaleRButton,nameField,fNameField,addressField,
+											areaCodeField,townField,ssnField,eMailField,phoneField,cellphoneField,birthdateField,patientNumberExamPanelField
+											,summaryExaminationList,summaryBookingroomList);
 			}
 		});
 		deletePatientButton.addActionListener(new ActionListener() {
@@ -583,15 +584,15 @@ public class InterfaceEnregistrementPatient {
 		scrollPane.setBounds(10, 11, 582, 183);
 		staySummaryPanel.add(scrollPane);
 		
-		summaryExaminationPatient = new JList();
-		scrollPane.setViewportView(summaryExaminationPatient);
+		summaryExaminationList = new JList();
+		scrollPane.setViewportView(summaryExaminationList);
 		
 		scrollPane_4 = new JScrollPane();
 		scrollPane_4.setBounds(600, 11, 582, 183);
 		staySummaryPanel.add(scrollPane_4);
 		
-		summaryBookingroomPatient = new JList();
-		scrollPane_4.setViewportView(summaryBookingroomPatient);
+		summaryBookingroomList = new JList();
+		scrollPane_4.setViewportView(summaryBookingroomList);
 		
 		cancelPatientButton = new JButton("Effacer");
 		cancelPatientButton.addActionListener(new ActionListener() {
