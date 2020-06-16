@@ -11,7 +11,7 @@ public class Chambre
 	private int 	numberOfBed;
 	private boolean alone;
 	private boolean accompanying;
-	private boolean available= true;
+	private boolean available= true; 
 	private boolean bookingRoom = false;
 	private static final String WITH = "Accompagné";
 	private static final String WITHOUT = "Sans accompagnement";

@@ -19,7 +19,7 @@ public class Examen
 	}
 	
 	public boolean isBookingRoom() {
-		return bookingRoom;
+		return bookingRoom; 
 	}
 	public void setBookingRoom( boolean pBookingRoom)
 	{

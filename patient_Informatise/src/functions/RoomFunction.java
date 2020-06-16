@@ -1,12 +1,16 @@
 package functions;
 
 import java.util.ArrayList;
+import java.util.Date;
+
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JList;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
+
+import com.toedter.calendar.JDateChooser;
 
 import patient_Informatise.Chambre;
 import patient_Informatise.Examen;
@@ -31,56 +35,56 @@ public class RoomFunction
 				cpt = 0;
 			if(i < 15) {
 				
-				boolean accompanying = false;
-				boolean alone = true;
-				boolean available = true;
-				boolean bookingRoom = true;
-				String entryDate ="";
-				String releaseDate ="";
-				int numberOfBed = 1;
-				int roomNumber = 100 + cpt;
+				boolean accompanying	= false;
+				boolean alone 			= true;
+				boolean available 		= true;
+				boolean bookingRoom 	= true;
+				Date entryDate			= null;
+				Date releaseDate		= null;
+				int numberOfBed 		= 1;
+				int roomNumber 			= 100 + cpt;
 				
 				room = new Chambre(entryDate,releaseDate,roomNumber,alone,accompanying,available,numberOfBed,bookingRoom);
 				arrayRoom.add(room);
 				
 			}else if (i >= 15 && i <= 20) {
 				
-				boolean accompanying = true;
-				boolean alone = false;
-				boolean available = true;
-				boolean bookingRoom = true;
-				String entryDate ="";
-				String releaseDate ="";
-				int numberOfBed = 2;
-				int roomNumber = 100 + cpt;
+				boolean accompanying 	= true;
+				boolean alone 			= false;
+				boolean available 		= true;
+				boolean bookingRoom 	= true;
+				Date entryDate			= null;
+				Date releaseDate		= null;
+				int numberOfBed 		= 2;
+				int roomNumber 			= 100 + cpt;
 				
 				room = new Chambre(entryDate,releaseDate,roomNumber,alone,accompanying,available,numberOfBed,bookingRoom);
 				arrayRoom.add(room);
 				
 			}else if (i >= 21 && i <= 35 ) {
 				
-				boolean accompanying = false;
-				boolean alone = true;
-				boolean available = true;
-				boolean bookingRoom = true;
-				String entryDate ="";
-				String releaseDate ="";
-				int numberOfBed = 1; 
-				int roomNumber = 200 + cpt;
+				boolean accompanying 	= false;
+				boolean alone 			= true;
+				boolean available 		= true;
+				boolean bookingRoom 	= true;
+				Date entryDate			= null;
+				Date releaseDate		= null;
+				int numberOfBed 		= 1; 
+				int roomNumber 			= 200 + cpt;
 				
 				room = new Chambre(entryDate,releaseDate,roomNumber,alone,accompanying,available,numberOfBed,bookingRoom);
 				arrayRoom.add(room);
 				
 			}else {
 
-				boolean accompanying = true;
-				boolean alone = false;
-				boolean available = true;
-				boolean bookingRoom = true;
-				String entryDate ="";
-				String releaseDate ="";
-				int numberOfBed = 2;
-				int roomNumber = 200 + cpt;
+				boolean accompanying 	= true;
+				boolean alone 			= false;
+				boolean available 		= true;
+				boolean bookingRoom 	= true;
+				Date entryDate			= null;
+				Date releaseDate		= null;
+				int numberOfBed 		= 2;
+				int roomNumber 			= 200 + cpt;
 				
 				room = new Chambre(entryDate,releaseDate,roomNumber,alone,accompanying,available,numberOfBed,bookingRoom);
 				arrayRoom.add(room);
@@ -110,7 +114,7 @@ public class RoomFunction
 		filterRoomWithSelection(list, arrayRoom, LengthOfStaySelectionBox, withAccompangyingRButton, withAccompangyingRButton);
 	}
 	
-	public static void bookingAvailableRoom(JList list,JTextField entryDateField,JTextField releaseDateField, JRadioButton withoutRoomRButton, ArrayList<Examen> arrayExamination,JTextField patientNumberBookingRoomPanelField,
+	public static void bookingAvailableRoom(JList list,JDateChooser entryDateField,JDateChooser releaseDateField, JRadioButton withoutRoomRButton, ArrayList<Examen> arrayExamination,JTextField patientNumberBookingRoomPanelField,
 											JRadioButton withRoomRButton,ButtonGroup accompanyingGroup,JComboBox LengthOfStaySelectionBox,JTextField bedRoomNumberField, ArrayList<Chambre> arrayRoom, JList bookedRoomList) {
 		Chambre room = null;
 		
@@ -136,7 +140,7 @@ public class RoomFunction
 	}
 	
 	public static void disableActionOnJRadio (JRadioButton withoutAccompanyingRButton, JComboBox lengthOfStayTypeSelection, JRadioButton withAccompangyingRButton,JRadioButton withoutRoomRButton,
-											  JTextField bedRoomNumberField,JTextField entryDateField,JTextField releaseDateField,JButton showRoomButton,JButton bookingRoomButton, 
+											  JTextField bedRoomNumberField,JDateChooser entryDateField,JDateChooser releaseDateField,JButton showRoomButton,JButton bookingRoomButton, 
 											  JButton deleteBookingRoomButton) {
 		
 		if(withoutRoomRButton.isSelected()) {
@@ -154,7 +158,7 @@ public class RoomFunction
 	}
 	
 	public static void ableActionOnJRadio (JRadioButton withoutAccompanyingRButton, JComboBox lengthOfStayTypeSelection, JRadioButton withAccompangyingRButton,JRadioButton withRoomRButton,
-										   JTextField bedRoomNumberField,JTextField entryDateField,JTextField releaseDateField,JButton showRoomButton,JButton bookingRoomButton, 
+										   JTextField bedRoomNumberField,JDateChooser entryDateField,JDateChooser releaseDateField,JButton showRoomButton,JButton bookingRoomButton, 
 										   JButton deleteBookingRoomButton) {
 		
 		if(withRoomRButton.isSelected()){
@@ -171,15 +175,15 @@ public class RoomFunction
 	}
 	
 	public static void cancelDataBeforeBookingRoom(JList list,JTextField patientNumberBookingRoomPanelField,ButtonGroup accompanyingGroup,ButtonGroup bookingGroup, JComboBox lengthOfStayTypeSelection,
-												   JTextField bedRoomNumberField,JTextField entryDateField,JTextField releaseDateField) {
+												   JTextField bedRoomNumberField,JDateChooser entryDateField,JDateChooser releaseDateField) {
 	
 		patientNumberBookingRoomPanelField.setText("");
 		accompanyingGroup.clearSelection();
 		accompanyingGroup.clearSelection();
 		lengthOfStayTypeSelection.setSelectedIndex(-1);
 		bedRoomNumberField.setText("");
-		entryDateField.setText("");
-		releaseDateField.setText("");
+		entryDateField.setDate(null);
+		releaseDateField.setDate(null);
 		temporaryListRoom.clear();
 		deleteDataFromExamination();
 		list.setListData(temporaryListExamination.toArray());
@@ -200,7 +204,7 @@ public class RoomFunction
 		
 	}
 	
-	private static void updateRoomInformation(JList list, Examen examination, Chambre room, JTextField entryDateField, JTextField releaseDateField,
+	private static void updateRoomInformation(JList list, Examen examination, Chambre room, JDateChooser entryDateField, JDateChooser releaseDateField,
 			  JRadioButton withoutRoomRButton) {
 
 		if(withoutRoomRButton.isSelected() == true) {
@@ -363,13 +367,13 @@ public class RoomFunction
 	private static void noBookingRoom (JList list, Examen examination, Chambre room) {
 		
 		examination.setBookingRoom(true);
-		room = new Chambre("", "", 0, false, false, false, 0, false, examination);
+		room = new Chambre(null, null, 0, false, false, false, 0, false, examination);
 		examination.setChambre(room);
 	}
 	
-	private static void bookingRoom(Examen examination, Chambre room, JTextField entryDateField, JTextField releaseDateField) {
-		room.setEntryDate(entryDateField.getText());
-		room.setReleaseDate(releaseDateField.getText());
+	private static void bookingRoom(Examen examination, Chambre room, JDateChooser entryDateField, JDateChooser releaseDateField) {
+		room.setEntryDate(entryDateField.getDate());
+		room.setReleaseDate(releaseDateField.getDate());
 		room.setExamination(examination);
 		room.SetAvailable(false);
 		examination.setChambre(room);
@@ -391,13 +395,13 @@ public class RoomFunction
 	}
 	
 	private static void clearInformationOnPannel(JTextField patientNumberBookingRoomPanelField,JRadioButton withRoomRButton,ButtonGroup accompanyingGroup,JComboBox LengthOfStaySelectionBox, 
-												 JTextField entryDateField, JTextField releaseDateField,JTextField bedRoomNumberField) {
+												 JDateChooser entryDateField, JDateChooser releaseDateField,JTextField bedRoomNumberField) {
 		patientNumberBookingRoomPanelField.setText("");
 		withRoomRButton.setSelected(true);
 		accompanyingGroup.clearSelection();
 		bedRoomNumberField.setText("");
-		entryDateField.setText("");
-		releaseDateField.setText("");
+		entryDateField.setDate(null);
+		releaseDateField.setDate(null);
 	}
 	
 	private static void printRoomInList(JList list,ArrayList<Chambre> arrayRoom) {
@@ -451,8 +455,8 @@ public class RoomFunction
 		room.setAlone(false);
 		room.SetAvailable(true);
 		room.setBookingRoom(true);
-		room.setEntryDate("");
-		room.setReleaseDate("");
+		room.setEntryDate(null);
+		room.setReleaseDate(null);
 		room.setExamination(null);
 	}
 	
@@ -461,8 +465,8 @@ public class RoomFunction
 		room.setAlone(false);
 		room.SetAvailable(true);
 		room.setBookingRoom(true);
-		room.setEntryDate("");
-		room.setReleaseDate("");
+		room.setEntryDate(null);
+		room.setReleaseDate(null);
 		room.setExamination(null);
 	}
 	
@@ -471,8 +475,8 @@ public class RoomFunction
 		room.setAlone(true);
 		room.SetAvailable(true);
 		room.setBookingRoom(true);
-		room.setEntryDate("");
-		room.setReleaseDate("");
+		room.setEntryDate(null);
+		room.setReleaseDate(null);
 		room.setExamination(null);
 	}
 	
@@ -481,8 +485,8 @@ public class RoomFunction
 		room.setAlone(true);
 		room.SetAvailable(true);
 		room.setBookingRoom(true);
-		room.setEntryDate("");
-		room.setReleaseDate("");
+		room.setEntryDate(null);
+		room.setReleaseDate(null);
 		room.setExamination(null);
 	}
 	

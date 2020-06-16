@@ -2,11 +2,14 @@ package functions;
 
 import java.awt.Color;
 import java.util.ArrayList;
+import java.util.Date;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
 import javax.swing.JList;
 import javax.swing.JTextField;
+
+import com.toedter.calendar.JDateChooser;
 
 import patient_Informatise.Chambre;
 import patient_Informatise.Examen;
@@ -19,15 +22,15 @@ public class ExaminationFunction
 	
 	
 	public static void creatExamination (JList listExaminationPanel,JList listBookingRoomPannel,ArrayList<Patient> arrayPatient,ArrayList<Examen> arrayExamination,
-										 JTextField patientNumberExamPanelField,
-										 JComboBox examinationTypeSelection,JTextField examinationDateField){
+										 JTextField patientNumberExamPanelField,JComboBox examinationTypeSelection,JDateChooser examinationDateField){
+		
 		int id = Integer.parseInt(patientNumberExamPanelField.getText());
 		Patient patient = PatientFunction.extractPatientFromArray(arrayPatient,id);
 		String examinationType="";
-		String examinationDate="";
+		Date examinationDate;
 		
 		if(patient == null) {
-			
+			  
 			
 			
 			patientNumberExamPanelField.setText("Patient introuvable");
@@ -37,26 +40,23 @@ public class ExaminationFunction
 		}else {
 			
 			examinationType = examinationTypeSelection.getSelectedItem().toString();
-			examinationDate = examinationDateField.getText();
+			examinationDate = examinationDateField.getDate();
 			Chambre room = null;
 			Examen examen = new Examen(patient,room,examinationType,examinationDate);
 			arrayExamination.add(examen);
 			RoomFunction.temporaryListExamination.add(examen);
+			
 			listExaminationPanel.setListData(arrayExamination.toArray());
 			listBookingRoomPannel.setListData(RoomFunction.temporaryListExamination.toArray());
-			examinationDateField.setText("");
-			patientNumberExamPanelField.setText("");
-			examinationTypeSelection.setModel(new DefaultComboBoxModel(new String[] {"Liste d'examens ", "Arthroscopie", "Alcool\u00E9mie", "Appendicectomie", "Arthroscanner", "Audiogramme",
-											"Avortement", "Bact\u00E9riologique", "Biopsie", "C\u00E9sarienne", "Coelioscopie", "ECG", "Endoscopie", "F\u00E9condation in vitro", 
-											"Fibroscopie", "IRM", "Mammographie", "Radiographie", "S\u00E9rodiagnostic", "Tension art\u00E9rielle ", "Urographie", "Ventriculographie", 
-											"Volum\u00E9trique "}));
+			
+			cancelInformationBeforeAddExamination(examinationDateField, patientNumberExamPanelField, examinationTypeSelection);
 		}
 		
 	}
 	
-	public static void cancelInformationBeforeAddExamination (JTextField examinationDateField,JTextField patientNumberExamPanelField,JComboBox examinationTypeSelection) {
+	public static void cancelInformationBeforeAddExamination (JDateChooser examinationDateField,JTextField patientNumberExamPanelField,JComboBox examinationTypeSelection) {
 		
-		examinationDateField.setText("");
+		examinationDateField.setLocale(null);
 		patientNumberExamPanelField.setText("");
 		examinationTypeSelection.setSelectedIndex(0);
 		}
@@ -72,7 +72,7 @@ public class ExaminationFunction
 			String idPatient =""+examination.getPatient().getId();
 			String text = searchExaminationField.getText();
 			
-			if(idPatient.equalsIgnoreCase(text) || examination.getTypeExamen().equalsIgnoreCase(text) || examination.getDateExamen().equalsIgnoreCase(text)) {
+			if(idPatient.equalsIgnoreCase(text) || examination.getTypeExamen().equalsIgnoreCase(text) /*|| examination.getDateExamen().equalsIgnoreCase(text)*/) {
 				temporaryList.add(examination);
 			}
 		}
@@ -85,7 +85,7 @@ public class ExaminationFunction
 	}
 	
 	public static void showExamination(JList list,ArrayList<Examen> arrayExamination,JTextField patientNumberExamPanelField,JComboBox examinationTypeSelection,
-									   JTextField examinationDateField) {
+									   JDateChooser examinationDateField) {
 		
 		if(temporaryList.isEmpty()) {
 			showExaminationFromArrayExamination(list,arrayExamination,patientNumberExamPanelField,examinationTypeSelection,examinationDateField);
@@ -95,7 +95,7 @@ public class ExaminationFunction
 	}
 	
 	public static void deleteExamination(JList list,ArrayList<Examen> arrayExamination,JTextField patientNumberExamPanelField,JComboBox examinationTypeSelection,
-										 JTextField examinationDateField,JList switchRoomAndExaminationList, JList bookedList) {
+										 JDateChooser examinationDateField,JList switchRoomAndExaminationList, JList bookedList) {
 
 		int idExamination = list.getSelectedIndex();
 		
@@ -112,7 +112,7 @@ public class ExaminationFunction
 	}
 	
 	public static void changeInfoExamination(JList list,ArrayList<Examen> arrayExamination,JTextField patientNumberExamPanelField,JComboBox examinationTypeSelection,
-			 								 JTextField examinationDateField) {
+											 JDateChooser examinationDateField) {
 
 		if(temporaryList.isEmpty()) {
 			
@@ -126,7 +126,7 @@ public class ExaminationFunction
 	}
 	
 	private static void showExaminationFromArrayExamination(JList list,ArrayList<Examen> arrayExamination,JTextField patientNumberExamPanelField,JComboBox examinationTypeSelection,
-														   JTextField examinationDateField) {
+															JDateChooser examinationDateField) {
 		
 		int idExamination = list.getSelectedIndex();
 		
@@ -137,11 +137,11 @@ public class ExaminationFunction
 		
 		patientNumberExamPanelField.setText(""+examination.getPatient().getId());
 		examinationTypeSelection.setSelectedItem(examination.getTypeExamen());
-		examinationDateField.setText(examination.getDateExamen());
+		examinationDateField.setDate(examination.getDateExamen());
 		
 	}
 	
-	private static void showExaminationFronTemporaryList(JList list,JTextField patientNumberExamPanelField,JComboBox examinationTypeSelection,JTextField examinationDateField) {
+	private static void showExaminationFronTemporaryList(JList list,JTextField patientNumberExamPanelField,JComboBox examinationTypeSelection,JDateChooser examinationDateField) {
 
 		int idExamination = list.getSelectedIndex();
 		
@@ -152,11 +152,12 @@ public class ExaminationFunction
 		
 		patientNumberExamPanelField.setText(""+examination.getPatient().getId());
 		examinationTypeSelection.setSelectedItem(examination.getTypeExamen());
-		examinationDateField.setText(examination.getDateExamen());	
+		examinationDateField.setDate(examination.getDateExamen());	
 	}
 	
 	private static void deleteFromArrayExamination(JList list,ArrayList<Examen> arrayExamination,int indexSelection,JTextField patientNumberExamPanelField,JComboBox examinationTypeSelection,
-												   JTextField examinationDateField, JList switchRoomAndExaminationList, JList bookedList) {
+												   JDateChooser examinationDateField, JList switchRoomAndExaminationList, JList bookedList) {
+		
 		Examen examination = arrayExamination.get(indexSelection);
 		if(examination.getChambre() == null) {
 			arrayExamination.remove(indexSelection);
@@ -174,7 +175,7 @@ public class ExaminationFunction
 	}
 	
 	private static void deleteFromTemporaryList(JList list,ArrayList<Examen> arrayExamination,int indexSelection,JTextField patientNumberExamPanelField,JComboBox examinationTypeSelection,
-											   JTextField examinationDateField,JList switchRoomAndExaminationList, JList bookedList) {
+												JDateChooser examinationDateField,JList switchRoomAndExaminationList, JList bookedList) {
 		
 		Examen examinationTest = temporaryList.get(indexSelection);
 		
@@ -202,7 +203,7 @@ public class ExaminationFunction
 	}
 	
 	private static void changeInfoExaminationFronArrayExamination (JList list,ArrayList<Examen> arrayExamination,JTextField patientNumberExamPanelField,JComboBox examinationTypeSelection,
-			 													  JTextField examinationDateField) {
+																   JDateChooser examinationDateField) {
 		
 		int selection = list.getSelectedIndex();
 			if(selection == -1)
@@ -212,13 +213,13 @@ public class ExaminationFunction
 		
 		examination.getPatient().setId(Integer.parseInt(patientNumberExamPanelField.getText()));
 		examination.setTypeExamen(examinationTypeSelection.getSelectedItem().toString());
-		examination.setDateExamen(examinationDateField.getText());
+		examination.setDateExamen(examinationDateField.getDate());
 		
 		list.setListData(arrayExamination.toArray());
 	}
 	
 	private static void changeInfoExaminationFromTemporaryList (JList list,ArrayList<Examen> arrayExamination,JTextField patientNumberExamPanelField,JComboBox examinationTypeSelection,
-																JTextField examinationDateField) {
+																JDateChooser examinationDateField) {
 
 		int selection = list.getSelectedIndex();
 		if(selection == -1)
@@ -228,7 +229,7 @@ public class ExaminationFunction
 		
 		examination.getPatient().setId(Integer.parseInt(patientNumberExamPanelField.getText()));
 		examination.setTypeExamen(examinationTypeSelection.getSelectedItem().toString());
-		examination.setDateExamen(examinationDateField.getText());
+		examination.setDateExamen(examinationDateField.getDate());
 		
 		temporaryList.clear();
 		

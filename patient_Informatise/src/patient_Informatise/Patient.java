@@ -11,7 +11,7 @@ public class Patient
 	private String 				email;
 	private int 				ssn;
 	private String 				phone;
-	private String 				cellPhone;
+	private String 				cellPhone; 
 	private String 				birthDate;
 	private boolean 			male = false;
 	private boolean 			female = false;
