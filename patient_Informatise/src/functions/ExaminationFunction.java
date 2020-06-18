@@ -1,16 +1,14 @@
 package functions;
 
 import java.awt.Color;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
-
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
 import javax.swing.JList;
 import javax.swing.JTextField;
-
 import com.toedter.calendar.JDateChooser;
-
 import patient_Informatise.Chambre;
 import patient_Informatise.Examen;
 import patient_Informatise.Patient;
@@ -27,7 +25,7 @@ public class ExaminationFunction
 		int id = Integer.parseInt(patientNumberExamPanelField.getText());
 		Patient patient = PatientFunction.extractPatientFromArray(arrayPatient,id);
 		String examinationType="";
-		Date examinationDate;
+		String examinationDate;
 		
 		if(patient == null) {
 			  
@@ -40,7 +38,7 @@ public class ExaminationFunction
 		}else {
 			
 			examinationType = examinationTypeSelection.getSelectedItem().toString();
-			examinationDate = examinationDateField.getDate();
+			examinationDate = ParseFunctions.dateFormat(examinationDateField.getDate());
 			Chambre room = null;
 			Examen examen = new Examen(patient,room,examinationType,examinationDate);
 			arrayExamination.add(examen);
@@ -137,7 +135,7 @@ public class ExaminationFunction
 		
 		patientNumberExamPanelField.setText(""+examination.getPatient().getId());
 		examinationTypeSelection.setSelectedItem(examination.getTypeExamen());
-		examinationDateField.setDate(examination.getDateExamen());
+		examinationDateField.setDate(ParseFunctions.dateFormat(examination.getDateExamen()));
 		
 	}
 	
@@ -152,7 +150,7 @@ public class ExaminationFunction
 		
 		patientNumberExamPanelField.setText(""+examination.getPatient().getId());
 		examinationTypeSelection.setSelectedItem(examination.getTypeExamen());
-		examinationDateField.setDate(examination.getDateExamen());	
+		examinationDateField.setDate(ParseFunctions.dateFormat(examination.getDateExamen()));	
 	}
 	
 	private static void deleteFromArrayExamination(JList list,ArrayList<Examen> arrayExamination,int indexSelection,JTextField patientNumberExamPanelField,JComboBox examinationTypeSelection,
@@ -213,7 +211,7 @@ public class ExaminationFunction
 		
 		examination.getPatient().setId(Integer.parseInt(patientNumberExamPanelField.getText()));
 		examination.setTypeExamen(examinationTypeSelection.getSelectedItem().toString());
-		examination.setDateExamen(examinationDateField.getDate());
+		examination.setDateExamen(ParseFunctions.dateFormat(examinationDateField.getDate()));
 		
 		list.setListData(arrayExamination.toArray());
 	}
@@ -229,7 +227,7 @@ public class ExaminationFunction
 		
 		examination.getPatient().setId(Integer.parseInt(patientNumberExamPanelField.getText()));
 		examination.setTypeExamen(examinationTypeSelection.getSelectedItem().toString());
-		examination.setDateExamen(examinationDateField.getDate());
+		examination.setDateExamen(ParseFunctions.dateFormat(examinationDateField.getDate()));
 		
 		temporaryList.clear();
 		

@@ -2,16 +2,13 @@ package functions;
 
 import java.util.ArrayList;
 import java.util.Date;
-
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JList;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
-
 import com.toedter.calendar.JDateChooser;
-
 import patient_Informatise.Chambre;
 import patient_Informatise.Examen;
 
@@ -39,8 +36,8 @@ public class RoomFunction
 				boolean alone 			= true;
 				boolean available 		= true;
 				boolean bookingRoom 	= true;
-				Date entryDate			= null;
-				Date releaseDate		= null;
+				String entryDate		= null;
+				String releaseDate		= null;
 				int numberOfBed 		= 1;
 				int roomNumber 			= 100 + cpt;
 				
@@ -53,8 +50,8 @@ public class RoomFunction
 				boolean alone 			= false;
 				boolean available 		= true;
 				boolean bookingRoom 	= true;
-				Date entryDate			= null;
-				Date releaseDate		= null;
+				String entryDate		= null;
+				String releaseDate		= null;
 				int numberOfBed 		= 2;
 				int roomNumber 			= 100 + cpt;
 				
@@ -67,8 +64,8 @@ public class RoomFunction
 				boolean alone 			= true;
 				boolean available 		= true;
 				boolean bookingRoom 	= true;
-				Date entryDate			= null;
-				Date releaseDate		= null;
+				String entryDate		= null;
+				String releaseDate		= null;
 				int numberOfBed 		= 1; 
 				int roomNumber 			= 200 + cpt;
 				
@@ -81,8 +78,8 @@ public class RoomFunction
 				boolean alone 			= false;
 				boolean available 		= true;
 				boolean bookingRoom 	= true;
-				Date entryDate			= null;
-				Date releaseDate		= null;
+				String entryDate		= null;
+				String releaseDate		= null;
 				int numberOfBed 		= 2;
 				int roomNumber 			= 200 + cpt;
 				
@@ -372,8 +369,8 @@ public class RoomFunction
 	}
 	
 	private static void bookingRoom(Examen examination, Chambre room, JDateChooser entryDateField, JDateChooser releaseDateField) {
-		room.setEntryDate(entryDateField.getDate());
-		room.setReleaseDate(releaseDateField.getDate());
+		room.setEntryDate(ParseFunctions.dateFormat(entryDateField.getDate()));
+		room.setReleaseDate(ParseFunctions.dateFormat(releaseDateField.getDate()));
 		room.setExamination(examination);
 		room.SetAvailable(false);
 		examination.setChambre(room);

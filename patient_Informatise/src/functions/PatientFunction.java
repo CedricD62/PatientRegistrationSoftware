@@ -31,10 +31,11 @@ public class PatientFunction
 		int idP 			= Integer.parseInt(id);
 		int cpP 			= Integer.parseInt(cp);
 		int ssnP 			= Integer.parseInt(ssn); 
+		String birthdate = ParseFunctions.dateFormat(birthDate);
 		boolean bookingRoom = false;
 
 		
-		Patient patient = new Patient(idP, male, female, name, fName, address, cpP, town,mail, ssnP, phone, cellPhone, birthDate,bookingRoom);
+		Patient patient = new Patient(idP, male, female, name, fName, address, cpP, town,mail, ssnP, phone, cellPhone, birthdate,bookingRoom);
 		
 		return patient;
 	}
@@ -199,7 +200,7 @@ public class PatientFunction
 			eMailField.setText(patient.getEmail());
 			phoneField.setText(""+patient.getPhone());
 			cellphoneField.setText(""+patient.getCellPhone());
-			birthdateField.setDate(patient.getBirthDate());
+			birthdateField.setDate(ParseFunctions.dateFormat(patient.getBirthDate()));
 			patientNumberExamPanelField.setText(""+patient.getId());
 			
 		if(!arrayExamination.isEmpty()) {
@@ -231,7 +232,7 @@ public class PatientFunction
 			eMailField.setText(patient.getEmail());
 			phoneField.setText(""+patient.getPhone());
 			cellphoneField.setText(""+patient.getCellPhone());
-			birthdateField.setDate(patient.getBirthDate());
+			birthdateField.setDate(ParseFunctions.dateFormat(patient.getBirthDate()));
 			patientNumberExamPanelField.setText(""+patient.getId());
 			
 			if(!arrayExamination.isEmpty()) {
@@ -261,7 +262,7 @@ public class PatientFunction
 		patient.setEmail(mail);
 		patient.setPhone(phone);
 		patient.setCellPhone(cellPhone);
-		patient.setBirthDate(birthDate);
+		patient.setBirthDate(ParseFunctions.dateFormat(birthDate));
 		
 		list.setListData(arrayPatient.toArray());
 		
@@ -290,7 +291,7 @@ public class PatientFunction
 		patient.setEmail(mail);
 		patient.setPhone(phone);
 		patient.setCellPhone(cellPhone);
-		patient.setBirthDate(birthDate);
+		patient.setBirthDate(ParseFunctions.dateFormat(birthDate));
 		
 		temporaryList.clear();
 		
