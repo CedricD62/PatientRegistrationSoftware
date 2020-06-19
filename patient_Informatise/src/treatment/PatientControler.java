@@ -180,8 +180,24 @@ public class PatientControler {
 
 	private static boolean checkUpAvailableEmail(JTextField text) {
 		boolean email = false;
+		boolean endWith = false;
+		int variableTampon = 0;		
 		
-		
+		String [] lastIndex = {".fr",".com",".net",".intra",".eu",".org",".be",".at",".au",".ca",".ch",".cn",".dk",".de",".gb",
+							   ".gp",".hk",".in",".ie",".it",".jp",".kr",".lu",".mq",".mx",".nc",".nl",".nz",".pl",".pt",".ro",
+							   ".ru",".us"};
+								
+				variableTampon = text.getText().indexOf("@");
+				
+				for(int i = 0; i < lastIndex.length; i++) {
+					
+					endWith = text.getText().endsWith(lastIndex[i]);
+					if(variableTampon > 0 && endWith == true ) 
+					{
+						email = true;
+						break;
+					}
+				}
 		
 		return email;
 	}
