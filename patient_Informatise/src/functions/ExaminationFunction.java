@@ -21,7 +21,8 @@ public class ExaminationFunction
 	
 	
 	public static void creatExamination (JList listExaminationPanel,JList listBookingRoomPannel,ArrayList<Patient> arrayPatient,ArrayList<Examen> arrayExamination,
-										 JTextField patientNumberExamPanelField,JComboBox examinationTypeSelection,JDateChooser examinationDateField){
+										 JTextField patientNumberExamPanelField,JComboBox examinationTypeSelection,JDateChooser examinationDateField,JDateChooser entryDateField, 
+										 JDateChooser releaseDateField){
 		
 		int id = Integer.parseInt(patientNumberExamPanelField.getText());
 		Patient patient = PatientFunction.extractPatientFromArray(arrayPatient,id);
@@ -37,13 +38,14 @@ public class ExaminationFunction
 			examinationType = examinationTypeSelection.getSelectedItem().toString();
 			examinationDate = ParseFunctions.dateFormating(examinationDateField);
 			Chambre room = null;
-			Examen examen = new Examen(patient,room,examinationType,examinationDate);
-			arrayExamination.add(examen);
-			RoomFunction.temporaryListExamination.add(examen);
+			Examen examination = new Examen(patient,room,examinationType,examinationDate);
+			arrayExamination.add(examination);
+			RoomFunction.temporaryListExamination.add(examination);
 			
 			listExaminationPanel.setListData(arrayExamination.toArray());
 			listBookingRoomPannel.setListData(RoomFunction.temporaryListExamination.toArray());
 			
+			DefaultValueLuncher.setDefaultRangeForBookingRoomDate(entryDateField,releaseDateField,examination);
 			cancelInformationBeforeAddExamination(examinationDateField, patientNumberExamPanelField, examinationTypeSelection);
 		}
 		

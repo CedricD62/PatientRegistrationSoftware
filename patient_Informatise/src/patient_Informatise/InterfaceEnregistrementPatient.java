@@ -20,8 +20,14 @@ import javax.swing.JTextField;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JTextArea;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+
 import com.toedter.calendar.JDateChooser;
+
+import functions.DefaultValueLuncher;
 import functions.ExaminationFunction;
+import functions.ParseFunctions;
 import functions.PatientFunction;
 import functions.RoomFunction;
 
@@ -194,7 +200,8 @@ public class InterfaceEnregistrementPatient {
 		addExaminationButton = new JButton("Ajouter Examen");
 		addExaminationButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				ExaminationFunction.creatExamination(examinationList,switchRoomAndExaminationList,arrayPatient,arrayExamination,patientNumberExamPanelField,examinationTypeSelection,examinationDateField);
+				ExaminationFunction.creatExamination(examinationList,switchRoomAndExaminationList,arrayPatient,arrayExamination,patientNumberExamPanelField,examinationTypeSelection,
+													 examinationDateField,entryDateField,releaseDateField);
 			}
 		});
 		addExaminationButton.setBounds(321, 54, 136, 23);
@@ -584,7 +591,7 @@ public class InterfaceEnregistrementPatient {
 				
 				
 				PatientFunction.creatPatient(patientList,arrayPatient,idField,maleRButton,femaleRButton,nameField,fNameField,addressField,areaCodeField,
-											townField,ssnField,eMailField,phoneField,cellphoneField,birthDateField,genderGroup);
+											townField,ssnField,eMailField,phoneField,cellphoneField,birthDateField,genderGroup,examinationDateField);
 				
 				
 			}
@@ -642,5 +649,7 @@ public class InterfaceEnregistrementPatient {
 		releaseDateField = new JDateChooser();
 		releaseDateField.setBounds(783, 131, 110, 20);
 		bookRoomPanel.add(releaseDateField);
+		
+		DefaultValueLuncher.setDefaultRangeForBirthdate(birthDateField);
 	}
 }

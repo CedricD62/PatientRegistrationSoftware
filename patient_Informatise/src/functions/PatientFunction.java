@@ -14,7 +14,8 @@ import com.toedter.calendar.JDateChooser;
 
 import patient_Informatise.Chambre;
 import patient_Informatise.Examen;
-import patient_Informatise.Patient; 
+import patient_Informatise.Patient;
+import treatment.PatientControler; 
 
 public class PatientFunction 
 {
@@ -24,32 +25,37 @@ public class PatientFunction
 	private static ArrayList<Chambre>arraySummaryRoom = new ArrayList<Chambre>();
 	
 	public static void creatPatient(JList list,ArrayList<Patient> arrayPatient,JTextField idField,JRadioButton maleRButton, JRadioButton femaleRButton, 
-			   JTextField nameField, JTextField fNameField,JTextField addressField, JTextField areaCodeField, JTextField townField, 
-			   JTextField ssnField,JTextField eMailField, JTextField phoneField, JTextField cellphoneField, JDateChooser birthdateField,ButtonGroup button) {
+									JTextField nameField, JTextField fNameField,JTextField addressField, JTextField areaCodeField, JTextField townField, 
+									JTextField ssnField,JTextField eMailField, JTextField phoneField, JTextField cellphoneField, JDateChooser birthdateField,ButtonGroup button,
+									JDateChooser examinationDateField) {
 		
+		//if(PatientControler.inputFieldControler(idField,maleRButton,femaleRButton,nameField,fNameField,addressField,areaCodeField,townField,ssnField,eMailField,
+												//phoneField,cellphoneField,birthdateField)== true) {
+			
+			int id  			= ParseFunctions.numericConversion(idField.getText());
+			boolean male 		= maleRButton.isSelected();
+			boolean female 		= femaleRButton.isSelected();
+			String name 		= nameField.getText();
+			String fName 		= fNameField.getText();
+			String address		= addressField.getText();
+			int cp  			= ParseFunctions.numericConversion(areaCodeField.getText());
+			String town			= townField.getText();
+			String mail 		= eMailField.getText(); 
+			int ssn  			= ParseFunctions.numericConversion(ssnField.getText());
+			String phone		= phoneField.getText();
+			String cellPhone	= cellphoneField.getText();
+			String birthdate 	= ParseFunctions.dateFormating(birthdateField);
+			boolean bookingRoom = false;
+			
+			Patient patient = new Patient(id,male,female,name,fName,address,cp,town,mail,ssn,phone,cellPhone,birthdate,bookingRoom);
+			arrayPatient.add(patient);
+			list.setListData(arrayPatient.toArray());
+			
+			DefaultValueLuncher.setDefaultRangeExaminationDate(patient, examinationDateField);
+			clearInformationField(idField,button,nameField,fNameField,addressField,areaCodeField,townField,ssnField,eMailField,phoneField,cellphoneField,birthdateField);
+		}
 		
-		int id  			= ParseFunctions.numericConversion(idField.getText());
-		boolean male 		= maleRButton.isSelected();
-		boolean female 		= femaleRButton.isSelected();
-		String name 		= nameField.getText();
-		String fName 		= fNameField.getText();
-		String address		= addressField.getText();
-		int cp  			= ParseFunctions.numericConversion(areaCodeField.getText());
-		String town			= townField.getText();
-		String mail 		= eMailField.getText(); 
-		int ssn  			= ParseFunctions.numericConversion(ssnField.getText());
-		String phone		= phoneField.getText();
-		String cellPhone	= cellphoneField.getText();
-		String birthdate 	= ParseFunctions.dateFormating(birthdateField);
-		boolean bookingRoom = false;
-
-		Patient patient = new Patient(id,male,female,name,fName,address,cp,town,mail,ssn,phone,cellPhone,birthdate,bookingRoom);
-		arrayPatient.add(patient);
-		list.setListData(arrayPatient.toArray());
-		
-		clearInformationField(idField,button,nameField,fNameField,addressField,areaCodeField,townField,ssnField,eMailField,phoneField,cellphoneField,birthdateField);
-		
-	}
+	//}
 	
 	public static void changeInfoPatient(JList list,ArrayList<Patient> arrayPatient,JTextField idField,JRadioButton maleRButton, JRadioButton femaleRButton, 
 			   							 JTextField nameField, JTextField fNameField,JTextField addressField, JTextField areaCodeField, JTextField townField, 
