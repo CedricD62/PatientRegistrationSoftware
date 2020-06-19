@@ -9,7 +9,15 @@ import com.toedter.calendar.JDateChooser;
 public class ParseFunctions {
 
 	
-	public static String dateFormat(JDateChooser date){
+	public static String dateFormating(JDateChooser date){
+		
+		SimpleDateFormat dateString = new SimpleDateFormat("dd/MM/yyy");
+		String dateFormat = dateString.format(date.getDate());
+		
+		return dateFormat;
+	}
+	
+	public static String dateFormating(Date date){
 		
 		SimpleDateFormat dateString = new SimpleDateFormat("dd/MM/yyy");
 		String dateFormat = dateString.format(date);
@@ -17,15 +25,7 @@ public class ParseFunctions {
 		return dateFormat;
 	}
 	
-	public static String dateFormat(Date date){
-		
-		SimpleDateFormat dateString = new SimpleDateFormat("dd/MM/yyy");
-		String dateFormat = dateString.format(date);
-		
-		return dateFormat;
-	}
-	
-	public static Date dateFormat(String date){
+	public static Date dateFormating(String date){
 		
 		SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyy");
 		Date dateFormat = null;
@@ -38,6 +38,12 @@ public class ParseFunctions {
 		}
 	
 		return dateFormat;
+	}
+	
+	public static int numericConversion(String field) {
+		
+		int ssn = Integer.parseInt(field);
+		return ssn;
 	}
 	
 }

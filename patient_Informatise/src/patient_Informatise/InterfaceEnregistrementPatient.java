@@ -6,8 +6,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.util.ArrayList;
-
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -19,14 +17,13 @@ import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
-
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JTextArea;
+import java.util.ArrayList;
+import com.toedter.calendar.JDateChooser;
 import functions.ExaminationFunction;
 import functions.PatientFunction;
 import functions.RoomFunction;
-
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.JTextArea;
-import com.toedter.calendar.JDateChooser;
 
 public class InterfaceEnregistrementPatient {
 	
@@ -440,7 +437,8 @@ public class InterfaceEnregistrementPatient {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				
-				PatientFunction.showPatient(patientList, arrayPatient, arrayExamination, idField, maleRButton, femaleRButton, nameField, fNameField, addressField, areaCodeField, townField, ssnField, eMailField, phoneField, cellphoneField, birthDateField, patientNumberExamPanelField, summaryExaminationList, summaryBookingroomList);
+				PatientFunction.showPatient(patientList, arrayPatient, arrayExamination, idField, maleRButton, femaleRButton, nameField, fNameField, addressField, areaCodeField, townField, 
+											ssnField, eMailField, phoneField, cellphoneField, birthDateField, patientNumberExamPanelField, summaryExaminationList, summaryBookingroomList);
 			}
 		});
 		deletePatientButton.addActionListener(new ActionListener() {
@@ -573,7 +571,8 @@ public class InterfaceEnregistrementPatient {
 		cancelPatientButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				PatientFunction.cancelInformationBeforeAddPatient(idField,nameField,fNameField,addressField,areaCodeField,townField,ssnField,eMailField,phoneField,cellphoneField,birthDateField, genderGroup);
+				PatientFunction.cancelInformationBeforeAddPatient(idField,nameField,fNameField,addressField,areaCodeField,townField,ssnField,eMailField,phoneField,cellphoneField,birthDateField, 
+																  genderGroup);
 			}
 		});
 		cancelPatientButton.setBounds(242, 219, 104, 23);
@@ -584,11 +583,10 @@ public class InterfaceEnregistrementPatient {
 			public void actionPerformed(ActionEvent e) {
 				
 				
-				arrayPatient.add((PatientFunction.creatPatient(idField.getText(),maleRButton.isSelected(), femaleRButton.isSelected(),nameField.getText(),
-						          fNameField.getText(),addressField.getText(),areaCodeField.getText(),townField.getText(),ssnField.getText(),eMailField.getText(),
-						          phoneField.getText(),cellphoneField.getText(),birthDateField.getDate())));
+				PatientFunction.creatPatient(patientList,arrayPatient,idField,maleRButton,femaleRButton,nameField,fNameField,addressField,areaCodeField,
+											townField,ssnField,eMailField,phoneField,cellphoneField,birthDateField,genderGroup);
 				
-				patientList.setListData(arrayPatient.toArray());
+				
 			}
 		});
 		addPatientButton.setBounds(120, 219, 104, 23);
@@ -622,9 +620,8 @@ public class InterfaceEnregistrementPatient {
 		changePatientInfoButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				PatientFunction.changeInfoPatient(patientList,arrayPatient,idField.getText(),maleRButton.isSelected(), femaleRButton.isSelected(),
-												  nameField.getText(),fNameField.getText(),addressField.getText(),areaCodeField.getText(),townField.getText(),
-												  ssnField.getText(),eMailField.getText(),phoneField.getText(),cellphoneField.getText(),birthDateField.getDate(),searchFiel);
+				PatientFunction.changeInfoPatient(patientList,arrayPatient,idField,maleRButton,femaleRButton,nameField,fNameField,addressField,areaCodeField,
+												  townField,ssnField,eMailField,phoneField,cellphoneField,birthDateField);
 	
 			}
 		});

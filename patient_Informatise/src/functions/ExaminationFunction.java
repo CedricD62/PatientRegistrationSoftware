@@ -1,6 +1,7 @@
 package functions;
 
-import java.awt.Color;
+
+
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -28,17 +29,13 @@ public class ExaminationFunction
 		String examinationDate;
 		
 		if(patient == null) {
-			  
-			
-			
+		
 			patientNumberExamPanelField.setText("Patient introuvable");
-			patientNumberExamPanelField.setCaretColor(Color.RED);
-			
 			
 		}else {
 			
 			examinationType = examinationTypeSelection.getSelectedItem().toString();
-			examinationDate = ParseFunctions.dateFormat(examinationDateField.getDate());
+			examinationDate = ParseFunctions.dateFormating(examinationDateField);
 			Chambre room = null;
 			Examen examen = new Examen(patient,room,examinationType,examinationDate);
 			arrayExamination.add(examen);
@@ -54,7 +51,7 @@ public class ExaminationFunction
 	
 	public static void cancelInformationBeforeAddExamination (JDateChooser examinationDateField,JTextField patientNumberExamPanelField,JComboBox examinationTypeSelection) {
 		
-		examinationDateField.setLocale(null);
+		examinationDateField.setDate(new Date());
 		patientNumberExamPanelField.setText("");
 		examinationTypeSelection.setSelectedIndex(0);
 		}
@@ -135,7 +132,7 @@ public class ExaminationFunction
 		
 		patientNumberExamPanelField.setText(""+examination.getPatient().getId());
 		examinationTypeSelection.setSelectedItem(examination.getTypeExamen());
-		examinationDateField.setDate(ParseFunctions.dateFormat(examination.getDateExamen()));
+		examinationDateField.setDate(ParseFunctions.dateFormating(examination.getDateExamen()));
 		
 	}
 	
@@ -150,7 +147,7 @@ public class ExaminationFunction
 		
 		patientNumberExamPanelField.setText(""+examination.getPatient().getId());
 		examinationTypeSelection.setSelectedItem(examination.getTypeExamen());
-		examinationDateField.setDate(ParseFunctions.dateFormat(examination.getDateExamen()));	
+		examinationDateField.setDate(ParseFunctions.dateFormating(examination.getDateExamen()));	
 	}
 	
 	private static void deleteFromArrayExamination(JList list,ArrayList<Examen> arrayExamination,int indexSelection,JTextField patientNumberExamPanelField,JComboBox examinationTypeSelection,
@@ -211,7 +208,7 @@ public class ExaminationFunction
 		
 		examination.getPatient().setId(Integer.parseInt(patientNumberExamPanelField.getText()));
 		examination.setTypeExamen(examinationTypeSelection.getSelectedItem().toString());
-		examination.setDateExamen(ParseFunctions.dateFormat(examinationDateField.getDate()));
+		examination.setDateExamen(ParseFunctions.dateFormating(examinationDateField.getDate()));
 		
 		list.setListData(arrayExamination.toArray());
 	}
@@ -227,7 +224,7 @@ public class ExaminationFunction
 		
 		examination.getPatient().setId(Integer.parseInt(patientNumberExamPanelField.getText()));
 		examination.setTypeExamen(examinationTypeSelection.getSelectedItem().toString());
-		examination.setDateExamen(ParseFunctions.dateFormat(examinationDateField.getDate()));
+		examination.setDateExamen(ParseFunctions.dateFormating(examinationDateField.getDate()));
 		
 		temporaryList.clear();
 		
