@@ -1,18 +1,12 @@
 package treatment;
 
-import java.awt.font.NumericShaper;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.InputMismatchException;
-
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 import com.toedter.calendar.JDateChooser;
-
 import filesActions.ReadExternalFiles;
-import functions.ParseFunctions;
 
 public class PatientControler {
 	
@@ -64,7 +58,7 @@ public class PatientControler {
 				fieldOk = false;
 			}
 		}
-		if(checkUpJTextFieldIntInput(ssnField) == false) {
+		if(checkUpJTextFieldLongInput(ssnField) == false) {
 			fieldOk = false; 
 		} else {
 			if(checkUpSsnLength(ssnField) == false) {
@@ -74,53 +68,12 @@ public class PatientControler {
 		if(checkUpJRadioButtonInput(maleRButton,femaleRButton) == false) {
 			fieldOk = false; 
 		}
-		if(checkUpJDateChooserDateInput(birthdateField) == false){
+		if(checkUpJDateChooserDateInput(birthdateField) == false) {
 			fieldOk = false;
 		}
 		
 		return fieldOk;
 	}
-	
-	/*public static void warningWrongInput(JTextField idField,JRadioButton maleRButton, JRadioButton femaleRButton,JTextField nameField, JTextField fNameField,
-			  							 JTextField addressField, JTextField areaCodeField, JTextField townField,JTextField ssnField,JTextField eMailField, JTextField phoneField, 
-			  							 JTextField cellphoneField, JDateChooser birthdateField) {
-		
-		if(checkUpJTextFieldStringInput(nameField) == false) {
-			warningWrongStringInput(nameField);
-		}
-		if(checkUpJTextFieldStringInput(fNameField) == false) {
-			warningWrongStringInput(fNameField);
-		}
-		if(checkUpJTextFieldStringInput(addressField) == false) {
-			warningWrongStringInput(addressField);
-		}
-		if(checkUpJTextFieldStringInput(areaCodeField) == false) {
-			warningWrongStringInput(areaCodeField);
-		}
-		if(checkUpJTextFieldStringInput(townField) == false) {
-			warningWrongStringInput(townField);
-		}
-		if(checkUpJTextFieldStringInput(eMailField) == false) {
-			warningWrongStringInput(eMailField);
-		}
-		if(checkUpJTextFieldStringInput(phoneField) == false) {
-			warningWrongStringInput(phoneField);
-		}
-		if(checkUpJTextFieldStringInput(cellphoneField) == false) {
-			warningWrongStringInput(cellphoneField);
-		}
-		if(checkUpJTextFieldIntInput(idField) == false) {
-			warningWrongIntInput(idField);
-		}
-		if(checkUpJTextFieldIntInput(ssnField) == false) {
-			warningWrongIntInput(ssnField);
-		}
-		if(checkUpJTextFieldIntInput(maleRButton,femaleRButton) == false) {
-			warningWrongBooleanInput(maleRButton,femaleRButton);
-		}
-		
-	}*/
-	
 	
 	private static boolean checkUpJTextFieldStringInput(JTextField text) {
 		boolean fieldOk = true;
@@ -144,8 +97,17 @@ public class PatientControler {
 		if(numericException(text) == true) {
 			fieldOk = false;
 			text.setText("erreur");
-		}
+		}	
+		return fieldOk;
+	}
+
+	private static boolean checkUpJTextFieldLongInput(JTextField text) {
+		boolean fieldOk = true;
 		
+		if(numericLongException(text) == true) {
+			fieldOk = false;
+			text.setText("erreur");
+		}	
 		return fieldOk;
 	}
 	
@@ -155,53 +117,59 @@ public class PatientControler {
 		if(JR1.isSelected() == false && JR2.isSelected() == false) {
 			fieldOk = false;
 		}
-		
 		return fieldOk;
 	}
 	
 	private static boolean checkUpJDateChooserDateInput(JDateChooser birthdateField) {
-		boolean fieldOk = true;
+		boolean fieldOk = false;
 		
-		if(birthdateField.equals(null)) {
-			fieldOk = false;
+		try {
+			Date date = birthdateField.getDate();
+			if(!date.equals(null)) {
+				fieldOk = true;
+			}
+		}catch(NullPointerException n) {
 			birthdateField.setDate(new Date());
-		}
-		
-		/*SimpleDateFormat formatDate = new SimpleDateFormat("dd/MM/yyyy");
-		String dateFormated = formatDate.format(birthdateField.getDate());*/
-		
+		}	
 		return fieldOk;
 	}
 	
 	private static boolean numericException(JTextField text) {
 		boolean error = false;
 			try {
-				String getText = text.getText();
-				int value = Integer.parseInt(getText); 
+				
+				int value = Integer.parseInt(text.getText()); 
 				error = false; 
 				
 			} catch (InputMismatchException e) {
-				
-				//text.setText("erreur");
+				error = true; 
+			} catch (NumberFormatException e) {
+				error = true; 
+			}	
+		return error;
+	}
+	
+	private static boolean numericLongException(JTextField text) {
+		boolean error = false;
+			try {
+				long value = Long.parseLong(text.getText()); 
+				error = false; 		
+			} catch (InputMismatchException e) {		
+				error = true; 
+			} catch (NumberFormatException e) {
 				error = true; 
 			}
-		
 		return error;
 	}
 	
 	private static boolean stringException(JTextField text) {
 		boolean error = false;
-			try {
-				
+			try {	
 				int value = Integer.parseInt(text.getText()); 
-				error = false; 
-				
+				error = false; 			
 			} catch (NumberFormatException e) {
-				
-				//text.setText("erreur");
 				error = true; 
 			}
-		
 		return error;
 	}
 
@@ -224,8 +192,7 @@ public class PatientControler {
 			
 			if(email == false) {
 				text.setText("erreur");
-			}
-				
+			}		
 		return email;
 	}
 	
@@ -245,8 +212,7 @@ public class PatientControler {
 		
 		if(phoneNumber == false) {
 			text.setText("erreur");	
-		}
-		
+		}	
 		return phoneNumber;
 	}
 	
@@ -258,15 +224,11 @@ public class PatientControler {
 									
 		for(int i = 0; i < ArrayAreaCode.size(); i++) {
 			
-			if(ArrayAreaCode.get(i).contentEquals(patientAreaCode)) 
-			{
+			if(ArrayAreaCode.get(i).contentEquals(patientAreaCode)) {
 				codeOk = true;
 				break;
 			}
 		}
-		
-		
-		
 		return codeOk;
 	}
 	
@@ -279,8 +241,7 @@ public class PatientControler {
 			ssnLength = true;
 		}else {
 			text.setText("erreur");
-		}
-		
+		}	
 		return ssnLength;
 	}
 }

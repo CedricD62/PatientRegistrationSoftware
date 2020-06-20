@@ -46,4 +46,10 @@ public class ParseFunctions {
 		return value;
 	}
 	
+	public static long numericConversionLong(String field) {
+		
+		long value = Long.parseLong(field);
+		return value;
+	}
+	
 }

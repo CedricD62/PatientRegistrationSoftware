@@ -30,7 +30,7 @@ public class PatientFunction
 									JDateChooser examinationDateField) {
 		
 		if(PatientControler.inputFieldControler(idField,maleRButton,femaleRButton,nameField,fNameField,addressField,areaCodeField,townField,ssnField,eMailField,
-												phoneField,cellphoneField,birthdateField)== true) {
+												phoneField,cellphoneField,birthdateField) == true) {
 			
 			int id  			= ParseFunctions.numericConversion(idField.getText());
 			boolean male 		= maleRButton.isSelected();
@@ -41,7 +41,7 @@ public class PatientFunction
 			int cp  			= ParseFunctions.numericConversion(areaCodeField.getText());
 			String town			= townField.getText();
 			String mail 		= eMailField.getText(); 
-			int ssn  			= ParseFunctions.numericConversion(ssnField.getText());
+			long ssn  			= ParseFunctions.numericConversionLong(ssnField.getText());
 			String phone		= phoneField.getText();
 			String cellPhone	= cellphoneField.getText();
 			String birthdate 	= ParseFunctions.dateFormating(birthdateField);
@@ -258,24 +258,27 @@ public class PatientFunction
 		if(idPatient == -1)
 			return;
 		
-		Patient patient = arrayPatient.get(idPatient);
-		
-		patient.setId(ParseFunctions.numericConversion(idField.getText()));
-		patient.setMasculin(maleRButton.isSelected());
-		patient.setFemale(femaleRButton.isSelected());
-		patient.setName(nameField.getText());
-		patient.setFirstName(fNameField.getText());
-		patient.setAddress(addressField.getText());
-		patient.setCp(ParseFunctions.numericConversion(areaCodeField.getText()));
-		patient.setCity(townField.getText());
-		patient.setSsn(ParseFunctions.numericConversion(ssnField.getText()));
-		patient.setEmail(eMailField.getText());
-		patient.setPhone(phoneField.getText());
-		patient.setCellPhone(cellphoneField.getText());
-		patient.setBirthDate(ParseFunctions.dateFormating(birthdateField));
-		
-		list.setListData(arrayPatient.toArray());
-		
+		if(PatientControler.inputFieldControler(idField,maleRButton,femaleRButton,nameField,fNameField,addressField,areaCodeField,townField,ssnField,eMailField,
+				phoneField,cellphoneField,birthdateField) == true) {
+				
+			Patient patient = arrayPatient.get(idPatient);
+			
+			patient.setId(ParseFunctions.numericConversion(idField.getText()));
+			patient.setMasculin(maleRButton.isSelected());
+			patient.setFemale(femaleRButton.isSelected());
+			patient.setName(nameField.getText());
+			patient.setFirstName(fNameField.getText());
+			patient.setAddress(addressField.getText());
+			patient.setCp(ParseFunctions.numericConversion(areaCodeField.getText()));
+			patient.setCity(townField.getText());
+			patient.setSsn(ParseFunctions.numericConversionLong(ssnField.getText()));
+			patient.setEmail(eMailField.getText());
+			patient.setPhone(phoneField.getText());
+			patient.setCellPhone(cellphoneField.getText());
+			patient.setBirthDate(ParseFunctions.dateFormating(birthdateField));
+			
+			list.setListData(arrayPatient.toArray());
+		}
 	}
 	
 	private static void changePatientTemporaryList (JList list,ArrayList<Patient> arrayPatient,JTextField idField,JRadioButton maleRButton, JRadioButton femaleRButton, 
@@ -286,25 +289,29 @@ public class PatientFunction
 		if(idPatient == -1)
 			return;
 		
-		Patient patient = temporaryList.get(idPatient);
-		
-		patient.setId(ParseFunctions.numericConversion(idField.getText()));
-		patient.setMasculin(maleRButton.isSelected());
-		patient.setFemale(femaleRButton.isSelected());
-		patient.setName(nameField.getText());
-		patient.setFirstName(fNameField.getText());
-		patient.setAddress(addressField.getText());
-		patient.setCp(ParseFunctions.numericConversion(areaCodeField.getText()));
-		patient.setCity(townField.getText());
-		patient.setSsn(ParseFunctions.numericConversion(ssnField.getText()));
-		patient.setEmail(eMailField.getText());
-		patient.setPhone(phoneField.getText());
-		patient.setCellPhone(cellphoneField.getText());
-		patient.setBirthDate(ParseFunctions.dateFormating(birthdateField));
-		
-		temporaryList.clear();
-		
-		list.setListData(arrayPatient.toArray());
+		if(PatientControler.inputFieldControler(idField,maleRButton,femaleRButton,nameField,fNameField,addressField,areaCodeField,townField,ssnField,eMailField,
+				phoneField,cellphoneField,birthdateField) == true) {
+			
+			Patient patient = temporaryList.get(idPatient);
+			
+			patient.setId(ParseFunctions.numericConversion(idField.getText()));
+			patient.setMasculin(maleRButton.isSelected());
+			patient.setFemale(femaleRButton.isSelected());
+			patient.setName(nameField.getText());
+			patient.setFirstName(fNameField.getText());
+			patient.setAddress(addressField.getText());
+			patient.setCp(ParseFunctions.numericConversion(areaCodeField.getText()));
+			patient.setCity(townField.getText());
+			patient.setSsn(ParseFunctions.numericConversionLong(ssnField.getText()));
+			patient.setEmail(eMailField.getText());
+			patient.setPhone(phoneField.getText());
+			patient.setCellPhone(cellphoneField.getText());
+			patient.setBirthDate(ParseFunctions.dateFormating(birthdateField));
+			
+			temporaryList.clear();
+			
+			list.setListData(arrayPatient.toArray());
+		}
 	}
 	
 	public static Patient extractPatientFromArray (ArrayList<Patient> arrayPatient,int idP) {

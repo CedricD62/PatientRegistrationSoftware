@@ -53,7 +53,7 @@ public class ReadExternalFiles {
 		return mail;
 	}
 	
-public static ArrayList<String> areaCode() {
+	public static ArrayList<String> areaCode() {
 		
 		ArrayList<String> ArrayAreaCode= new ArrayList <String>(); 
 		

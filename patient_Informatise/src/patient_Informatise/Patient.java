@@ -9,7 +9,7 @@ public class Patient
 	private int 				cp;
 	private String 				city;
 	private String 				email;
-	private int 				ssn;
+	private long 				ssn;
 	private String 				phone;
 	private String 				cellPhone; 
 	private String 				birthDate;
@@ -22,7 +22,7 @@ public class Patient
 	
 	
 	public Patient(int pId,boolean pMale,boolean pFemale,String pName,String pFirstName,String pAddress,int pCp,String pCity,String pEmail, 
-				   int pSsn,String pPhone,String pCellPhone,String pBirthDate, boolean pBookingRoom) {		
+			long pSsn,String pPhone,String pCellPhone,String pBirthDate, boolean pBookingRoom) {		
 			id 			= pId;
 			male 		= pMale;
 			female 		= pFemale;
@@ -95,10 +95,10 @@ public class Patient
 	public void setEmail(String pEmail) {
 		this.email = pEmail;
 	}
-	public int getSsn() {
+	public long getSsn() {
 		return ssn;
 	}
-	public void setSsn(int pSsn) {
+	public void setSsn(long pSsn) {
 		this.ssn = pSsn;
 	}
 	
@@ -140,9 +140,9 @@ public class Patient
 	@Override
 	public String toString() {
 		if(isMale() == true) {
-			return "Patient [id=" + id + ", name=" + name + ", firstName=" + firstName + ", address=" + address + ", cp="+ cp + ", city=" + city + ", email=" + email + ", ssn=" + ssn + ", phone=" + phone + ", cellPhone="+ cellPhone + ", birthDate=" + birthDate + ", " + MALE+"]";
+			return "Patient : "+id+", "+name+", "+firstName+", "+address+", "+cp+", "+city+", "+email+", "+ssn+", "+phone+", "+cellPhone+", "+birthDate+ ", "+MALE;
 		}else {
-			return "Patient [id=" + id + ", name=" + name + ", firstName=" + firstName + ", address=" + address + ", cp="+ cp + ", city=" + city + ", email=" + email + ", ssn=" + ssn + ", phone=" + phone + ", cellPhone="+ cellPhone + ", birthDate=" + birthDate + ", " + FEMALE+"]";
+			return "Patient : "+id+", "+name+", "+firstName+", "+address+", "+cp+", "+city+", "+email+", "+ssn+", "+phone+", "+cellPhone+", "+birthDate+ ", "+FEMALE;
 		}
 	}
 }
