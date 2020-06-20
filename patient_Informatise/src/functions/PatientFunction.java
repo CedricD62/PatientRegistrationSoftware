@@ -29,8 +29,8 @@ public class PatientFunction
 									JTextField ssnField,JTextField eMailField, JTextField phoneField, JTextField cellphoneField, JDateChooser birthdateField,ButtonGroup button,
 									JDateChooser examinationDateField) {
 		
-		//if(PatientControler.inputFieldControler(idField,maleRButton,femaleRButton,nameField,fNameField,addressField,areaCodeField,townField,ssnField,eMailField,
-												//phoneField,cellphoneField,birthdateField)== true) {
+		if(PatientControler.inputFieldControler(idField,maleRButton,femaleRButton,nameField,fNameField,addressField,areaCodeField,townField,ssnField,eMailField,
+												phoneField,cellphoneField,birthdateField)== true) {
 			
 			int id  			= ParseFunctions.numericConversion(idField.getText());
 			boolean male 		= maleRButton.isSelected();
@@ -55,7 +55,7 @@ public class PatientFunction
 			clearInformationField(idField,button,nameField,fNameField,addressField,areaCodeField,townField,ssnField,eMailField,phoneField,cellphoneField,birthdateField);
 		}
 		
-	//}
+	}
 	
 	public static void changeInfoPatient(JList list,ArrayList<Patient> arrayPatient,JTextField idField,JRadioButton maleRButton, JRadioButton femaleRButton, 
 			   							 JTextField nameField, JTextField fNameField,JTextField addressField, JTextField areaCodeField, JTextField townField, 

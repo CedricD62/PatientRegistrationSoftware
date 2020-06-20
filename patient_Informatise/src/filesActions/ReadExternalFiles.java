@@ -4,18 +4,17 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.Date;
+import java.util.ArrayList;
 
 public class ReadExternalFiles {
 
-	public static String [] mailEndings() {
-		
-		String [] mail; 
-		
-		File 			file = null;
-		FileReader 		fileR= null;
-		BufferedReader 	buffer=null;
+	private static File 			file = null;
+	private static FileReader 		fileR= null;
+	private static BufferedReader 	buffer=null;
 	
+	public static ArrayList<String> mailEndings() {
+		
+		ArrayList<String> mail= new ArrayList <String>(); 
 		
 		try {
 			
@@ -28,7 +27,7 @@ public class ReadExternalFiles {
 			while((line = buffer.readLine()) != null) {
 				
 				if(counter != 0) {
-					mail[counter] = line;
+					mail.add(line);
 				}
 				
 				counter++;
@@ -52,6 +51,49 @@ public class ReadExternalFiles {
 		}
 		
 		return mail;
+	}
+	
+public static ArrayList<String> areaCode() {
+		
+		ArrayList<String> ArrayAreaCode= new ArrayList <String>(); 
+		
+		try {
+			
+			file = new File("areaCode.csv");
+			fileR = new FileReader(file); 
+			buffer = new BufferedReader(fileR);
+			String line;
+			int counter = 0;	
+			
+			while((line = buffer.readLine()) != null) {
+								
+				if(counter != 0) {
+					String [] fileAreaCode;
+					fileAreaCode = line.split(";");
+					ArrayAreaCode.add(fileAreaCode[2]);
+				}
+				
+				counter++;
+			}
+			
+			if(buffer != null) {
+				buffer.close();
+			}			
+		}catch(IOException ex) {
+			ex.printStackTrace();
+			System.err.println("erreur d'impression");
+		}finally {
+			try {
+				if(buffer != null) {
+					buffer.close();
+				}
+			} catch (IOException e) {
+				e.printStackTrace();
+				System.err.println("erreur d'impression");
+			}			
+		}
+		
+		return ArrayAreaCode;
 	}
 	
 }

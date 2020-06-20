@@ -42,8 +42,8 @@ public class ParseFunctions {
 	
 	public static int numericConversion(String field) {
 		
-		int ssn = Integer.parseInt(field);
-		return ssn;
+		int value = Integer.parseInt(field);
+		return value;
 	}
 	
 }

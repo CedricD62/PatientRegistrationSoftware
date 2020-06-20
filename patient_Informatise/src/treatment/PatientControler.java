@@ -1,11 +1,18 @@
 package treatment;
 
+import java.awt.font.NumericShaper;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.InputMismatchException;
+
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 import com.toedter.calendar.JDateChooser;
+
+import filesActions.ReadExternalFiles;
+import functions.ParseFunctions;
 
 public class PatientControler {
 	
@@ -33,30 +40,36 @@ public class PatientControler {
 				fieldOk = false;
 			}
 		}
-		if(checkUpJTextFieldStringInput(phoneField) == false) {
+		if(checkUpJTextFieldIntInput(phoneField) == false) {
 			fieldOk = false; 
 		}else {
-			
+			if(checkUpAvailablePhoneNumber(phoneField) == false) {
+				fieldOk = false;
+			}
 		}
-		if(checkUpJTextFieldStringInput(cellphoneField) == false) {
+		if(checkUpJTextFieldIntInput(cellphoneField) == false) {
 			fieldOk = false; 
 		}else {
-			
+			if(checkUpAvailablePhoneNumber(cellphoneField) == false) {
+				fieldOk = false;
+			}
 		}
 		if(checkUpJTextFieldIntInput(idField) == false) {
 			fieldOk = false; 
-		}else {
-			
 		}
 		if(checkUpJTextFieldIntInput(areaCodeField) == false) {
 			fieldOk = false; 
 		}else {
-			
+			if(checkUpAvailableAreaCode(areaCodeField) == false) {
+				fieldOk = false;
+			}
 		}
 		if(checkUpJTextFieldIntInput(ssnField) == false) {
 			fieldOk = false; 
-		}else {
-			
+		} else {
+			if(checkUpSsnLength(ssnField) == false) {
+				fieldOk = false;
+			}
 		}
 		if(checkUpJRadioButtonInput(maleRButton,femaleRButton) == false) {
 			fieldOk = false; 
@@ -117,7 +130,7 @@ public class PatientControler {
 			fieldOk = false;
 		}
 		
-		if(numericException(text) == false) {
+		if(stringException(text) == false) {
 			fieldOk = false;
 			text.setText("erreur");
 		}
@@ -162,16 +175,30 @@ public class PatientControler {
 	
 	private static boolean numericException(JTextField text) {
 		boolean error = false;
-		int value;
-		
 			try {
-				value = Integer.parseInt(text.getText()); 
-	
+				String getText = text.getText();
+				int value = Integer.parseInt(getText); 
 				error = false; 
+				
+			} catch (InputMismatchException e) {
+				
+				//text.setText("erreur");
+				error = true; 
+			}
+		
+		return error;
+	}
+	
+	private static boolean stringException(JTextField text) {
+		boolean error = false;
+			try {
+				
+				int value = Integer.parseInt(text.getText()); 
+				error = false; 
+				
 			} catch (NumberFormatException e) {
 				
-				text.setText("erreur");
-				
+				//text.setText("erreur");
 				error = true; 
 			}
 		
@@ -180,25 +207,80 @@ public class PatientControler {
 
 	private static boolean checkUpAvailableEmail(JTextField text) {
 		boolean email = false;
-		boolean endWith = false;
+		
 		int variableTampon = 0;		
-		
-		String [] lastIndex = {".fr",".com",".net",".intra",".eu",".org",".be",".at",".au",".ca",".ch",".cn",".dk",".de",".gb",
-							   ".gp",".hk",".in",".ie",".it",".jp",".kr",".lu",".mq",".mx",".nc",".nl",".nz",".pl",".pt",".ro",
-							   ".ru",".us"};
+		String mailAddress = text.getText();
+		ArrayList<String> lastIndex = ReadExternalFiles.mailEndings();
 								
-				variableTampon = text.getText().indexOf("@");
+			variableTampon = mailAddress.indexOf("@");
+			
+			for(int i = 0; i < lastIndex.size(); i++) {
 				
-				for(int i = 0; i < lastIndex.length; i++) {
-					
-					endWith = text.getText().endsWith(lastIndex[i]);
-					if(variableTampon > 0 && endWith == true ) 
-					{
-						email = true;
-						break;
-					}
+				if(variableTampon > 0 && mailAddress.endsWith(lastIndex.get(i)) == true ) {
+					email = true;
+					break;
 				}
-		
+			}
+			
+			if(email == false) {
+				text.setText("erreur");
+			}
+				
 		return email;
+	}
+	
+	private static boolean checkUpAvailablePhoneNumber(JTextField text) {
+		boolean phoneNumber = false;
+		String [] phoneBegin = {"01","02","03","04","05","06","07","09"};	
+		String patientPhoneNumber = text.getText();
+		
+		if(patientPhoneNumber.length() == 10) {
+			for(int i = 0; i < phoneBegin.length; i++) {
+				if( patientPhoneNumber.startsWith(phoneBegin[i]) == true) {
+					phoneNumber = true;
+					break;
+				}
+			}
+		}
+		
+		if(phoneNumber == false) {
+			text.setText("erreur");	
+		}
+		
+		return phoneNumber;
+	}
+	
+	private static boolean checkUpAvailableAreaCode(JTextField text) {
+		boolean codeOk = false;
+		String patientAreaCode = text.getText();
+		
+		ArrayList<String> ArrayAreaCode = ReadExternalFiles.areaCode();
+									
+		for(int i = 0; i < ArrayAreaCode.size(); i++) {
+			
+			if(ArrayAreaCode.get(i).contentEquals(patientAreaCode)) 
+			{
+				codeOk = true;
+				break;
+			}
+		}
+		
+		
+		
+		return codeOk;
+	}
+	
+	private static boolean checkUpSsnLength(JTextField text) {
+		boolean ssnLength = false;
+		
+		String patientSsn = text.getText();
+		
+		if(patientSsn.length() == 15) {
+			ssnLength = true;
+		}else {
+			text.setText("erreur");
+		}
+		
+		return ssnLength;
 	}
 }
