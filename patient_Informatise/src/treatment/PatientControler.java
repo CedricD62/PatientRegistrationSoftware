@@ -16,7 +16,7 @@ public class PatientControler {
 		boolean fieldOk = true;
 		
 		if(checkUpJTextFieldStringInput(nameField) == false) {
-			fieldOk = false; 
+			fieldOk = false;
 		}
 		if(checkUpJTextFieldStringInput(fNameField) == false) {
 			fieldOk = false; 
@@ -192,7 +192,8 @@ public class PatientControler {
 			
 			if(email == false) {
 				text.setText("erreur");
-			}		
+			}
+			
 		return email;
 	}
 	
@@ -213,6 +214,7 @@ public class PatientControler {
 		if(phoneNumber == false) {
 			text.setText("erreur");	
 		}	
+		
 		return phoneNumber;
 	}
 	
@@ -229,6 +231,7 @@ public class PatientControler {
 				break;
 			}
 		}
+		
 		return codeOk;
 	}
 	
@@ -242,6 +245,7 @@ public class PatientControler {
 		}else {
 			text.setText("erreur");
 		}	
+		
 		return ssnLength;
 	}
 }

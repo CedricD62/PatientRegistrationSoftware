@@ -17,7 +17,6 @@ public class ReadExternalFiles {
 		ArrayList<String> mail= new ArrayList <String>(); 
 		
 		try {
-			
 			file = new File("mailTerminaisons.csv");
 			fileR = new FileReader(file); 
 			buffer = new BufferedReader(fileR);
@@ -29,7 +28,6 @@ public class ReadExternalFiles {
 				if(counter != 0) {
 					mail.add(line);
 				}
-				
 				counter++;
 			}
 			
@@ -58,7 +56,6 @@ public class ReadExternalFiles {
 		ArrayList<String> ArrayAreaCode= new ArrayList <String>(); 
 		
 		try {
-			
 			file = new File("areaCode.csv");
 			fileR = new FileReader(file); 
 			buffer = new BufferedReader(fileR);
@@ -72,7 +69,6 @@ public class ReadExternalFiles {
 					fileAreaCode = line.split(";");
 					ArrayAreaCode.add(fileAreaCode[2]);
 				}
-				
 				counter++;
 			}
 			
@@ -95,5 +91,4 @@ public class ReadExternalFiles {
 		
 		return ArrayAreaCode;
 	}
-	
 }

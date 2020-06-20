@@ -20,8 +20,7 @@ public class RoomFunction
 	public static ArrayList<Chambre> bookedRoomList = new ArrayList<Chambre>(); 
 	public static ArrayList<Examen> temporaryListExamination = new ArrayList<Examen>();
 	
-	
-	public static void creatRoomIfFileIsEmpty(JList<Object> list,ArrayList<Chambre>arrayRoom) {
+	public static void creatRoomIfFileIsEmpty(JList list,ArrayList<Chambre>arrayRoom) {
 	
 		Chambre room;
 		int cpt = 0;
@@ -30,8 +29,9 @@ public class RoomFunction
 			
 			if(cpt == 21) 
 				cpt = 0;
+			
 			if(i < 15) {
-				
+	
 				boolean accompanying	= false;
 				boolean alone 			= true;
 				boolean available 		= true;
@@ -91,7 +91,7 @@ public class RoomFunction
 		list.setListData(arrayRoom.toArray());
 	}
 	
-	public static void updateListOfAvailableRoom(JList<Object> list,ArrayList<Chambre> arrayRoom,JTextField patientNumberBookingRoomPanelField, JRadioButton withoutRoomRButton, JRadioButton withAccompangyingRButton, 
+	public static void updateListOfAvailableRoom(JList list,ArrayList<Chambre> arrayRoom,JTextField patientNumberBookingRoomPanelField, JRadioButton withoutRoomRButton, JRadioButton withAccompangyingRButton, 
 										   JRadioButton withoutAccompangyingRButton, JComboBox LengthOfStaySelectionBox) {
 		Examen examination = null;
 		
@@ -110,9 +110,8 @@ public class RoomFunction
 		
 		filterRoomWithSelection(list, arrayRoom, LengthOfStaySelectionBox, withAccompangyingRButton, withAccompangyingRButton);
 	}
-	
-	@SuppressWarnings("unchecked")
-	public static void bookingAvailableRoom(JList<Object> list,JDateChooser entryDateField,JDateChooser releaseDateField, JRadioButton withoutRoomRButton, ArrayList<Examen> arrayExamination,JTextField patientNumberBookingRoomPanelField,
+
+	public static void bookingAvailableRoom(JList list,JDateChooser entryDateField,JDateChooser releaseDateField, JRadioButton withoutRoomRButton, ArrayList<Examen> arrayExamination,JTextField patientNumberBookingRoomPanelField,
 											JRadioButton withRoomRButton,ButtonGroup accompanyingGroup,JComboBox LengthOfStaySelectionBox,JTextField bedRoomNumberField, ArrayList<Chambre> arrayRoom, JList bookedRoomList) {
 		Chambre room = null;
 		
@@ -127,9 +126,8 @@ public class RoomFunction
 		printRoomInList(bookedRoomList,arrayRoom);
 	}
 			
-	public static void showInformationRoomAndExamination(JList<Object> list,ArrayList<Chambre> arrayRoom,ArrayList<Examen> arrayExamination,JTextField patientNumberBookingRoomPanelField,
+	public static void showInformationRoomAndExamination(JList list,ArrayList<Chambre> arrayRoom,ArrayList<Examen> arrayExamination,JTextField patientNumberBookingRoomPanelField,
 														 JTextField bedRoomNumberField) {
-		
 		if(temporaryListRoom.isEmpty()) {
 			showInformationFromArrayExamination(list,arrayExamination,patientNumberBookingRoomPanelField);
 		}else {
@@ -137,42 +135,7 @@ public class RoomFunction
 		}
 	}
 	
-	public static void disableActionOnJRadio (JRadioButton withoutAccompanyingRButton, JComboBox lengthOfStayTypeSelection, JRadioButton withAccompangyingRButton,JRadioButton withoutRoomRButton,
-											  JTextField bedRoomNumberField,JDateChooser entryDateField,JDateChooser releaseDateField,JButton showRoomButton,JButton bookingRoomButton, 
-											  JButton deleteBookingRoomButton) {
-		
-		if(withoutRoomRButton.isSelected()) {
-			
-			lengthOfStayTypeSelection.setEnabled(false);
-			withAccompangyingRButton.setEnabled(false);
-			withoutAccompanyingRButton.setEnabled(false);
-			bedRoomNumberField.setEnabled(false);
-			entryDateField.setEnabled(false);
-			releaseDateField.setEnabled(false);
-			showRoomButton.setEnabled(false);
-			deleteBookingRoomButton.setEnabled(false);
-			
-		}
-	}
-	
-	public static void ableActionOnJRadio (JRadioButton withoutAccompanyingRButton, JComboBox lengthOfStayTypeSelection, JRadioButton withAccompangyingRButton,JRadioButton withRoomRButton,
-										   JTextField bedRoomNumberField,JDateChooser entryDateField,JDateChooser releaseDateField,JButton showRoomButton,JButton bookingRoomButton, 
-										   JButton deleteBookingRoomButton) {
-		
-		if(withRoomRButton.isSelected()){
-			lengthOfStayTypeSelection.setEnabled(true);
-			withAccompangyingRButton.setEnabled(true);
-			withoutAccompanyingRButton.setEnabled(true);
-			bedRoomNumberField.setEnabled(true);
-			entryDateField.setEnabled(true);
-			releaseDateField.setEnabled(true);
-			showRoomButton.setEnabled(true);
-			deleteBookingRoomButton.setEnabled(true);
-			
-		}
-	}
-	
-	public static void cancelDataBeforeBookingRoom(JList<Object> list,JTextField patientNumberBookingRoomPanelField,ButtonGroup accompanyingGroup,ButtonGroup bookingGroup, JComboBox lengthOfStayTypeSelection,
+	public static void cancelDataBeforeBookingRoom(JList list,JTextField patientNumberBookingRoomPanelField,ButtonGroup accompanyingGroup,ButtonGroup bookingGroup, JComboBox lengthOfStayTypeSelection,
 												   JTextField bedRoomNumberField,JDateChooser entryDateField,JDateChooser releaseDateField) {
 	
 		patientNumberBookingRoomPanelField.setText("");
@@ -187,7 +150,7 @@ public class RoomFunction
 		list.setListData(temporaryListExamination.toArray());
 	}
 	
-	public static void deleteBookedRoom(JList<Object> switchRoomAndExaminationList, JList<Object> bookedList,ArrayList<Examen> arrayExamination,ArrayList<Chambre> arrayRoom ) {
+	public static void deleteBookedRoom(JList switchRoomAndExaminationList, JList bookedList,ArrayList<Examen> arrayExamination,ArrayList<Chambre> arrayRoom ) {
 		
 		int ligneNumbre = bookedList.getSelectedIndex();
 		if(ligneNumbre == -1) {
@@ -199,10 +162,9 @@ public class RoomFunction
 		resetRoomDataToDefault(room);
 		updadeExaminationListForBooking(switchRoomAndExaminationList, arrayExamination);
 		printRoomInList(bookedList, room);
-		
 	}
 	
-	private static void updateRoomInformation(JList<Object> list, Examen examination, Chambre room, JDateChooser entryDateField, JDateChooser releaseDateField,
+	private static void updateRoomInformation(JList list, Examen examination, Chambre room, JDateChooser entryDateField, JDateChooser releaseDateField,
 			  JRadioButton withoutRoomRButton) {
 
 		if(withoutRoomRButton.isSelected() == true) {
@@ -210,10 +172,9 @@ public class RoomFunction
 		}else {
 			bookingRoom(examination, room, entryDateField, releaseDateField);
 		}
-	
 	}
 	
-	private static void filterRoomWithSelection(JList<Object> list,ArrayList<Chambre> arrayRoom,JComboBox LengthOfStaySelectionBox,JRadioButton withAccompangyingRButton,JRadioButton withoutAccompanyingRButton) {
+	private static void filterRoomWithSelection(JList list,ArrayList<Chambre> arrayRoom,JComboBox LengthOfStaySelectionBox,JRadioButton withAccompangyingRButton,JRadioButton withoutAccompanyingRButton) {
 		
 		int selection = LengthOfStaySelectionBox.getSelectedIndex();
 			if(selection == -1)
@@ -232,10 +193,9 @@ public class RoomFunction
 				selectRoomLongStayAlone(list,arrayRoom);
 			}
 		}
-		
 	}
 	
-	private static void selectRoomShorStaytAccompanying(JList<Object> list,ArrayList<Chambre> arrayRoom) {
+	private static void selectRoomShorStaytAccompanying(JList list,ArrayList<Chambre> arrayRoom) {
 		
 		Chambre room = null;
 		temporaryListRoom.clear();
@@ -251,10 +211,9 @@ public class RoomFunction
 		}
 		
 		list.setListData(temporaryListRoom.toArray());
-	
 	}
 	
-	private static void selectRoomLongStaytAccompanying(JList<Object> list,ArrayList<Chambre> arrayRoom) {
+	private static void selectRoomLongStaytAccompanying(JList list,ArrayList<Chambre> arrayRoom) {
 		
 		Chambre room = null;
 		temporaryListRoom.clear();
@@ -270,10 +229,9 @@ public class RoomFunction
 		}
 		
 		list.setListData(temporaryListRoom.toArray());
-		
 	}
 	
-	private static void selectRoomShorStayAlone(JList<Object> list,ArrayList<Chambre> arrayRoom) {
+	private static void selectRoomShorStayAlone(JList list,ArrayList<Chambre> arrayRoom) {
 		
 		Chambre room = null;
 		temporaryListRoom.clear();
@@ -289,10 +247,9 @@ public class RoomFunction
 		}
 		
 		list.setListData(temporaryListRoom.toArray());
-		
 	}
 	
-	private static void selectRoomLongStayAlone(JList<Object> list,ArrayList<Chambre> arrayRoom) {
+	private static void selectRoomLongStayAlone(JList list,ArrayList<Chambre> arrayRoom) {
 		
 		Chambre room = null;
 		temporaryListRoom.clear();
@@ -308,10 +265,9 @@ public class RoomFunction
 		}
 		
 		list.setListData(temporaryListRoom.toArray());
-	
 	}
 	
-	private static void showInformationFromArrayExamination(JList<Object> list,ArrayList<Examen> arrayExamination,JTextField patientNumberBookingRoomPanelField) {
+	private static void showInformationFromArrayExamination(JList list,ArrayList<Examen> arrayExamination,JTextField patientNumberBookingRoomPanelField) {
 		
 		int idExamination = list.getSelectedIndex();
 		
@@ -322,7 +278,7 @@ public class RoomFunction
 		patientNumberBookingRoomPanelField.setText(""+examination.getPatient().getId());
 	}
 	
-	private static void showInformationFromTemporaryListRoom(JList<Object> list,JTextField bedRoomNumberField,ArrayList<Chambre> arrayRoom) {
+	private static void showInformationFromTemporaryListRoom(JList list,JTextField bedRoomNumberField,ArrayList<Chambre> arrayRoom) {
 		int idRoom = list.getSelectedIndex();
 		
 			if(idRoom == -1) 
@@ -336,7 +292,7 @@ public class RoomFunction
 		}
 	}
 	
-	private static Examen extractExaminationFromList (JList<Object> list) {
+	private static Examen extractExaminationFromList (JList list) {
 		Examen examination = null;
 		
 		for(int i = 0; i < temporaryListExamination.size(); i++) {
@@ -345,11 +301,10 @@ public class RoomFunction
 					break;
 				}
 			}
-	
 		return examination;
 	}
 	
-	private static Chambre extractRoomFromArray(JList<Object> list) {
+	private static Chambre extractRoomFromArray(JList list) {
 		
 		Chambre room = null;
 
@@ -358,11 +313,10 @@ public class RoomFunction
 				return room;
 		
 		room = temporaryListRoom.get(ligneNumber);
-		
 		return room;
 	}
 	
-	private static void noBookingRoom (JList<Object> list, Examen examination, Chambre room) {
+	private static void noBookingRoom (JList list, Examen examination, Chambre room) {
 		
 		examination.setBookingRoom(true);
 		room = new Chambre(null, null, 0, false, false, false, 0, false, examination);
@@ -375,10 +329,9 @@ public class RoomFunction
 		room.setExamination(examination);
 		room.SetAvailable(false);
 		examination.setChambre(room);
-		
 	}
 
-	public static void updadeExaminationListForBooking(JList<Object> list,ArrayList<Examen> arrayExamination) {
+	public static void updadeExaminationListForBooking(JList list,ArrayList<Examen> arrayExamination) {
 		
 		Examen examination = null;
 		temporaryListExamination.clear();
@@ -402,7 +355,7 @@ public class RoomFunction
 		releaseDateField.setDate(new Date());
 	}
 	
-	private static void printRoomInList(JList<Object> list,ArrayList<Chambre> arrayRoom) {
+	private static void printRoomInList(JList list,ArrayList<Chambre> arrayRoom) {
 		Chambre room = null;
 		
 		bookedRoomList.clear();
@@ -417,10 +370,7 @@ public class RoomFunction
 		list.setListData(bookedRoomList.toArray());
 	}
 	
-	public static void printRoomInList(JList<Object> list, Chambre room) {
-		
-		
-	
+	public static void printRoomInList(JList list, Chambre room) {
 		
 		for(int i = 0; i < bookedRoomList.size(); i++) {
 			
@@ -507,5 +457,4 @@ public class RoomFunction
 			}
 		}
 	}
-	
 }

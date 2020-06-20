@@ -3,12 +3,10 @@ package functions;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-
 import com.toedter.calendar.JDateChooser;
 
 public class ParseFunctions {
 
-	
 	public static String dateFormating(JDateChooser date){
 		
 		SimpleDateFormat dateString = new SimpleDateFormat("dd/MM/yyy");
@@ -51,5 +49,4 @@ public class ParseFunctions {
 		long value = Long.parseLong(field);
 		return value;
 	}
-	
 }

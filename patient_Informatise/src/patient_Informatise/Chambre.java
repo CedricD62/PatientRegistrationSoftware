@@ -1,7 +1,5 @@
 package patient_Informatise;
 
-import javax.management.BadBinaryOpValueExpException;
-
 public class Chambre 
 {
 	private Examen	examination;
@@ -17,8 +15,6 @@ public class Chambre
 	private static final String WITHOUT = "Sans accompagnement";
 	private static final String BOOKINGSTATUS = "pas de réservation de chambre";
 
-
-	
 	public Chambre(String pEntryDate, String pReleaseDate, int pRoomNumber, boolean pAlone, boolean pAccompanying, boolean pAvailable, int pNumberOfBed, boolean pBookingRoom) {
 	
 		this.entryDate 		= pEntryDate;
@@ -106,7 +102,6 @@ public class Chambre
 	public void setAccompanying(boolean pAccompanying) {
 		this.accompanying = pAccompanying;
 	}
-
 
 	@Override
 	public String toString() {

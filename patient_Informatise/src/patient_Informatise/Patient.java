@@ -20,7 +20,6 @@ public class Patient
 	private static final String FEMALE = "Femme";
 	private static final String BOOKING = "Pas de chambre";
 	
-	
 	public Patient(int pId,boolean pMale,boolean pFemale,String pName,String pFirstName,String pAddress,int pCp,String pCity,String pEmail, 
 			long pSsn,String pPhone,String pCellPhone,String pBirthDate, boolean pBookingRoom) {		
 			id 			= pId;

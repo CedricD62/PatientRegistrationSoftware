@@ -2,7 +2,6 @@ package patient_Informatise;
 
 public class Examen 
 {
-	
 	private String 				typeExamen;
 	private String 				dateExamen;
 	private Patient 			patient;
@@ -14,8 +13,7 @@ public class Examen
 		patient 	= pPatient;
 		room 		= pRoom;
 		typeExamen 	= pTypeExamen;
-		dateExamen 	= pDateExamen;
-	 
+		dateExamen 	= pDateExamen; 
 	}
 	
 	public boolean isBookingRoom() {

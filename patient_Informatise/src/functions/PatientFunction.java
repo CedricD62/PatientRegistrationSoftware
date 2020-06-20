@@ -1,17 +1,12 @@
 package functions;
 
-
-
 import java.util.ArrayList;
 import java.util.Date;
-
 import javax.swing.ButtonGroup;
 import javax.swing.JList;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
-
 import com.toedter.calendar.JDateChooser;
-
 import patient_Informatise.Chambre;
 import patient_Informatise.Examen;
 import patient_Informatise.Patient;
@@ -19,7 +14,6 @@ import treatment.PatientControler;
 
 public class PatientFunction 
 {
-	
 	private static ArrayList<Patient> temporaryList = new ArrayList<Patient>();
 	private static ArrayList<Examen> arraySummaryExamination = new ArrayList<Examen>();
 	private static ArrayList<Chambre>arraySummaryRoom = new ArrayList<Chambre>();
@@ -54,7 +48,6 @@ public class PatientFunction
 			DefaultValueLuncher.setDefaultRangeExaminationDate(patient, examinationDateField);
 			clearInformationField(idField,button,nameField,fNameField,addressField,areaCodeField,townField,ssnField,eMailField,phoneField,cellphoneField,birthdateField);
 		}
-		
 	}
 	
 	public static void changeInfoPatient(JList list,ArrayList<Patient> arrayPatient,JTextField idField,JRadioButton maleRButton, JRadioButton femaleRButton, 
@@ -84,34 +77,33 @@ public class PatientFunction
 		}
 	}
 	
-	public static void deletePatient(JList list,ArrayList<Patient> arrayPatient, int idPatient, JTextField idField,ButtonGroup button, 
+	public static void deletePatient(JList list,ArrayList<Patient> arrayPatient, JTextField idField,ButtonGroup button, 
 									 JTextField nameField, JTextField fNameField,JTextField addressField, JTextField areaCodeField, JTextField townField, 
 									 JTextField ssnField,JTextField eMailField, JTextField phoneField, JTextField cellphoneField, JDateChooser birthdateField) {
 
 		if(temporaryList.isEmpty()) {
-			deleteFromArrayPatient(list,arrayPatient,idPatient,idField,button,nameField,fNameField,addressField,areaCodeField,townField,ssnField,eMailField,phoneField,
+			deleteFromArrayPatient(list,arrayPatient,idField,button,nameField,fNameField,addressField,areaCodeField,townField,ssnField,eMailField,phoneField,
 								   cellphoneField,birthdateField);
 		}else {
-			deleteFromTemporaryList(list,arrayPatient,idPatient,idField,button,nameField,fNameField,addressField,areaCodeField,townField,ssnField,eMailField,phoneField,
+			deleteFromTemporaryList(list,arrayPatient,idField,button,nameField,fNameField,addressField,areaCodeField,townField,ssnField,eMailField,phoneField,
 									cellphoneField,birthdateField);
-			
 		}
 	}
 	
 	public static void searchPatient(JList list,ArrayList<Patient> arrayPatient, String text) {
 		
-			if(text.contentEquals("homme")) {
-				
-				serchPatientMale(list,arrayPatient);
-				
-			}else if (text.contentEquals("femme")) {
-				
-				searchPatientFemale(list,arrayPatient);
-				
-			}else if(!text.contentEquals("homme") || text.contentEquals("femme")) {
-				
-				searchPatientOtherInfo(list,arrayPatient,text);
-			}
+		if(text.contentEquals("homme")) {
+			
+			serchPatientMale(list,arrayPatient);
+			
+		}else if (text.contentEquals("femme")) {
+			
+			searchPatientFemale(list,arrayPatient);
+			
+		}else if(!text.contentEquals("homme") || text.contentEquals("femme")) {
+			
+			searchPatientOtherInfo(list,arrayPatient,text);
+		}
 	}
 	
 	public static void cancelInformationBeforeAddPatient(JTextField idField,JTextField nameField, JTextField fNameField,
@@ -122,8 +114,7 @@ public class PatientFunction
 	}
 	
 	private static void serchPatientMale(JList list,ArrayList<Patient> arrayPatient) {
-		
-		
+
 		Patient patient;
 		temporaryList.clear();
 		
@@ -139,8 +130,7 @@ public class PatientFunction
 		list.setListData(temporaryList.toArray());
 	}
 	
-	private static void searchPatientFemale(JList list,ArrayList<Patient> arrayPatient) {
-			
+	private static void searchPatientFemale(JList list,ArrayList<Patient> arrayPatient) {	
 	
 		Patient patient;
 		temporaryList.clear();
@@ -182,9 +172,7 @@ public class PatientFunction
 			list.setListData(temporaryList.toArray());
 		}
 	}
-	
-	
-	
+
 	private static void showPatientArrayPatient(JList list,ArrayList<Patient> arrayPatient,ArrayList<Examen> arrayExamination,JTextField idField,JRadioButton maleRButton,JRadioButton femaleRButton, 
 												JTextField nameField,JTextField fNameField,JTextField addressField,JTextField areaCodeField,JTextField townField, 
 												JTextField ssnField,JTextField eMailField,JTextField phoneField,JTextField cellphoneField,JDateChooser birthdateField,
@@ -244,9 +232,9 @@ public class PatientFunction
 			birthdateField.setDate(ParseFunctions.dateFormating(patient.getBirthDate()));
 			patientNumberExamPanelField.setText(""+patient.getId());
 			
-			if(!arrayExamination.isEmpty()) {
-				displaySummaryExamination(summaryExaminationList,summaryBookingroomList,patient,arrayExamination);
-			}
+		if(!arrayExamination.isEmpty()) {
+			displaySummaryExamination(summaryExaminationList,summaryBookingroomList,patient,arrayExamination);
+		}
 	}
 	
 	private static void changePatientArrayPatient (JList list,ArrayList<Patient> arrayPatient,JTextField idField,JRadioButton maleRButton, JRadioButton femaleRButton, 
@@ -284,7 +272,6 @@ public class PatientFunction
 	private static void changePatientTemporaryList (JList list,ArrayList<Patient> arrayPatient,JTextField idField,JRadioButton maleRButton, JRadioButton femaleRButton, 
 			   										JTextField nameField, JTextField fNameField,JTextField addressField, JTextField areaCodeField, JTextField townField, 
 			   										JTextField ssnField,JTextField eMailField, JTextField phoneField, JTextField cellphoneField, JDateChooser birthdateField) {
-
 		int idPatient = list.getSelectedIndex();
 		if(idPatient == -1)
 			return;
@@ -345,27 +332,28 @@ public class PatientFunction
 		return exist;
 	}
 	
-	private static void deleteFromArrayPatient(JList list,ArrayList<Patient> arrayPatient, int idPatient, JTextField idField,ButtonGroup button, 
+	private static void deleteFromArrayPatient(JList list,ArrayList<Patient> arrayPatient, JTextField idField,ButtonGroup button, 
 			   								   JTextField nameField, JTextField fNameField,JTextField addressField, JTextField areaCodeField, JTextField townField, 
 			   								   JTextField ssnField,JTextField eMailField, JTextField phoneField, JTextField cellphoneField, JDateChooser birthdateField)  {
 		
-		if(idPatient == -1)
-			return;
+		int idPatient = list.getSelectedIndex();
+			if(idPatient == -1)
+				return;
 		
 		arrayPatient.remove(idPatient);
 		
 		clearInformationField(idField,button,nameField,fNameField,addressField,areaCodeField,townField,ssnField,eMailField,phoneField,cellphoneField,birthdateField);
 		
 		list.setListData(arrayPatient.toArray());
-		
 	}
 	
-	private static void deleteFromTemporaryList(JList list,ArrayList<Patient> arrayPatient, int idPatient, JTextField idField,ButtonGroup button, 
+	private static void deleteFromTemporaryList(JList list,ArrayList<Patient> arrayPatient, JTextField idField,ButtonGroup button, 
 												JTextField nameField, JTextField fNameField,JTextField addressField, JTextField areaCodeField, JTextField townField, 
 												JTextField ssnField,JTextField eMailField, JTextField phoneField, JTextField cellphoneField, JDateChooser birthdateField)  {
 		
-		if(idPatient == -1)
-			return;
+		int idPatient = list.getSelectedIndex();
+			if(idPatient == -1)
+				return;
 		
 		Patient patientTest = temporaryList.get(idPatient);
 		
@@ -381,10 +369,8 @@ public class PatientFunction
 		
 		clearInformationField(idField,button,nameField,fNameField,addressField,areaCodeField,townField,ssnField,eMailField,phoneField,cellphoneField,birthdateField);
 		
-		
 		list.setListData(arrayPatient.toArray());
 		temporaryList.clear();
-		
 	}
 	
 	private static void displaySummaryExamination(JList summaryExaminationList, JList summaryBookingroomList,Patient patient,ArrayList<Examen> arrayExamination) {
@@ -403,14 +389,12 @@ public class PatientFunction
 				}
 			}
 		}
-		
 		summaryExaminationList.setListData(arraySummaryExamination.toArray());
 		summaryBookingroomList.setListData(arraySummaryRoom.toArray());
 	}
 	
 	private static void clearInformationField(JTextField idField,ButtonGroup button,JTextField nameField, JTextField fNameField,JTextField addressField, JTextField areaCodeField, 
 											  JTextField townField,JTextField ssnField,JTextField eMailField, JTextField phoneField, JTextField cellphoneField, JDateChooser birthdateField) {
-		
 		idField.setText("");
 		button.clearSelection();
 		nameField.setText("");
@@ -425,6 +409,4 @@ public class PatientFunction
 		birthdateField.setDate(new Date());
 		
 	}
-	
-	
 }
