@@ -94,7 +94,8 @@ public class RoomFunction
 	}
 	
 	public static void updateListOfAvailableRoom(JList list,ArrayList<Chambre> arrayRoom,JTextField patientNumberBookingRoomPanelField,JRadioButton withRoomRButton,JRadioButton withoutRoomRButton, JRadioButton withAccompangyingRButton, 
-										   JRadioButton withoutAccompangyingRButton, JComboBox LengthOfStaySelectionBox) {
+										   JRadioButton withoutAccompangyingRButton, JComboBox LengthOfStaySelectionBox,JDateChooser entryDateField, 
+											 JDateChooser releaseDateField) {
 		if(RoomControler.inputFieldControlerBookingRoomRButton(withoutRoomRButton,withRoomRButton,patientNumberBookingRoomPanelField) == true) {
 			Examen examination = null;
 			
@@ -110,7 +111,7 @@ public class RoomFunction
 						
 						examination = temporaryListExamination.get(ligneNumber);
 						examination.setBookingRoom(true);
-						
+						DefaultValueLuncher.setDefaultRangeForBookingRoomDate(entryDateField,releaseDateField,examination);
 						filterRoomWithSelection(list, arrayRoom, LengthOfStaySelectionBox, withAccompangyingRButton, withAccompangyingRButton);
 					}
 				}

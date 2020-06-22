@@ -205,7 +205,7 @@ public class InterfaceEnregistrementPatient {
 		addExaminationButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				ExaminationFunction.creatExamination(examinationList,switchRoomAndExaminationList,arrayPatient,arrayExamination,patientNumberExamPanelField,examinationTypeSelection,
-													 examinationDateField,entryDateField,releaseDateField);
+													 examinationDateField);
 			}});
 		addExaminationButton.setBounds(321, 54, 136, 23);
 		addExaminationPanel.add(addExaminationButton);
@@ -213,7 +213,7 @@ public class InterfaceEnregistrementPatient {
 		changeExaminationButton = new JButton("Modifier Examen");
 		changeExaminationButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {	
-				ExaminationFunction.changeInfoExamination(examinationList,arrayExamination,patientNumberExamPanelField,examinationTypeSelection,examinationDateField);
+				ExaminationFunction.changeInfoExamination(examinationList,arrayExamination,arrayPatient,patientNumberExamPanelField,examinationTypeSelection,examinationDateField);
 			}});
 		changeExaminationButton.setBounds(321, 166, 136, 23);
 		addExaminationPanel.add(changeExaminationButton);
@@ -318,7 +318,8 @@ public class InterfaceEnregistrementPatient {
 		showRoomButton = new JButton("Afficher Chambres");
 		showRoomButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				RoomFunction.updateListOfAvailableRoom(switchRoomAndExaminationList, arrayRoom, patientNumberBookingRoomPanelField,withRoomRButton, withoutRoomRButton, withAccompangyingRButton, withoutAccompanyingRButton, LengthOfStaySelectionBox);
+				RoomFunction.updateListOfAvailableRoom(switchRoomAndExaminationList, arrayRoom, patientNumberBookingRoomPanelField,withRoomRButton, withoutRoomRButton, 
+													   withAccompangyingRButton, withoutAccompanyingRButton, LengthOfStaySelectionBox,entryDateField,releaseDateField);
 			}});
 		showRoomButton.setBounds(178, 192, 166, 23);
 		bookRoomPanel.add(showRoomButton);		
@@ -435,7 +436,8 @@ public class InterfaceEnregistrementPatient {
 		deletePatientButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				PatientFunction.deletePatient(patientList,arrayPatient,idField,genderGroup,nameField,fNameField,addressField,
-											  areaCodeField,townField,ssnField,eMailField,phoneField,cellphoneField,birthDateField);				
+											  areaCodeField,townField,ssnField,eMailField,phoneField,cellphoneField,birthDateField,examinationList,
+											  arrayExamination,summaryExaminationList,summaryBookingroomList);				
 			}});
 		searchPatientListButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
