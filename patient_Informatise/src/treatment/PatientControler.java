@@ -83,7 +83,7 @@ public class PatientControler {
 			fieldOk = false;
 		}
 		
-		if(stringException(text) == false) {
+		if(ExceptionControler.stringException(text) == false) {
 			fieldOk = false;
 			text.setText("erreur");
 		}
@@ -94,7 +94,7 @@ public class PatientControler {
 	private static boolean checkUpJTextFieldIntInput(JTextField text) {
 		boolean fieldOk = true;
 		
-		if(numericException(text) == true) {
+		if(ExceptionControler.numericException(text) == true) {
 			fieldOk = false;
 			text.setText("erreur");
 		}	
@@ -104,7 +104,7 @@ public class PatientControler {
 	private static boolean checkUpJTextFieldLongInput(JTextField text) {
 		boolean fieldOk = true;
 		
-		if(numericLongException(text) == true) {
+		if(ExceptionControler.numericLongException(text) == true) {
 			fieldOk = false;
 			text.setText("erreur");
 		}	
@@ -134,44 +134,7 @@ public class PatientControler {
 		return fieldOk;
 	}
 	
-	private static boolean numericException(JTextField text) {
-		boolean error = false;
-			try {
-				
-				int value = Integer.parseInt(text.getText()); 
-				error = false; 
-				
-			} catch (InputMismatchException e) {
-				error = true; 
-			} catch (NumberFormatException e) {
-				error = true; 
-			}	
-		return error;
-	}
 	
-	private static boolean numericLongException(JTextField text) {
-		boolean error = false;
-			try {
-				long value = Long.parseLong(text.getText()); 
-				error = false; 		
-			} catch (InputMismatchException e) {		
-				error = true; 
-			} catch (NumberFormatException e) {
-				error = true; 
-			}
-		return error;
-	}
-	
-	private static boolean stringException(JTextField text) {
-		boolean error = false;
-			try {	
-				int value = Integer.parseInt(text.getText()); 
-				error = false; 			
-			} catch (NumberFormatException e) {
-				error = true; 
-			}
-		return error;
-	}
 
 	private static boolean checkUpAvailableEmail(JTextField text) {
 		boolean email = false;

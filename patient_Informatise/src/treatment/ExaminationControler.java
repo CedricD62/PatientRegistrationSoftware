@@ -8,13 +8,18 @@ import com.toedter.calendar.JDateChooser;
 
 public class ExaminationControler {
 	
-	public static boolean inputFieldControler(JTextField patientNumberExamPanelField) {
+	public static boolean inputFieldControler(JTextField patientNumberExamPanelField,JComboBox examinationTypeSelection,JDateChooser examinationDateField) {
 		boolean fieldOk = true;
 		
 		if(checkUpJTextFieldIntInput(patientNumberExamPanelField) == false) {
 			fieldOk = false; 
 		}
-		
+		if(checkUpJDateChooserDateInput(examinationDateField) == false) {
+			fieldOk = false;
+		}
+		if(checkUpJComboBoxInput(examinationTypeSelection) == false) {
+			fieldOk = false;
+		}
 		return fieldOk;
 	}
 	
@@ -33,28 +38,13 @@ public class ExaminationControler {
 	private static boolean checkUpJTextFieldIntInput(JTextField text) {
 		boolean fieldOk = true;
 		
-		if(numericException(text) == true) {
+		if(ExceptionControler.numericException(text) == true) {
 			fieldOk = false;
 			text.setText("erreur");
 		}	
 		return fieldOk;
 	}
-	
-	private static boolean numericException(JTextField text) {
-		boolean error = false;
-			try {
-				
-				int value = Integer.parseInt(text.getText()); 
-				error = false; 
-				
-			} catch (InputMismatchException e) {
-				error = true; 
-			} catch (NumberFormatException e) {
-				error = true; 
-			}	
-		return error;
-	}
-	
+
 	private static boolean checkUpJDateChooserDateInput(JDateChooser examinationDateField) {
 		boolean fieldOk = false;
 		

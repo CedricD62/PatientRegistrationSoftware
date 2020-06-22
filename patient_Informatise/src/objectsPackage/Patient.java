@@ -1,4 +1,4 @@
-package patient_Informatise;
+package objectsPackage;
 
 public class Patient 
 {

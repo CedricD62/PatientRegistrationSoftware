@@ -7,9 +7,10 @@ import javax.swing.JList;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 import com.toedter.calendar.JDateChooser;
-import patient_Informatise.Chambre;
-import patient_Informatise.Examen;
-import patient_Informatise.Patient;
+
+import objectsPackage.Chambre;
+import objectsPackage.Examen;
+import objectsPackage.Patient;
 import treatment.PatientControler; 
 
 public class PatientFunction 

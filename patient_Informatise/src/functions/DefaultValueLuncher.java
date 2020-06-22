@@ -3,8 +3,9 @@ package functions;
 import java.util.Calendar;
 import java.util.Date;
 import com.toedter.calendar.JDateChooser;
-import patient_Informatise.Examen;
-import patient_Informatise.Patient;
+
+import objectsPackage.Examen;
+import objectsPackage.Patient;
 
 	public class DefaultValueLuncher {
 		
@@ -27,7 +28,8 @@ import patient_Informatise.Patient;
 		public static void setDefaultRangeForBookingRoomDate(JDateChooser entryDateField,JDateChooser releaseDateField,Examen examination) {
 			
 			Date examinationDate = ParseFunctions.dateFormating(examination.getDateExamen());
-			entryDateField.setMaxSelectableDate(examinationDate);
+			Date dateMin = new Date();
+			entryDateField.setSelectableDateRange(dateMin,examinationDate);
 			releaseDateField.setMinSelectableDate(examinationDate);
 		}
 	}

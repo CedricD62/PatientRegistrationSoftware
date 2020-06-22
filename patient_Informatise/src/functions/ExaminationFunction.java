@@ -6,9 +6,10 @@ import javax.swing.JComboBox;
 import javax.swing.JList;
 import javax.swing.JTextField;
 import com.toedter.calendar.JDateChooser;
-import patient_Informatise.Chambre;
-import patient_Informatise.Examen;
-import patient_Informatise.Patient;
+
+import objectsPackage.Chambre;
+import objectsPackage.Examen;
+import objectsPackage.Patient;
 import treatment.ExaminationControler;
 
 public class ExaminationFunction 
@@ -19,7 +20,7 @@ public class ExaminationFunction
 	public static void creatExamination (JList listExaminationPanel,JList listBookingRoomPannel,ArrayList<Patient> arrayPatient,ArrayList<Examen> arrayExamination,
 										 JTextField patientNumberExamPanelField,JComboBox examinationTypeSelection,JDateChooser examinationDateField,JDateChooser entryDateField, 
 										 JDateChooser releaseDateField){
-		if(ExaminationControler.inputFieldControler(patientNumberExamPanelField) == true) {
+		if(ExaminationControler.inputFieldControler(patientNumberExamPanelField,examinationTypeSelection, examinationDateField) == true) {
 			int id = ParseFunctions.numericConversion(patientNumberExamPanelField.getText());
 			Patient patient = PatientFunction.extractPatientFromArray(arrayPatient,id);
 			String examinationType="";

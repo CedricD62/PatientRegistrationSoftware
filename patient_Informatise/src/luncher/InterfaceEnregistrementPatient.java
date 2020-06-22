@@ -1,4 +1,4 @@
-package patient_Informatise;
+package luncher;
 
 import java.awt.Color;
 import java.awt.EventQueue;
@@ -30,6 +30,9 @@ import functions.ExaminationFunction;
 import functions.ParseFunctions;
 import functions.PatientFunction;
 import functions.RoomFunction;
+import objectsPackage.Chambre;
+import objectsPackage.Examen;
+import objectsPackage.Patient;
 import treatment.RoomControler;
 
 public class InterfaceEnregistrementPatient {
@@ -315,7 +318,7 @@ public class InterfaceEnregistrementPatient {
 		showRoomButton = new JButton("Afficher Chambres");
 		showRoomButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				RoomFunction.updateListOfAvailableRoom(switchRoomAndExaminationList, arrayRoom, patientNumberBookingRoomPanelField, withoutRoomRButton, withAccompangyingRButton, withoutAccompanyingRButton, LengthOfStaySelectionBox);
+				RoomFunction.updateListOfAvailableRoom(switchRoomAndExaminationList, arrayRoom, patientNumberBookingRoomPanelField,withRoomRButton, withoutRoomRButton, withAccompangyingRButton, withoutAccompanyingRButton, LengthOfStaySelectionBox);
 			}});
 		showRoomButton.setBounds(178, 192, 166, 23);
 		bookRoomPanel.add(showRoomButton);		
@@ -324,7 +327,8 @@ public class InterfaceEnregistrementPatient {
 		bookingRoomButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				RoomFunction.bookingAvailableRoom(switchRoomAndExaminationList, entryDateField, releaseDateField, withoutRoomRButton, arrayExamination, patientNumberBookingRoomPanelField, 
-												  withRoomRButton, accompanyingGroup, LengthOfStaySelectionBox, bedRoomNumberField, arrayRoom, listOfBookedRoom);
+												  withRoomRButton, accompanyingGroup, LengthOfStaySelectionBox, bedRoomNumberField, arrayRoom, listOfBookedRoom,bookingGroup,
+												  withAccompangyingRButton,withoutAccompanyingRButton);
 			}});
 		bookingRoomButton.setBounds(648, 192, 110, 23);
 		bookRoomPanel.add(bookingRoomButton);
@@ -366,7 +370,7 @@ public class InterfaceEnregistrementPatient {
 		bookingGroup.add(withoutRoomRButton);
 					
 		LengthOfStaySelectionBox = new JComboBox();
-		LengthOfStaySelectionBox.setModel(new DefaultComboBoxModel(new String[] {"courte", "longue"}));
+		LengthOfStaySelectionBox.setModel(new DefaultComboBoxModel(new String[] {"- choix", "courte", "longue"}));
 		LengthOfStaySelectionBox.setBounds(143, 151, 201, 20);
 		bookRoomPanel.add(LengthOfStaySelectionBox);
 		
