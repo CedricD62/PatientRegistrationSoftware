@@ -155,6 +155,7 @@ public class ExaminationFunction
 		Examen examination = arrayExamination.get(indexSelection);
 		if(examination.getChambre() == null) {
 			arrayExamination.remove(indexSelection);
+			RoomFunction.updadeExaminationListForBooking(switchRoomAndExaminationList, arrayExamination);
 		}else {
 			Chambre room = examination.getChambre();
 			RoomFunction.resetRoomDataToDefault(room);

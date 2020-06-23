@@ -46,7 +46,7 @@ public class PatientFunction
 			arrayPatient.add(patient);
 			list.setListData(arrayPatient.toArray());
 			
-			DefaultValueLuncher.setDefaultRangeExaminationDate(patient, examinationDateField);
+			DefaultValueLuncher.setDefaultRangeExaminationDate(examinationDateField);
 			clearInformationField(idField,button,nameField,fNameField,addressField,areaCodeField,townField,ssnField,eMailField,phoneField,cellphoneField,birthdateField);
 		}
 	}
@@ -80,15 +80,14 @@ public class PatientFunction
 	
 	public static void deletePatient(JList list,ArrayList<Patient> arrayPatient, JTextField idField,ButtonGroup button, 
 									 JTextField nameField, JTextField fNameField,JTextField addressField, JTextField areaCodeField, JTextField townField, 
-									 JTextField ssnField,JTextField eMailField, JTextField phoneField, JTextField cellphoneField, JDateChooser birthdateField,
-									 JList examinationList,ArrayList<Examen> arrayExamination,JList summaryExaminationList, JList summaryBookingroomList) {
+									 JTextField ssnField,JTextField eMailField, JTextField phoneField, JTextField cellphoneField, JDateChooser birthdateField) {
 
 		if(temporaryList.isEmpty()) {
 			deleteFromArrayPatient(list,arrayPatient,idField,button,nameField,fNameField,addressField,areaCodeField,townField,ssnField,eMailField,phoneField,
-								   cellphoneField,birthdateField, examinationList,arrayExamination,summaryExaminationList,summaryBookingroomList);
+								   cellphoneField,birthdateField);
 		}else {
 			deleteFromTemporaryList(list,arrayPatient,idField,button,nameField,fNameField,addressField,areaCodeField,townField,ssnField,eMailField,phoneField,
-									cellphoneField,birthdateField, examinationList,arrayExamination,summaryExaminationList,summaryBookingroomList);
+									cellphoneField,birthdateField);
 		}
 	}
 	
@@ -335,27 +334,23 @@ public class PatientFunction
 	
 	private static void deleteFromArrayPatient(JList list,ArrayList<Patient> arrayPatient, JTextField idField,ButtonGroup button, 
 			   								   JTextField nameField, JTextField fNameField,JTextField addressField, JTextField areaCodeField, JTextField townField, 
-			   								   JTextField ssnField,JTextField eMailField, JTextField phoneField, JTextField cellphoneField, JDateChooser birthdateField,
-			   								   JList examinationList,ArrayList<Examen> arrayExamination,JList summaryExaminationList, JList summaryBookingroomList)  {
+			   								   JTextField ssnField,JTextField eMailField, JTextField phoneField, JTextField cellphoneField, JDateChooser birthdateField)  {
 		
 		int idPatient = list.getSelectedIndex();
 			if(idPatient == -1)
 				return;
 		
-		deleteExaminationAndRoomIfExist(arrayExamination, idPatient, examinationList);	
-		displaySummaryList(summaryExaminationList, summaryBookingroomList, arrayExamination);
-			
 		arrayPatient.remove(idPatient);
 		
 		clearInformationField(idField,button,nameField,fNameField,addressField,areaCodeField,townField,ssnField,eMailField,phoneField,cellphoneField,birthdateField);
 		
 		list.setListData(arrayPatient.toArray());
+
 	}
 	
 	private static void deleteFromTemporaryList(JList list,ArrayList<Patient> arrayPatient, JTextField idField,ButtonGroup button, 
 												JTextField nameField, JTextField fNameField,JTextField addressField, JTextField areaCodeField, JTextField townField, 
-												JTextField ssnField,JTextField eMailField, JTextField phoneField, JTextField cellphoneField, JDateChooser birthdateField,
-												JList examinationList,ArrayList<Examen> arrayExamination,JList summaryExaminationList, JList summaryBookingroomList)  {
+												JTextField ssnField,JTextField eMailField, JTextField phoneField, JTextField cellphoneField, JDateChooser birthdateField){
 		
 		int idPatient = list.getSelectedIndex();
 			if(idPatient == -1)
@@ -366,14 +361,13 @@ public class PatientFunction
 		for(int i = 0; i < arrayPatient.size(); i++) {
 			Patient patientRemove = arrayPatient.get(i);
 			if(patientTest.getId() == patientRemove.getId()) {
-				deleteExaminationAndRoomIfExist(arrayExamination, patientTest.getId(), examinationList);	
 				arrayPatient.remove(i);
 				break;
 			}
 		}
 		
 		temporaryList.remove(idPatient);
-		displaySummaryList(summaryExaminationList, summaryBookingroomList, arrayExamination);
+	
 		clearInformationField(idField,button,nameField,fNameField,addressField,areaCodeField,townField,ssnField,eMailField,phoneField,cellphoneField,birthdateField);
 		
 		list.setListData(arrayPatient.toArray());
@@ -400,24 +394,6 @@ public class PatientFunction
 		summaryBookingroomList.setListData(arraySummaryRoom.toArray());
 	}
 	
-	private static void displaySummaryList(JList summaryExaminationList, JList summaryBookingroomList,ArrayList<Examen> arrayExamination) {
-		
-		Examen examination = null;
-		arraySummaryExamination.clear();
-		arraySummaryRoom.clear();
-		
-		for(int i = 0; i < arrayExamination.size(); i++) {
-			examination = arrayExamination.get(i);
-			arraySummaryExamination.add(examination);
-			Chambre room = examination.getChambre();
-			if(room != null){
-				arraySummaryRoom.add(room);
-			}
-		}
-		summaryExaminationList.setListData(arraySummaryExamination.toArray());
-		summaryBookingroomList.setListData(arraySummaryRoom.toArray());
-	}
-	
 	private static void clearInformationField(JTextField idField,ButtonGroup button,JTextField nameField, JTextField fNameField,JTextField addressField, JTextField areaCodeField, 
 											  JTextField townField,JTextField ssnField,JTextField eMailField, JTextField phoneField, JTextField cellphoneField, JDateChooser birthdateField) {
 		idField.setText("");
@@ -433,24 +409,5 @@ public class PatientFunction
 		cellphoneField.setText("");
 		birthdateField.setDate(new Date());
 		
-	}
-	
-	private static void deleteExaminationAndRoomIfExist(ArrayList<Examen> arrayExamination, int idPatient, JList examinationList) {
-		
-		Examen examination;
-		
-		for(int i = 0; i < arrayExamination.size(); i++) {
-			examination= arrayExamination.get(i);
-			if(examination.getChambre() != null) {
-				Chambre room = examination.getChambre();
-				RoomFunction.resetRoomDataToDefault(room);
-				arrayExamination.remove(i);
-			
-			}else {
-				arrayExamination.remove(i);
-				
-			}
-		}
-		examinationList.setListData(arrayExamination.toArray());
 	}
 }

@@ -435,9 +435,8 @@ public class InterfaceEnregistrementPatient {
 			}});
 		deletePatientButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				PatientFunction.deletePatient(patientList,arrayPatient,idField,genderGroup,nameField,fNameField,addressField,
-											  areaCodeField,townField,ssnField,eMailField,phoneField,cellphoneField,birthDateField,examinationList,
-											  arrayExamination,summaryExaminationList,summaryBookingroomList);				
+				PatientFunction.deletePatient(patientList,arrayPatient,idField,genderGroup,nameField,fNameField,addressField,areaCodeField,townField,ssnField,eMailField,phoneField,cellphoneField,
+											  birthDateField);				
 			}});
 		searchPatientListButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {

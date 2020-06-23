@@ -195,13 +195,13 @@ public class RoomFunction
 				return;
 		
 		if(withAccompangyingRButton.isSelected()) {
-			if(selection == 0) {
+			if(selection == 1) {
 				selectRoomShorStaytAccompanying(list,arrayRoom);
 			}else{
 				selectRoomLongStaytAccompanying(list,arrayRoom);
 			}
 		}else{
-			if(selection == 0) {
+			if(selection == 1) {
 				selectRoomShorStayAlone(list,arrayRoom);
 			}else {
 				selectRoomLongStayAlone(list,arrayRoom);

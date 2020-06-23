@@ -19,10 +19,9 @@ import objectsPackage.Patient;
 			birthdateField.setSelectableDateRange(dateMin,dateMax);
 		}
 		
-		public static void setDefaultRangeExaminationDate(Patient patient,JDateChooser examinationDateField) {	
+		public static void setDefaultRangeExaminationDate(JDateChooser examinationDateField) {	
 			
-			Date dateMin = ParseFunctions.dateFormating(patient.getBirthDate());
-			examinationDateField.setMinSelectableDate(dateMin);
+			examinationDateField.setMinSelectableDate(new Date());
 		}
 		
 		public static void setDefaultRangeForBookingRoomDate(JDateChooser entryDateField,JDateChooser releaseDateField,Examen examination) {
