@@ -133,21 +133,19 @@ public class PatientControler {
 		}	
 		return fieldOk;
 	}
-	
-	
 
 	private static boolean checkUpAvailableEmail(JTextField text) {
 		boolean email = false;
 		
 		int variableTampon = 0;		
 		String mailAddress = text.getText();
-		ArrayList<String> lastIndex = ReadExternalFiles.mailEndings();
+	
 								
 			variableTampon = mailAddress.indexOf("@");
 			
-			for(int i = 0; i < lastIndex.size(); i++) {
+			for(int i = 0; i < ReadExternalFiles.arrayMail.size(); i++) {
 				
-				if(variableTampon > 0 && mailAddress.endsWith(lastIndex.get(i)) == true ) {
+				if(variableTampon > 0 && mailAddress.endsWith(ReadExternalFiles.arrayMail.get(i)) == true ) {
 					email = true;
 					break;
 				}
@@ -185,11 +183,10 @@ public class PatientControler {
 		boolean codeOk = false;
 		String patientAreaCode = text.getText();
 		
-		ArrayList<String> ArrayAreaCode = ReadExternalFiles.areaCode();
 									
-		for(int i = 0; i < ArrayAreaCode.size(); i++) {
+		for(int i = 0; i < ReadExternalFiles.arrayAreaCode.size(); i++) {
 			
-			if(ArrayAreaCode.get(i).contentEquals(patientAreaCode)) {
+			if(ReadExternalFiles.arrayAreaCode.get(i).contentEquals(patientAreaCode)) {
 				codeOk = true;
 				break;
 			}

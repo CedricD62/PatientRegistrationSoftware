@@ -2,11 +2,12 @@ package objectsPackage;
 
 public class Examen 
 {
-	private String 				typeExamen;
-	private String 				dateExamen;
-	private Patient 			patient;
-	private Chambre				room;
-	private boolean 			bookingRoom;
+	private String 	typeExamen;
+	private String 	dateExamen;
+	private Patient patient;
+	private Chambre	room;
+	private boolean bookingRoom;
+	public boolean save = false;
 	
 	public Examen(Patient pPatient,Chambre pRoom ,String pTypeExamen, String pDateExamen) {
 		
@@ -57,6 +58,10 @@ public class Examen
 
 	@Override
 	public String toString() {
-		return "patient N° : "+patient.getId() +", Examen : "+typeExamen+", date : "+dateExamen;
+		if(save == false) {
+			return "patient N° : "+patient.getId() +", Examen : "+typeExamen+", date : "+dateExamen;			
+		}else {
+			return patient.getId() +","+typeExamen+","+dateExamen;
+		}
 	}
 }

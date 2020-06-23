@@ -269,5 +269,20 @@ public class ExaminationFunction
 			
 		return examination;
 	}
+	
+	public static Examen extractExaminationFromArray(ArrayList<Examen> arrayExamination,int idP, String examinationType, String examinationDate) {
+		
+		Examen examination = null;
+		
+			for(int i = 0; i < arrayExamination.size(); i++) {
+				Examen examinationTest = arrayExamination.get(i);
+				if(examinationTest.getPatient().getId() == idP && examinationTest.getTypeExamen().equals(examinationType) && examinationTest.getDateExamen().equals(examinationDate)) { 
+					examination= examinationTest;
+					break;
+				}
+			}
+			
+		return examination;
+	}
 
 }

@@ -16,6 +16,7 @@ public class Patient
 	private boolean 			male = false;
 	private boolean 			female = false;
 	private boolean 			bookingRoom = false;
+	public boolean 				save = false;
 	private static final String MALE = "Homme";
 	private static final String FEMALE = "Femme";
 	private static final String BOOKING = "Pas de chambre";
@@ -138,10 +139,15 @@ public class Patient
 
 	@Override
 	public String toString() {
-		if(isMale() == true) {
-			return "Patient : "+id+", "+name+", "+firstName+", "+address+", "+cp+", "+city+", "+email+", "+ssn+", "+phone+", "+cellPhone+", "+birthDate+ ", "+MALE;
+		if(save == false) {
+			if(isMale() == true) {
+				return "Patient : "+id+", "+name+", "+firstName+", "+address+", "+cp+", "+city+", "+email+", "+ssn+", "+phone+", "+cellPhone+", "+birthDate+ ", "+MALE;
+			}else {
+				return "Patient : "+id+", "+name+", "+firstName+", "+address+", "+cp+", "+city+", "+email+", "+ssn+", "+phone+", "+cellPhone+", "+birthDate+ ", "+FEMALE;
+			}
 		}else {
-			return "Patient : "+id+", "+name+", "+firstName+", "+address+", "+cp+", "+city+", "+email+", "+ssn+", "+phone+", "+cellPhone+", "+birthDate+ ", "+FEMALE;
+			return id+","+name+","+firstName+","+address+","+cp+","+city+","+email+","+ssn+","+phone+","+cellPhone+","+birthDate+","+male+","+female+","+bookingRoom;
 		}
+		
 	}
 }

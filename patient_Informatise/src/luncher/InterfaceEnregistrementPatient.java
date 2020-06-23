@@ -25,6 +25,7 @@ import java.util.Date;
 
 import com.toedter.calendar.JDateChooser;
 
+import filesActions.ReadExternalFiles;
 import functions.DefaultValueLuncher;
 import functions.ExaminationFunction;
 import functions.ParseFunctions;
@@ -125,9 +126,9 @@ public class InterfaceEnregistrementPatient {
 	private ButtonGroup summaryGenderGroup;
 	private ButtonGroup bookingGroup;
 	
-	private ArrayList<Patient>arrayPatient;
-	private ArrayList<Chambre>arrayRoom;
-	private ArrayList<Examen>arrayExamination;
+	public static  ArrayList<Patient>arrayPatient;
+	public static ArrayList<Chambre>arrayRoom;
+	public static ArrayList<Examen>arrayExamination;
 
 	
 	/**
@@ -616,5 +617,7 @@ public class InterfaceEnregistrementPatient {
 		
 		RoomFunction.creatRoomIfFileIsEmpty(switchRoomAndExaminationList, arrayRoom);
 		DefaultValueLuncher.setDefaultRangeForBirthdate(birthDateField);
+		ReadExternalFiles.areaCode();
+		ReadExternalFiles.mailEndings();
 	}
 }

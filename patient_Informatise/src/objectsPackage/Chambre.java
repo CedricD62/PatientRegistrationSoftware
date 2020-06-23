@@ -11,6 +11,7 @@ public class Chambre
 	private boolean accompanying;
 	private boolean available= true; 
 	private boolean bookingRoom = false;
+	public boolean save = false;
 	private static final String WITH = "Accompagné";
 	private static final String WITHOUT = "Sans accompagnement";
 	private static final String BOOKINGSTATUS = "pas de réservation de chambre";
@@ -105,21 +106,29 @@ public class Chambre
 
 	@Override
 	public String toString() {
-		if(isBookingRoom() == false) {
-			return BOOKINGSTATUS;
-		}else {
-			if(isAvailable() == true) {
-				return "Chambre N° : " + roomNumber;
-			}else{
-				if (isAlone() == true){
-					return "Chambre N° : " + roomNumber+", "+ getExamination().getPatient().getName()+", "+ getExamination().getPatient().getFirstName()+
-						   ", " + getExamination().getTypeExamen()+", "+ WITHOUT;
-				}else {
-					return "Chambre N° : " + roomNumber+", "+ getExamination().getPatient().getName()+", "+getExamination().getPatient().getFirstName()+
-						   ", "+ getExamination().getTypeExamen()+", "+ WITH;
-				}		
+		if(save == false) {
+			if(isBookingRoom() == false) {
+				return BOOKINGSTATUS;
+			}else {
+				if(isAvailable() == true) {
+					return "Chambre N° : " + roomNumber;
+				}else{
+					if (isAlone() == true){
+						return "Chambre N° : " + roomNumber+", "+ getExamination().getPatient().getName()+", "+ getExamination().getPatient().getFirstName()+
+								", " + getExamination().getTypeExamen()+", "+entryDate+", "+releaseDate+", "+ WITHOUT;
+					}else {
+						return "Chambre N° : " + roomNumber+", "+ getExamination().getPatient().getName()+", "+getExamination().getPatient().getFirstName()+
+								", "+ getExamination().getTypeExamen()+", "+entryDate+", "+releaseDate+", "+ WITH;
+					}		
+				}
 			}
-		}
+		}else {
+			if (isAlone() == true){
+				return roomNumber+", "+getExamination().getPatient().getId()+", "+getExamination().getTypeExamen()+", "+getExamination().getDateExamen()+", "+numberOfBed+","+entryDate+", "+releaseDate+", "+alone+", "+accompanying+", "+available+", "+bookingRoom;
+			}else {
+				return roomNumber+", "+getExamination().getPatient().getId()+", "+getExamination().getTypeExamen()+", "+getExamination().getDateExamen()+", "+numberOfBed+","+entryDate+", "+releaseDate+", "+alone+", "+accompanying+", "+available+", "+bookingRoom;
+			}		
+		} 
 	}
 }
 
