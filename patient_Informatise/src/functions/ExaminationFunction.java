@@ -17,7 +17,7 @@ public class ExaminationFunction
 
 	public static ArrayList<Examen> temporaryList = new ArrayList<Examen>();
 	
-	public static void creatExamination (JList listExaminationPanel,JList listBookingRoomPannel,ArrayList<Patient> arrayPatient,ArrayList<Examen> arrayExamination,
+	public static void creatExamination (JList listExaminationPanel,JList switchRoomAndExaminationList,ArrayList<Patient> arrayPatient,ArrayList<Examen> arrayExamination,
 										 JTextField patientNumberExamPanelField,JComboBox examinationTypeSelection,JDateChooser examinationDateField){
 		if(ExaminationControler.inputFieldControler(patientNumberExamPanelField,examinationTypeSelection, examinationDateField) == true) {
 			int id = ParseFunctions.numericConversion(patientNumberExamPanelField.getText());
@@ -40,7 +40,7 @@ public class ExaminationFunction
 					RoomFunction.temporaryListExamination.add(examination);
 					
 					listExaminationPanel.setListData(arrayExamination.toArray());
-					listBookingRoomPannel.setListData(RoomFunction.temporaryListExamination.toArray());
+					switchRoomAndExaminationList.setListData(RoomFunction.temporaryListExamination.toArray());
 					
 					
 					cancelInformationBeforeAddExamination(examinationDateField, patientNumberExamPanelField, examinationTypeSelection);

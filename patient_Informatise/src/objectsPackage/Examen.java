@@ -61,7 +61,7 @@ public class Examen
 		if(save == false) {
 			return "patient N° : "+patient.getId() +", Examen : "+typeExamen+", date : "+dateExamen;			
 		}else {
-			return patient.getId() +","+typeExamen+","+dateExamen;
+			return patient.getId() +","+typeExamen+","+dateExamen+","+bookingRoom;
 		}
 	}
 }

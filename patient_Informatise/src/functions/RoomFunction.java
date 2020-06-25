@@ -10,6 +10,7 @@ import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 import com.toedter.calendar.JDateChooser;
 
+import filesActions.WriteInExternalFiles;
 import objectsPackage.Chambre;
 import objectsPackage.Examen;
 import treatment.RoomControler;
@@ -17,10 +18,10 @@ import treatment.RoomControler;
 public class RoomFunction 
 {
 	
-	public static ArrayList<Chambre> temporaryListRoom = new ArrayList<Chambre>();
-	public static ArrayList<Chambre> temporaryListNoBooking = new ArrayList<Chambre>(); 
-	public static ArrayList<Chambre> bookedRoomList = new ArrayList<Chambre>(); 
-	public static ArrayList<Examen> temporaryListExamination = new ArrayList<Examen>();
+	public static ArrayList<Chambre> temporaryListRoom 			= new ArrayList<Chambre>();
+	public static ArrayList<Chambre> temporaryListNoBooking		= new ArrayList<Chambre>(); 
+	public static ArrayList<Chambre> bookedRoomList 			= new ArrayList<Chambre>(); 
+	public static ArrayList<Examen> temporaryListExamination 	= new ArrayList<Examen>();
 	
 	public static void creatRoomIfFileIsEmpty(JList list,ArrayList<Chambre>arrayRoom) {
 	
@@ -90,7 +91,7 @@ public class RoomFunction
 			}
 			cpt++;	
 		}	
-		list.setListData(arrayRoom.toArray());
+		WriteInExternalFiles.writeRoomFile(arrayRoom);
 	}
 	
 	public static void updateListOfAvailableRoom(JList list,ArrayList<Chambre> arrayRoom,JTextField patientNumberBookingRoomPanelField,JRadioButton withRoomRButton,JRadioButton withoutRoomRButton, JRadioButton withAccompangyingRButton, 

@@ -3,9 +3,9 @@ package treatment;
 import java.io.File;
 import java.io.FileNotFoundException;
 
-public class fileControler {
+public class FileControler {
 	
-	public static boolean filePatient() {
+	public static boolean filePatientExist() {
 		boolean exist = false;
 		
 		//try {
@@ -19,7 +19,7 @@ public class fileControler {
 		return exist;
 	}
 	
-	public static boolean fileExamen() {
+	public static boolean fileExamenExist() {
 		boolean exist = false;
 		
 		File file = new File("Examen.txt");
@@ -28,7 +28,7 @@ public class fileControler {
 		return exist;
 	}
 
-	public static boolean fileRoom() {
+	public static boolean fileRoomExist() {
 		boolean exist = false;
 		
 		File file = new File("Chambre.txt");

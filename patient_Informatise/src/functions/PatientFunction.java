@@ -46,7 +46,6 @@ public class PatientFunction
 			arrayPatient.add(patient);
 			list.setListData(arrayPatient.toArray());
 			
-			DefaultValueLuncher.setDefaultRangeExaminationDate(examinationDateField);
 			clearInformationField(idField,button,nameField,fNameField,addressField,areaCodeField,townField,ssnField,eMailField,phoneField,cellphoneField,birthdateField);
 		}
 	}

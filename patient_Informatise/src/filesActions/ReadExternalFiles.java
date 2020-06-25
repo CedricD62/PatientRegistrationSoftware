@@ -12,10 +12,10 @@ import functions.ExaminationFunction;
 import functions.ParseFunctions;
 import functions.PatientFunction;
 import functions.RoomFunction;
-import luncher.InterfaceEnregistrementPatient;
 import objectsPackage.Chambre;
 import objectsPackage.Examen;
 import objectsPackage.Patient;
+import treatment.FileControler;
 
 public class ReadExternalFiles {
 
@@ -25,7 +25,27 @@ public class ReadExternalFiles {
 	public static ArrayList<String> arrayAreaCode = new  ArrayList<String>();
 	public static ArrayList<String> arrayMail= new ArrayList <String>(); 
 	
-	public static void mailEndings() {
+	public static void dispatchInfoFromFiles(JList patientList,JList examinationList, JList switchRoomAndExaminationList,
+			ArrayList<Examen>arrayExamination,ArrayList<Patient>arrayPatient,ArrayList<Chambre>arrayRoom,JList listOfBookedRoom) {
+		if(FileControler.filePatientExist() == true) {
+			readPatientFile(patientList, arrayPatient);
+		}
+		
+		if(FileControler.fileExamenExist() == true) {
+			readExaminationFile(examinationList, arrayExamination, arrayPatient);
+		}
+		
+		if(FileControler.fileRoomExist() == true) {
+			readRoomFile(arrayRoom, arrayExamination,listOfBookedRoom,switchRoomAndExaminationList);
+		}else {
+			RoomFunction.creatRoomIfFileIsEmpty(switchRoomAndExaminationList, arrayRoom);
+		}
+		
+		areaCode();
+		mailEndings();
+	}
+	
+	private static void mailEndings() {
 		
 		try {
 			file = new File("mailTerminaisons.csv");
@@ -60,7 +80,7 @@ public class ReadExternalFiles {
 		}
 	}
 	
-	public static void areaCode() {
+	private static void areaCode() {
 		
 		try {
 			file = new File("areaCode.csv");
@@ -97,7 +117,7 @@ public class ReadExternalFiles {
 		}
 	}
 	
-	public static void readPatientFile(JList patientList) {
+	private static void readPatientFile(JList patientList,ArrayList<Patient>arrayPatient) {
 		
 		try {
 			
@@ -128,16 +148,16 @@ public class ReadExternalFiles {
 				
 				patient = new Patient(id, male, female, name, firstName, address, cp, city, email, ssn, phone, cellPhone, birthDate, bookingRoom);
 				patient.save = false;
-				InterfaceEnregistrementPatient.arrayPatient.add(patient);
+				arrayPatient.add(patient);
 			}
 			
-			patientList.setListData(InterfaceEnregistrementPatient.arrayPatient.toArray());
+			patientList.setListData(arrayPatient.toArray());
 		}catch(IOException ex) {
 			
 		}
 	}
 	
-	public static void readExaminationFile(JList examinationList, JList switchRoomAndExaminationList) {
+	private static void readExaminationFile(JList examinationList,ArrayList<Examen>arrayExamination,ArrayList<Patient>arrayPatient) {
 		
 		try {
 			
@@ -153,23 +173,22 @@ public class ReadExternalFiles {
 				splitExamination = line.split(",");
 				
 				int idPatient		= ParseFunctions.numericConversion(splitExamination[0]);
-				Patient patient 	= PatientFunction.extractPatientFromArray(InterfaceEnregistrementPatient.arrayPatient, idPatient);
+				Patient patient 	= PatientFunction.extractPatientFromArray(arrayPatient, idPatient);
 				String typeExamen	= splitExamination[1];
 				String dateExamen	= splitExamination[2];
+				boolean bookingRoom = Boolean.parseBoolean(splitExamination[3]);
 
 				examination = new Examen(patient,null,typeExamen,dateExamen);
+				examination.setBookingRoom(bookingRoom);
 				examination.save = false;
-				InterfaceEnregistrementPatient.arrayExamination.add(examination);
-				RoomFunction.temporaryListExamination.add(examination);
+				arrayExamination.add(examination);
 			}
-			switchRoomAndExaminationList.setListData(RoomFunction.temporaryListExamination.toArray());
-			examinationList.setListData(InterfaceEnregistrementPatient.arrayExamination.toArray());
 		}catch(IOException ex) {
 			
 		}
 	}
 	
-	public static void readRoomFile(JList examinationList) {
+	private static void readRoomFile(ArrayList<Chambre>arrayRoom,ArrayList<Examen>arrayExamination,JList listOfBookedRoom,JList switchRoomAndExaminationList) {
 		
 		try {
 			
@@ -181,28 +200,45 @@ public class ReadExternalFiles {
 			
 			while((line = buffer.readLine()) != null) {
 				
-				String [] splitRoom;
-				splitRoom = line.split(",");
-				
-				int roomNumber			= ParseFunctions.numericConversion(splitRoom[0]); 
-				int idPatient			= ParseFunctions.numericConversion(splitRoom[1]);
-				String examinationType 	= splitRoom[2];
-				String examinationDate 	= splitRoom[3];
-				Examen examination 		= ExaminationFunction.extractExaminationFromArray(InterfaceEnregistrementPatient.arrayExamination,idPatient, examinationType, examinationDate);
-				int numberOfBed			= ParseFunctions.numericConversion(splitRoom[4]);
-				String entryDate		= splitRoom[5];
-				String releaseDate		= splitRoom[6];
-				boolean alone 			= Boolean.parseBoolean(splitRoom[7]);
-				boolean accompanying 	= Boolean.parseBoolean(splitRoom[8]);
-				boolean available 		= Boolean.parseBoolean(splitRoom[9]);
-				boolean bookingRoom 	= Boolean.parseBoolean(splitRoom[10]);
-
-				room = new Chambre(entryDate,releaseDate,roomNumber,alone,accompanying,available,numberOfBed,bookingRoom,examination);
-				room.save = false;
-				InterfaceEnregistrementPatient.arrayRoom.add(room);
+					String [] splitRoom;
+					splitRoom = line.split(",");
+					
+					if(splitRoom.length > 8) {
+					int roomNumber			= ParseFunctions.numericConversion(splitRoom[0]); 
+					int idPatient			= ParseFunctions.numericConversion(splitRoom[1]);
+					String examinationType 	= splitRoom[2];
+					String examinationDate 	= splitRoom[3];
+					Examen examination 		= ExaminationFunction.extractExaminationFromArray(arrayExamination,idPatient, examinationType, examinationDate);
+					int numberOfBed			= ParseFunctions.numericConversion(splitRoom[4]);
+					String entryDate		= splitRoom[5];
+					String releaseDate		= splitRoom[6];
+					boolean alone 			= Boolean.parseBoolean(splitRoom[7]);
+					boolean accompanying 	= Boolean.parseBoolean(splitRoom[8]);
+					boolean available 		= Boolean.parseBoolean(splitRoom[9]);
+					boolean bookingRoom 	= Boolean.parseBoolean(splitRoom[10]);
+	
+					room = new Chambre(entryDate,releaseDate,roomNumber,alone,accompanying,available,numberOfBed,bookingRoom,examination);
+					room.save = false;
+					RoomFunction.bookedRoomList.add(room);
+					arrayRoom.add(room);
+				}else {
+					int roomNumber			= ParseFunctions.numericConversion(splitRoom[0]); 
+					boolean accompanying 	= Boolean.parseBoolean(splitRoom[1]);
+					boolean alone 			= Boolean.parseBoolean(splitRoom[2]);
+					boolean available 		= Boolean.parseBoolean(splitRoom[3]);
+					boolean bookingRoom 	= Boolean.parseBoolean(splitRoom[4]);
+					String entryDate		= splitRoom[5];
+					String releaseDate		= splitRoom[6];
+					int numberOfBed			= ParseFunctions.numericConversion(splitRoom[7]);
+					
+					room = new Chambre(entryDate,releaseDate,roomNumber,alone,accompanying,available,numberOfBed,bookingRoom);
+					room.save = false;
+					arrayRoom.add(room);
+				}
 			}
 			
-			examinationList.setListData(InterfaceEnregistrementPatient.arrayExamination.toArray());
+			//switchRoomAndExaminationList.setListData(arrayRoom.toArray());
+			listOfBookedRoom.setListData(RoomFunction.bookedRoomList.toArray());
 		}catch(IOException ex) {
 			
 		}

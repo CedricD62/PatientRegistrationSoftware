@@ -26,6 +26,7 @@ import java.util.Date;
 import com.toedter.calendar.JDateChooser;
 
 import filesActions.ReadExternalFiles;
+import filesActions.WriteInExternalFiles;
 import functions.DefaultValueLuncher;
 import functions.ExaminationFunction;
 import functions.ParseFunctions;
@@ -126,9 +127,9 @@ public class InterfaceEnregistrementPatient {
 	private ButtonGroup summaryGenderGroup;
 	private ButtonGroup bookingGroup;
 	
-	public static  ArrayList<Patient>arrayPatient;
-	public static ArrayList<Chambre>arrayRoom;
-	public static ArrayList<Examen>arrayExamination;
+	private ArrayList<Patient>arrayPatient;
+	private ArrayList<Chambre>arrayRoom;
+	private ArrayList<Examen>arrayExamination;
 
 	
 	/**
@@ -207,6 +208,7 @@ public class InterfaceEnregistrementPatient {
 			public void actionPerformed(ActionEvent e) {
 				ExaminationFunction.creatExamination(examinationList,switchRoomAndExaminationList,arrayPatient,arrayExamination,patientNumberExamPanelField,examinationTypeSelection,
 													 examinationDateField);
+				WriteInExternalFiles.writeExaminationFile(arrayExamination);
 			}});
 		addExaminationButton.setBounds(321, 54, 136, 23);
 		addExaminationPanel.add(addExaminationButton);
@@ -215,6 +217,7 @@ public class InterfaceEnregistrementPatient {
 		changeExaminationButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {	
 				ExaminationFunction.changeInfoExamination(examinationList,arrayExamination,arrayPatient,patientNumberExamPanelField,examinationTypeSelection,examinationDateField);
+				WriteInExternalFiles.writeExaminationFile(arrayExamination);
 			}});
 		changeExaminationButton.setBounds(321, 166, 136, 23);
 		addExaminationPanel.add(changeExaminationButton);
@@ -256,6 +259,7 @@ public class InterfaceEnregistrementPatient {
 			public void actionPerformed(ActionEvent e) {
 				ExaminationFunction.deleteExamination(examinationList,arrayExamination,patientNumberExamPanelField,examinationTypeSelection,
 													  examinationDateField,switchRoomAndExaminationList, listOfBookedRoom);
+				WriteInExternalFiles.writeExaminationFile(arrayExamination);
 				}});
 		deleteExaminationButton.setBounds(1014, 166, 110, 23);
 		addExaminationPanel.add(deleteExaminationButton);
@@ -321,6 +325,7 @@ public class InterfaceEnregistrementPatient {
 			public void actionPerformed(ActionEvent e) {
 				RoomFunction.updateListOfAvailableRoom(switchRoomAndExaminationList, arrayRoom, patientNumberBookingRoomPanelField,withRoomRButton, withoutRoomRButton, 
 													   withAccompangyingRButton, withoutAccompanyingRButton, LengthOfStaySelectionBox,entryDateField,releaseDateField);
+				WriteInExternalFiles.writeExaminationFile(arrayExamination);
 			}});
 		showRoomButton.setBounds(178, 192, 166, 23);
 		bookRoomPanel.add(showRoomButton);		
@@ -331,6 +336,8 @@ public class InterfaceEnregistrementPatient {
 				RoomFunction.bookingAvailableRoom(switchRoomAndExaminationList, entryDateField, releaseDateField, withoutRoomRButton, arrayExamination, patientNumberBookingRoomPanelField, 
 												  withRoomRButton, accompanyingGroup, LengthOfStaySelectionBox, bedRoomNumberField, arrayRoom, listOfBookedRoom,bookingGroup,
 												  withAccompangyingRButton,withoutAccompanyingRButton);
+				WriteInExternalFiles.writeRoomFile(arrayRoom);
+				WriteInExternalFiles.writeExaminationFile(arrayExamination);
 			}});
 		bookingRoomButton.setBounds(648, 192, 110, 23);
 		bookRoomPanel.add(bookingRoomButton);
@@ -437,7 +444,8 @@ public class InterfaceEnregistrementPatient {
 		deletePatientButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				PatientFunction.deletePatient(patientList,arrayPatient,idField,genderGroup,nameField,fNameField,addressField,areaCodeField,townField,ssnField,eMailField,phoneField,cellphoneField,
-											  birthDateField);				
+											  birthDateField);			
+				WriteInExternalFiles.writePatientFile(arrayPatient);
 			}});
 		searchPatientListButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -565,6 +573,7 @@ public class InterfaceEnregistrementPatient {
 			public void actionPerformed(ActionEvent e) {	
 				PatientFunction.creatPatient(patientList,arrayPatient,idField,maleRButton,femaleRButton,nameField,fNameField,addressField,areaCodeField,
 											townField,ssnField,eMailField,phoneField,cellphoneField,birthDateField,genderGroup,examinationDateField);
+				WriteInExternalFiles.writePatientFile(arrayPatient);
 			}});
 		addPatientButton.setBounds(120, 219, 104, 23);
 		patientInformationPanel.add(addPatientButton);
@@ -598,11 +607,13 @@ public class InterfaceEnregistrementPatient {
 			public void actionPerformed(ActionEvent e) {		
 				PatientFunction.changeInfoPatient(patientList,arrayPatient,idField,maleRButton,femaleRButton,nameField,fNameField,addressField,areaCodeField,
 												  townField,ssnField,eMailField,phoneField,cellphoneField,birthDateField);
+				WriteInExternalFiles.writePatientFile(arrayPatient);
 			}});
 		deleteBookedRoom = new JButton("Supprimer");
 		deleteBookedRoom.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {	
 				RoomFunction.deleteBookedRoom(switchRoomAndExaminationList, listOfBookedRoom, arrayExamination, arrayRoom);
+				WriteInExternalFiles.writeRoomFile(arrayRoom);
 			}});
 		deleteBookedRoom.setBounds(1072, 192, 110, 23);
 		bookRoomPanel.add(deleteBookedRoom);
@@ -615,9 +626,7 @@ public class InterfaceEnregistrementPatient {
 		releaseDateField.setBounds(783, 131, 110, 20);
 		bookRoomPanel.add(releaseDateField);
 		
-		RoomFunction.creatRoomIfFileIsEmpty(switchRoomAndExaminationList, arrayRoom);
-		DefaultValueLuncher.setDefaultRangeForBirthdate(birthDateField);
-		ReadExternalFiles.areaCode();
-		ReadExternalFiles.mailEndings();
+		DefaultValueLuncher.defaultValuesStartSoftware(birthDateField,patientList,examinationList,switchRoomAndExaminationList,arrayExamination,arrayPatient,arrayRoom,
+													   examinationDateField,listOfBookedRoom);
 	}
 }
