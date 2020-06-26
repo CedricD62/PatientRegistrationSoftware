@@ -34,8 +34,8 @@
 212,false,true,true,true,,,1
 213,false,true,true,true,,,1
 214,false,true,true,true,,,1
-215,1,Alcoolémie,26/06/2020,2,26/06/2020,26/06/2020,false,true,false,true
-216,2,Arthroscopie,26/06/2020,2,25/06/2020,27/06/2020,false,true,false,true
+215,true,false,true,true,,,2
+216,true,false,true,true,,,2
 217,true,false,true,true,,,2
 218,true,false,true,true,,,2
 219,true,false,true,true,,,2
