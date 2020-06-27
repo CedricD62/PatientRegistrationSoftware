@@ -1,4 +1,4 @@
-package functions;
+package com.functions;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -6,12 +6,12 @@ import javax.swing.ButtonGroup;
 import javax.swing.JList;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
-import com.toedter.calendar.JDateChooser;
 
-import objectsPackage.Chambre;
-import objectsPackage.Examen;
-import objectsPackage.Patient;
-import treatment.PatientControler; 
+import com.objectsPackage.Chambre;
+import com.objectsPackage.Examen;
+import com.objectsPackage.Patient;
+import com.toedter.calendar.JDateChooser;
+import com.treatment.PatientControler; 
 
 public class PatientFunction 
 {

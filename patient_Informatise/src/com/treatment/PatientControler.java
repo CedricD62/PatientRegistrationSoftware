@@ -1,12 +1,13 @@
-package treatment;
+package com.treatment;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.InputMismatchException;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
+
+import com.filesActions.ReadExternalFiles;
 import com.toedter.calendar.JDateChooser;
-import filesActions.ReadExternalFiles;
 
 public class PatientControler {
 	

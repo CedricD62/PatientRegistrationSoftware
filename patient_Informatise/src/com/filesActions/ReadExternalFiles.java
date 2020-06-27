@@ -1,4 +1,4 @@
-package filesActions;
+package com.filesActions;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -8,14 +8,14 @@ import java.util.ArrayList;
 
 import javax.swing.JList;
 
-import functions.ExaminationFunction;
-import functions.ParseFunctions;
-import functions.PatientFunction;
-import functions.RoomFunction;
-import objectsPackage.Chambre;
-import objectsPackage.Examen;
-import objectsPackage.Patient;
-import treatment.FileControler;
+import com.functions.ExaminationFunction;
+import com.functions.ParseFunctions;
+import com.functions.PatientFunction;
+import com.functions.RoomFunction;
+import com.objectsPackage.Chambre;
+import com.objectsPackage.Examen;
+import com.objectsPackage.Patient;
+import com.treatment.FileControler;
 
 public class ReadExternalFiles {
 
@@ -23,7 +23,8 @@ public class ReadExternalFiles {
 	private static FileReader 		fileR= null;
 	private static BufferedReader 	buffer=null;
 	public static ArrayList<String> arrayAreaCode = new  ArrayList<String>();
-	public static ArrayList<String> arrayMail= new ArrayList <String>(); 
+	public static ArrayList<String> arrayMail= new ArrayList <String>();
+	public static  ArrayList<String> JcomboSelection = new ArrayList <String>();
 	
 	public static void dispatchInfoFromFiles(JList patientList,JList examinationList, JList switchRoomAndExaminationList,
 			ArrayList<Examen>arrayExamination,ArrayList<Patient>arrayPatient,ArrayList<Chambre>arrayRoom,JList listOfBookedRoom) {
@@ -48,7 +49,7 @@ public class ReadExternalFiles {
 	private static void mailEndings() {
 		
 		try {
-			file = new File("externalFiles/mailTerminaisons.csv");
+			file = new File("C:/Users/final/Desktop/externalFiles/mailTerminaisons.csv");
 			fileR = new FileReader(file); 
 			buffer = new BufferedReader(fileR);
 			String line;
@@ -83,7 +84,7 @@ public class ReadExternalFiles {
 	private static void areaCode() {
 		
 		try {
-			file = new File("externalFiles/areaCode.csv");
+			file = new File("C:/Users/final/Desktop/externalFiles/areaCode.csv");
 			fileR = new FileReader(file); 
 			buffer = new BufferedReader(fileR);
 			String line;

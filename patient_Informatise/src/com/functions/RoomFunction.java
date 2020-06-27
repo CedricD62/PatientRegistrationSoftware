@@ -1,4 +1,4 @@
-package functions;
+package com.functions;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -8,12 +8,12 @@ import javax.swing.JComboBox;
 import javax.swing.JList;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
-import com.toedter.calendar.JDateChooser;
 
-import filesActions.WriteInExternalFiles;
-import objectsPackage.Chambre;
-import objectsPackage.Examen;
-import treatment.RoomControler;
+import com.filesActions.WriteInExternalFiles;
+import com.objectsPackage.Chambre;
+import com.objectsPackage.Examen;
+import com.toedter.calendar.JDateChooser;
+import com.treatment.RoomControler;
 
 public class RoomFunction 
 {

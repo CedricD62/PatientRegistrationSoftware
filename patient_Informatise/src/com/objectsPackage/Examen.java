@@ -1,4 +1,4 @@
-package objectsPackage;
+package com.objectsPackage;
 
 public class Examen 
 {

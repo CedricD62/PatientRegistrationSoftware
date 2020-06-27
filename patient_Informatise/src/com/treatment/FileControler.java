@@ -1,4 +1,4 @@
-package treatment;
+package com.treatment;
 
 import java.io.File;
 import java.io.FileNotFoundException;

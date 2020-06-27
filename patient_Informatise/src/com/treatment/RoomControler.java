@@ -1,4 +1,4 @@
-package treatment;
+package com.treatment;
 
 import java.util.Date;
 
@@ -7,11 +7,10 @@ import javax.swing.JComboBox;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
+import com.functions.ParseFunctions;
+import com.functions.RoomFunction;
+import com.objectsPackage.Chambre;
 import com.toedter.calendar.JDateChooser;
-
-import functions.ParseFunctions;
-import functions.RoomFunction;
-import objectsPackage.Chambre;
 
 public class RoomControler {
 	public static boolean inputFieldControlerGlobalCheckUp(JRadioButton withoutRoomRButton,JRadioButton withRoomRButton,JTextField patientNumberBookingRoomPanelField,JRadioButton withAccompangyingRButton,

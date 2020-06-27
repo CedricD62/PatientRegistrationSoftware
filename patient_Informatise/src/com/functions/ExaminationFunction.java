@@ -1,16 +1,16 @@
-package functions;
+package com.functions;
 
 import java.util.ArrayList;
 import java.util.Date;
 import javax.swing.JComboBox;
 import javax.swing.JList;
 import javax.swing.JTextField;
-import com.toedter.calendar.JDateChooser;
 
-import objectsPackage.Chambre;
-import objectsPackage.Examen;
-import objectsPackage.Patient;
-import treatment.ExaminationControler;
+import com.objectsPackage.Chambre;
+import com.objectsPackage.Examen;
+import com.objectsPackage.Patient;
+import com.toedter.calendar.JDateChooser;
+import com.treatment.ExaminationControler;
 
 public class ExaminationFunction 
 {

@@ -1,4 +1,4 @@
-package filesActions;
+package com.filesActions;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -6,11 +6,12 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import functions.RoomFunction;
+import com.functions.RoomFunction;
+import com.objectsPackage.Chambre;
+import com.objectsPackage.Examen;
+import com.objectsPackage.Patient;
+
 import luncher.InterfaceEnregistrementPatient;
-import objectsPackage.Chambre;
-import objectsPackage.Examen;
-import objectsPackage.Patient;
 
 public class WriteInExternalFiles {
 	

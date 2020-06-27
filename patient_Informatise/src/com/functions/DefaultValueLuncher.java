@@ -1,4 +1,4 @@
-package functions;
+package com.functions;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -6,12 +6,11 @@ import java.util.Date;
 
 import javax.swing.JList;
 
+import com.filesActions.ReadExternalFiles;
+import com.objectsPackage.Chambre;
+import com.objectsPackage.Examen;
+import com.objectsPackage.Patient;
 import com.toedter.calendar.JDateChooser;
-
-import filesActions.ReadExternalFiles;
-import objectsPackage.Chambre;
-import objectsPackage.Examen;
-import objectsPackage.Patient;
 
 public class DefaultValueLuncher {
 	

@@ -1,4 +1,4 @@
-package treatment;
+package com.treatment;
 
 import java.util.InputMismatchException;
 

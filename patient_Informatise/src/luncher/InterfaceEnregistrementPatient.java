@@ -23,19 +23,18 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
+import com.filesActions.ReadExternalFiles;
+import com.filesActions.WriteInExternalFiles;
+import com.functions.DefaultValueLuncher;
+import com.functions.ExaminationFunction;
+import com.functions.ParseFunctions;
+import com.functions.PatientFunction;
+import com.functions.RoomFunction;
+import com.objectsPackage.Chambre;
+import com.objectsPackage.Examen;
+import com.objectsPackage.Patient;
 import com.toedter.calendar.JDateChooser;
-
-import filesActions.ReadExternalFiles;
-import filesActions.WriteInExternalFiles;
-import functions.DefaultValueLuncher;
-import functions.ExaminationFunction;
-import functions.ParseFunctions;
-import functions.PatientFunction;
-import functions.RoomFunction;
-import objectsPackage.Chambre;
-import objectsPackage.Examen;
-import objectsPackage.Patient;
-import treatment.RoomControler;
+import com.treatment.RoomControler;
 
 public class InterfaceEnregistrementPatient {
 	
