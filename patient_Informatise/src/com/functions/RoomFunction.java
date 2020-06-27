@@ -12,18 +12,50 @@ import javax.swing.JTextField;
 import com.filesActions.WriteInExternalFiles;
 import com.objectsPackage.Chambre;
 import com.objectsPackage.Examen;
+import com.objectsPackage.Patient;
 import com.toedter.calendar.JDateChooser;
+import com.treatment.ExaminationControler;
 import com.treatment.RoomControler;
 
+/**
+ * <b>RoomFunction class contains all functions needed to Chambre Object</b>
+ * </br>
+ * This class contains 9 public functions and 20 private functions
+ * </br>
+ * @author C.DEBAISIEUX
+ * @version 1.0
+ *
+ */
 public class RoomFunction 
 {
-	
+	/**
+	 * {@code ArrayList<Chambre> temporaryListRoom} stores Chambre object after filters have been used
+	 */
 	public static ArrayList<Chambre> temporaryListRoom 			= new ArrayList<Chambre>();
+	/**
+	 * {@code ArrayList<Chambre> temporaryListNoBooking} stores Chambre object with no bookingRoom
+	 */
 	public static ArrayList<Chambre> temporaryListNoBooking		= new ArrayList<Chambre>(); 
+	/**
+	 * {@code ArrayList<Chambre> bookedRoomList} stores Chambre object for which a room has been booked
+	 */
 	public static ArrayList<Chambre> bookedRoomList 			= new ArrayList<Chambre>(); 
+	/**
+	 * {@code ArrayList<Chambre> temporaryListExamination} stores Examen to display in JList switchRoomAndExaminationList
+	 */
 	public static ArrayList<Examen> temporaryListExamination 	= new ArrayList<Examen>();
 	
-	public static void creatRoomIfFileIsEmpty(JList list,ArrayList<Chambre>arrayRoom) {
+	/**
+	 * This function is needed when the Application is started for the first time
+	 * It creates Chambre objects whose are stored in arrayRoom
+	 * Then those Chambre Objects are saved in a txt file
+	 * </br>
+	 * @param arrayRoom : used to store the Chambre object extracted from external file or updated by the user 
+	 * </br>
+	 * @see Chambre#Chambre(String, String, int, boolean, boolean, boolean, int, boolean)
+	 * @see WriteInExternalFiles#writeRoomFile(ArrayList)
+	 */
+	public static void creatRoomIfFileIsEmpty(ArrayList<Chambre>arrayRoom) {
 	
 		Chambre room;
 		int cpt = 0;
@@ -94,6 +126,32 @@ public class RoomFunction
 		WriteInExternalFiles.writeRoomFile(arrayRoom);
 	}
 	
+	/**
+	 * <b>this function is used to select the Chambre Object available from the choices of the user</b>
+	 * </br>
+	 * before the selection of the Chambre is done all the field are check
+	 * If the result of the selected index equals -1 the isn't executed
+	 * If withoutRoomRButton is selected, the Examination is updated and the function ends
+	 * Else the other fields are checked , the Examination is updated
+	 * The default range for the entry and realese date are updated
+	 * Finally filterRoomWithSelection() is used 
+	 * </br>
+	 * @param list ; switch between temporaryListExamination informations and temporaryListRoom
+	 * @param arrayRoom : used to store the Chambre object extracted from external file or updated by the user 
+	 * @param patientNumberBookingRoomPanelField : store the id of the Patient for whom the Examen has been registered
+	 * @param withRoomRButton : Radio Button if selected return true
+	 * @param withoutRoomRButton : Radio Button if selected return true
+	 * @param withAccompangyingRButton : Radio Button if selected return true
+	 * @param withoutAccompangyingRButton : Radio Button if selected return true
+	 * @param LengthOfStaySelectionBox : several values are available for the user to select 
+	 * @param entryDateField : the user can choose the entry date from a pre determined range 
+	 * @param releaseDateField : the minimum available release date is set to be the current date
+	 * </br>
+	 * @see RoomControler#inputFieldControlerBookingRoomRButton(JRadioButton, JRadioButton, JTextField)
+	 * @see RoomControler#inputFieldControlerBeforeRoomSelection(JRadioButton, JRadioButton, JRadioButton, JRadioButton, JComboBox)
+	 * @see DefaultValueLuncher#setDefaultRangeForBookingRoomDate(JDateChooser, JDateChooser, Examen)
+	 * @see RoomFunction#filterRoomWithSelection(JList, ArrayList, JComboBox, JRadioButton, JRadioButton)
+	 */
 	public static void updateListOfAvailableRoom(JList list,ArrayList<Chambre> arrayRoom,JTextField patientNumberBookingRoomPanelField,JRadioButton withRoomRButton,JRadioButton withoutRoomRButton, JRadioButton withAccompangyingRButton, 
 										   JRadioButton withoutAccompangyingRButton, JComboBox LengthOfStaySelectionBox,JDateChooser entryDateField, 
 											 JDateChooser releaseDateField) {

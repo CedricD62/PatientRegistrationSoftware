@@ -17,17 +17,70 @@ import com.objectsPackage.Examen;
 import com.objectsPackage.Patient;
 import com.treatment.FileControler;
 
+/**
+ * <b>ReadExternalFiles class contains all functions needed tp extract informations from files to run the application</b>
+ * </br>
+ * This class contains 1 public function and 5 private functions
+ * </br>
+ * @author C.DEBAISIEUX
+ * @version 1.0
+ *
+ */
 public class ReadExternalFiles {
-
+	
+	/**
+	 * file, fileR and buffer are File related objects put in private static to be used only by all the functions of this class 
+	 */
 	private static File 			file = null;
 	private static FileReader 		fileR= null;
 	private static BufferedReader 	buffer=null;
-	public static ArrayList<String> arrayAreaCode = new  ArrayList<String>();
-	public static ArrayList<String> arrayMail= new ArrayList <String>();
-	public static  ArrayList<String> JcomboSelection = new ArrayList <String>();
 	
-	public static void dispatchInfoFromFiles(JList patientList,JList examinationList, JList switchRoomAndExaminationList,
-			ArrayList<Examen>arrayExamination,ArrayList<Patient>arrayPatient,ArrayList<Chambre>arrayRoom,JList listOfBookedRoom) {
+	/**
+	 * arrayAreaCode ArrayList type collection used to keep the areaCode extracted from external file 
+	 * this Array is used for checking available AreaCode of France country 
+	 * </br>
+	 * <ul>
+	 * <li> @see areaCode </li>  
+	 * <li> @see checkUpAvailableAreaCode </li>  
+	 * </ul>   
+	 */
+	public static ArrayList<String> arrayAreaCode = new  ArrayList<String>();
+	
+	/**
+	 * arrayMail ArrayList type collection used to keep the mail extracted from external file 
+	 * this Array is used for checking available email endings 
+	 * </br>
+	 * <ul>
+	 * <li> @see mailEndings </li>  
+	 * <li> @see checkUpAvailableEmail </li>  
+	 * </ul>   
+	 */
+	public static ArrayList<String> arrayMail= new ArrayList <String>();
+	//public static  ArrayList<String> JcomboSelection = new ArrayList <String>();
+	
+	/**
+	 * <b>The only public function of this class lunched in starting application and dispaitching informations from files if files exist</b>
+	 *  </br>
+	 * <ul>
+	 * <li> @see FileControler </li>  
+	 * <li> @see readPatientFile</li>  
+	 * <li> @see readExaminationFile </li>  
+	 * <li> @see readRoomFile() </li>  
+	 * <li> @see RoomFunction#creatRoomIfFileIsEmpty </li>  
+	 * <li> @see areaCode </li>  
+	 * <li> @see mailEndings </li>  
+	 * </ul>  
+	 * 
+	 * @param patientList : Graphic list componant displaying the informations from the patient objects existing in arrayPatient
+	 * @param examinationList : Graphic list componant displaying the informations from the Examen objects existing in arrayExamination
+	 * @param switchRoomAndExaminationList : Graphic list componant  switching display informations between Examen objects and Chambre object
+	 * @param arrayExamination : used to keep the Examen object extracted from external file or created by the user 
+	 * @param arrayPatient : used to keep the Patient object extracted from external file or created by the user 
+	 * @param arrayRoom : used to keep the Chambre object extracted from external file 
+	 * @param listOfBookedRoom : Graphic list componant displaying the informations from the booked Chambre object extracted from external file or booked by the user 
+	 */
+	public static void dispatchInfoFromFiles(JList patientList,JList examinationList, JList switchRoomAndExaminationList,ArrayList<Examen>arrayExamination,
+											 ArrayList<Patient>arrayPatient,ArrayList<Chambre>arrayRoom,JList listOfBookedRoom) {
 		if(FileControler.filePatientExist() == true) {
 			readPatientFile(patientList, arrayPatient);
 		}
@@ -39,13 +92,24 @@ public class ReadExternalFiles {
 		if(FileControler.fileRoomExist() == true) {
 			readRoomFile(arrayRoom, arrayExamination,listOfBookedRoom,switchRoomAndExaminationList);
 		}else {
-			RoomFunction.creatRoomIfFileIsEmpty(switchRoomAndExaminationList, arrayRoom);
+			RoomFunction.creatRoomIfFileIsEmpty(arrayRoom);
 		}
 		
 		areaCode();
 		mailEndings();
 	}
 	
+	/**
+	 * <b>This function extract mail endings from csv file and add it to {@code ArrayList<String> arrayMail}</b>
+	 * </br>
+	 * The first line for the csv file is ignored by the extraction function
+	 * If a problem occur it is shoulder by the catch part
+	 * The function ends with the finally block in which the buffer is closed
+	 * </br>
+	 * The following URL needs to be parametized before <b>jar compilation</b> for the extraction to be working 
+	 * {@code file = new File("C:/Users/final/Desktop/externalFiles/mailTerminaisons.csv") }
+	 * </br>
+	 */
 	private static void mailEndings() {
 		
 		try {
@@ -81,6 +145,18 @@ public class ReadExternalFiles {
 		}
 	}
 	
+	/**
+	 * <b>This function extract area codes from csv file and add it to {@code ArrayList<String> arrayAreaCode}</b>
+	 * </br>
+	 * The first line for the csv file is ignored by the extraction function
+	 * Only the third columns (the one which contains the area code) is extracted from the CSV file
+	 * If a problem occur it is shoulder by the catch part
+	 * The function ends with the finally block in which the buffer is closed
+	 * </br>
+	 * The following URL needs to be parametized before <b>jar compilation</b> for the extraction to be working 
+	 * {@code file = new File("C:/Users/final/Desktop/externalFiles/areaCode.csv") }
+	 * </br>
+	 */
 	private static void areaCode() {
 		
 		try {
@@ -118,6 +194,23 @@ public class ReadExternalFiles {
 		}
 	}
 	
+	/**
+	 * <b>This function extract Patients  from csv file and add it to {@code ArrayList<Patient>arrayPatient}</b>
+	 * </br>
+	 * Each rows are extracted from the file, stocked in a String [] splitPatient and split
+	 * Then each index of the array are stored in variables and parsed if needed before being used in Patient constructor.
+	 * Reach created Patient are stored in arrayPatient and displayed in patientList.
+	 * </br>
+	 * {@code patient.save = false} is only used in writing and reading Object and allow the application to switch beetween toString options
+	 * 						   this param doesn't have Getter and Setter functions to reduce all wrong using
+	 * </br>
+	 * @param patientList : Graphic list componant showing the patient objects existing in arrayPatient
+	 * @param arrayPatient : used to keep the Patient object extracted from external file or created by the user
+	 *  </br>
+	 * @see ParseFunctions#numericConversion()
+	 * @see ParseFunctions#numericConversionLong()
+	 * @see Patient#Patient(int, boolean, boolean, String, String, String, int, String, String, long, String, String, String, boolean)
+	 */
 	private static void readPatientFile(JList patientList,ArrayList<Patient>arrayPatient) {
 		
 		try {
@@ -158,6 +251,26 @@ public class ReadExternalFiles {
 		}
 	}
 	
+	/**
+	 * <b>This function extract Examen from csv file and add it to {@code ArrayList<Examen>arrayExamination}</b>
+	 * </br>
+	 * Each rows are extracted from the file, stocked in a String [] splitExamination and split
+	 * Then each index of the array are stored in variables and parsed if needed 
+	 * The patient for whom the examination has been registerd is extracted from arrayPatient 
+	 * thoses variables are used in Examen constructor.
+	 * Reach created Examen are stored in arrayExamination and displayed in examinationList.
+	 * </br>
+	 * {@code examination.save = false} is only used in writing and reading Object and allow the application to switch beetween toString options
+	 * 								   this param doesn't have Getter and Setter functions to reduce all wrong using
+	 * </br>
+	 * @param examinationList : Graphic list componant displaying the informations from the Examen objects existing in arrayExamination
+	 * @param arrayExamination : used to keep the Examen object extracted from external file or created by the user
+	 * @param arrayPatient : used to keep the Patient object extracted from external file or created by the user
+	 * </br>
+	 * @see ParseFunctions#numericConversion
+	 * @see PatientFunction@extractPatientFromArray
+	 * @see Examen#Examen(Patient, Chambre, String, String)
+	 */
 	private static void readExaminationFile(JList examinationList,ArrayList<Examen>arrayExamination,ArrayList<Patient>arrayPatient) {
 		
 		try {
@@ -189,6 +302,30 @@ public class ReadExternalFiles {
 		}
 	}
 	
+	/**
+	 * <b>This function extract Chambre from csv file and add it to {@code ArrayList<Chambre>arrayRoom or RoomFunction.bookedRoomList }</b>
+	 * </br>
+	 * Each rows are extracted from the file, stocked in a String [] splitRoom and split
+	 * Then each index of the array are stored in variables and parsed if needed 
+	 * The examination for which a room has been booked is extracted from arrayExamination 
+	 * those variables are used in Chambre constructor.
+	 * each created Chambre are stored in arrayRoom and/or RoomFunction.bookedRoomList, it depends of the existing Examen or not.
+	 * This information is known thank to the length of the array [] splitRoom which determined the process followed for the instanciation of Chambre Object
+	 * Then those informations are displayed in examinationList
+	 * </br>
+	 * {@code room.save = false} is only used in writing and reading Object and allow the application to switch beetween toString options
+	 * 						this param doesn't have Getter and Setter functions to reduce all wrong using
+	 * </br>
+	 * @param arrayRoom : used to keep the Chambre object extracted from external file
+	 * @param arrayExamination : used to keep the Examen object extracted from external file or created by the user
+	 * @param listOfBookedRoom : Graphic list componant displaying the informations from the booked Chambre object extracted from external file or booked by the user 
+	 * @param switchRoomAndExaminationList : Graphic list componant  switching display informations between Examen objects and Chambre object
+	 * * </br>
+	 * @see ParseFunctions#numericConversion
+	 * @see ExaminationFunction#extractExaminationFromArray
+	 * @see Chambre#Chambre(String, String, int, boolean, boolean, boolean, int, boolean, Examen)
+	 * @see Chambre#Chambre(String, String, int, boolean, boolean, boolean, int, boolean)
+	 */
 	private static void readRoomFile(ArrayList<Chambre>arrayRoom,ArrayList<Examen>arrayExamination,JList listOfBookedRoom,JList switchRoomAndExaminationList) {
 		
 		try {
@@ -205,36 +342,39 @@ public class ReadExternalFiles {
 					splitRoom = line.split(",");
 					
 					if(splitRoom.length > 8) {
-					int roomNumber			= ParseFunctions.numericConversion(splitRoom[0]); 
-					int idPatient			= ParseFunctions.numericConversion(splitRoom[1]);
-					String examinationType 	= splitRoom[2];
-					String examinationDate 	= splitRoom[3];
-					Examen examination 		= ExaminationFunction.extractExaminationFromArray(arrayExamination,idPatient, examinationType, examinationDate);
-					int numberOfBed			= ParseFunctions.numericConversion(splitRoom[4]);
-					String entryDate		= splitRoom[5];
-					String releaseDate		= splitRoom[6];
-					boolean alone 			= Boolean.parseBoolean(splitRoom[7]);
-					boolean accompanying 	= Boolean.parseBoolean(splitRoom[8]);
-					boolean available 		= Boolean.parseBoolean(splitRoom[9]);
-					boolean bookingRoom 	= Boolean.parseBoolean(splitRoom[10]);
-	
-					room = new Chambre(entryDate,releaseDate,roomNumber,alone,accompanying,available,numberOfBed,bookingRoom,examination);
-					room.save = false;
-					RoomFunction.bookedRoomList.add(room);
-					arrayRoom.add(room);
-				}else {
-					int roomNumber			= ParseFunctions.numericConversion(splitRoom[0]); 
-					boolean accompanying 	= Boolean.parseBoolean(splitRoom[1]);
-					boolean alone 			= Boolean.parseBoolean(splitRoom[2]);
-					boolean available 		= Boolean.parseBoolean(splitRoom[3]);
-					boolean bookingRoom 	= Boolean.parseBoolean(splitRoom[4]);
-					String entryDate		= splitRoom[5];
-					String releaseDate		= splitRoom[6];
-					int numberOfBed			= ParseFunctions.numericConversion(splitRoom[7]);
-					
-					room = new Chambre(entryDate,releaseDate,roomNumber,alone,accompanying,available,numberOfBed,bookingRoom);
-					room.save = false;
-					arrayRoom.add(room);
+						
+						int roomNumber			= ParseFunctions.numericConversion(splitRoom[0]); 
+						int idPatient			= ParseFunctions.numericConversion(splitRoom[1]);
+						String examinationType 	= splitRoom[2];
+						String examinationDate 	= splitRoom[3];
+						Examen examination 		= ExaminationFunction.extractExaminationFromArray(arrayExamination,idPatient, examinationType, examinationDate);
+						int numberOfBed			= ParseFunctions.numericConversion(splitRoom[4]);
+						String entryDate		= splitRoom[5];
+						String releaseDate		= splitRoom[6];
+						boolean alone 			= Boolean.parseBoolean(splitRoom[7]);
+						boolean accompanying 	= Boolean.parseBoolean(splitRoom[8]);
+						boolean available 		= Boolean.parseBoolean(splitRoom[9]);
+						boolean bookingRoom 	= Boolean.parseBoolean(splitRoom[10]);
+		
+						room = new Chambre(entryDate,releaseDate,roomNumber,alone,accompanying,available,numberOfBed,bookingRoom,examination);
+						room.save = false;
+						RoomFunction.bookedRoomList.add(room);
+						arrayRoom.add(room);
+						
+					}else {
+						
+						int roomNumber			= ParseFunctions.numericConversion(splitRoom[0]); 
+						boolean accompanying 	= Boolean.parseBoolean(splitRoom[1]);
+						boolean alone 			= Boolean.parseBoolean(splitRoom[2]);
+						boolean available 		= Boolean.parseBoolean(splitRoom[3]);
+						boolean bookingRoom 	= Boolean.parseBoolean(splitRoom[4]);
+						String entryDate		= splitRoom[5];
+						String releaseDate		= splitRoom[6];
+						int numberOfBed			= ParseFunctions.numericConversion(splitRoom[7]);
+						
+						room = new Chambre(entryDate,releaseDate,roomNumber,alone,accompanying,available,numberOfBed,bookingRoom);
+						room.save = false;
+						arrayRoom.add(room);	
 				}
 			}
 			

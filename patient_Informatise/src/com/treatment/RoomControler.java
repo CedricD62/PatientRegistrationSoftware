@@ -58,8 +58,7 @@ public class RoomControler {
 		
 		return fieldOk;
 	}
-	
-	
+
 	public static boolean inputFieldControlerBeforeRoomSelection(JRadioButton withoutRoomRButton,JRadioButton withRoomRButton,JRadioButton withAccompangyingRButton,
 			 													JRadioButton withoutAccompangyingRButton,JComboBox LengthOfStaySelectionBox) {
 		boolean fieldOk = true;
