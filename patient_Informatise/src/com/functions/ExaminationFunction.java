@@ -225,7 +225,6 @@ public class ExaminationFunction
 	/**
 	 * <b>this function is used to put the information of an Examen object in the graphic field</b>
 	 * </br> 
-	 * the index of the ligne selected in the graphic list is registered
 	 * If the result of the selected index equals -1 the isn't executed
 	 * the Examen stored at the selected index is extracted from the arrayExamination
 	 * the information are dispatched in the related graphic fields component

@@ -136,7 +136,7 @@ public class RoomFunction
 	 * The default range for the entry and realese date are updated
 	 * Finally filterRoomWithSelection() is used 
 	 * </br>
-	 * @param list ; switch between temporaryListExamination informations and temporaryListRoom
+	 * @param list : switch between temporaryListExamination informations and temporaryListRoom
 	 * @param arrayRoom : used to store the Chambre object extracted from external file or updated by the user 
 	 * @param patientNumberBookingRoomPanelField : store the id of the Patient for whom the Examen has been registered
 	 * @param withRoomRButton : Radio Button if selected return true
@@ -176,7 +176,41 @@ public class RoomFunction
 				}
 			}
 	}
-
+	
+	/**
+	 * <b>this function is used to instantiate a Chambre Object from the choices of the user</b>
+	 * </br>
+	 * First The extractExaminationFromList is used and an Examen is created
+	 * If withoutRoomRButton is not selected, the extractRoomFromArray is used and a Chambre is identified
+	 * Then all the field are checked 
+	 * Several functions are used to update the several List and Array before updating the values of the selected Chambre and Examen
+	 * temporaryListRoom must be cleared before quitting the function
+	 * </br>
+	 * @param list : switch between temporaryListExamination informations and temporaryListRoom
+	 * @param entryDateField : the user can choose the entry date from a pre determined range 
+	 * @param releaseDateField : the minimum available release date is set to be the current date
+	 * @param withoutRoomRButton : Radio Button if selected return true
+	 * @param arrayExamination : used to keep the Examen object extracted from external file or created by the user 
+	 * @param patientNumberBookingRoomPanelField : store the id of the Patient for whom the Examen has been registered
+	 * @param withRoomRButton : Radio Button if selected return true
+	 * @param accompanyingGroup : store the selection result of a JRadioButton group with boolean type 
+	 * @param LengthOfStaySelectionBox : several values are available for the user to select 
+	 * @param bedRoomNumberField : store the number allocated for a specific room
+	 * @param arrayRoom : used to store the Chambre object extracted from external file or updated by the user 
+	 * @param bookedRoomList : Graphic list componant displaying the informations from the booked Chambre object
+	 * @param bookingGroup : store the selection result of a JRadioButton group with boolean type 
+	 * @param withAccompangyingRButton : Radio Button if selected return true
+	 * @param withoutAccompangyingRButton : Radio Button if selected return true
+	 * </br>
+	 * @see RoomFunction#extractExaminationFromList(JList)
+	 * @see RoomFunction#extractRoomFromArray(JList)
+	 * @see RoomControler#inputFieldControlerGlobalCheckUp(JRadioButton,JRadioButton,JTextField,JRadioButton,JRadioButton,JComboBox,JDateChooser,JDateChooser,JTextField)
+	 * @see RoomControler#inputFieldControlerBeforeRoomBooking(JDateChooser, JDateChooser, JTextField)
+	 * @see RoomFunction#updateRoomInformation(JList, Examen, Chambre, JDateChooser, JDateChooser, JRadioButton)
+	 * @see RoomFunction#updadeExaminationListForBooking(JList, ArrayList)
+	 * @see RoomFunction#clearInformationOnPannel(JTextField, ButtonGroup, JComboBox, JDateChooser, JDateChooser, JTextField, ButtonGroup)
+	 * @see RoomFunction#printRoomInList(JList, ArrayList)
+	 */
 	public static void bookingAvailableRoom(JList list,JDateChooser entryDateField,JDateChooser releaseDateField, JRadioButton withoutRoomRButton, ArrayList<Examen> arrayExamination,JTextField patientNumberBookingRoomPanelField,
 											JRadioButton withRoomRButton,ButtonGroup accompanyingGroup,JComboBox LengthOfStaySelectionBox,JTextField bedRoomNumberField, ArrayList<Chambre> arrayRoom, JList bookedRoomList,
 											ButtonGroup bookingGroup,JRadioButton withAccompangyingRButton,JRadioButton withoutAccompangyingRButton) {
@@ -199,6 +233,22 @@ public class RoomFunction
 		}
 	}
 			
+	/**
+	 * <b>this function is used to dispatch the information of a Chambre object in the related fields</b>
+	 * </br> 
+	 *The function used is related to the state of the temporaryListRoom
+	 * 		if the temporaryListRoom is empty showInformationFromArrayExamination() if put in action
+	 * 		else showInformationFromTemporaryListRoom() is used
+	 * </br>
+	 * @param list : switch between temporaryListExamination informations and temporaryListRoom
+	 * @param arrayRoom : used to store the Chambre object extracted from external file or updated by the user 
+	 * @param arrayExamination : used to keep the Examen object extracted from external file or created by the user 
+	 * @param patientNumberBookingRoomPanelField : store the id of the Patient for whom the Examen has been registered
+	 * @param bedRoomNumberField : store the number allocated for a specific room
+	 * </br>
+	 * @see RoomFunction#showInformationFromArrayExamination(JList, ArrayList, JTextField)
+	 * @see RoomFunction#showInformationFromTemporaryListRoom(JList, JTextField, ArrayList)
+	 */
 	public static void showInformationRoomAndExamination(JList list,ArrayList<Chambre> arrayRoom,ArrayList<Examen> arrayExamination,JTextField patientNumberBookingRoomPanelField,
 														 JTextField bedRoomNumberField) {
 		if(temporaryListRoom.isEmpty()) {
@@ -208,6 +258,20 @@ public class RoomFunction
 		}
 	}
 	
+	/**
+	 * <b>this function is used to clear the fields related of a Chambre information in the application</b>
+	 * </br> 
+	 * All the fields are cleared and no informations remains
+	 * </br>
+	 * @param list : switch between temporaryListExamination informations and temporaryListRoom
+	 * @param patientNumberBookingRoomPanelField : store the id of the Patient for whom the Examen has been registered
+	 * @param accompanyingGroup : store the selection result of a JRadioButton group with boolean type 
+	 * @param bookingGroup : store the selection result of a JRadioButton group with boolean type 
+	 * @param lengthOfStayTypeSelection : several values are available for the user to select 
+	 * @param bedRoomNumberField : store the number allocated for a specific room
+	 * @param entryDateField : the user can choose the entry date from a pre determined range 
+	 * @param releaseDateField : the minimum available release date is set to be the current date
+	 */
 	public static void cancelDataBeforeBookingRoom(JList list,JTextField patientNumberBookingRoomPanelField,ButtonGroup accompanyingGroup,ButtonGroup bookingGroup, JComboBox lengthOfStayTypeSelection,
 												   JTextField bedRoomNumberField,JDateChooser entryDateField,JDateChooser releaseDateField) {
 	
@@ -223,6 +287,23 @@ public class RoomFunction
 		list.setListData(temporaryListExamination.toArray());
 	}
 	
+	/**
+	 * <b>this function is used to delete the booking of a Chambre Object</b>
+	 * </br>
+	 * If the result of the selected index equals -1 the function isn't executed
+	 * Else a Chambre Object is instantiate with the informations stores in the bookedRoomList at the specific index
+	 * Several functions are used to reset all the informations related to the Examen and the Chambre objects
+	 * </br> 
+	 * @param switchRoomAndExaminationList : switch between temporaryListExamination informations and temporaryListRoom
+	 * @param bookedList : Graphic list componant displaying the informations from the booked Chambre object
+	 * @param arrayExamination : used to keep the Examen object extracted from external file or created by the user 
+	 * @param arrayRoom : used to store the Chambre object extracted from external file or updated by the user 
+	 * </br>
+	 * @see RoomFunction#deleteDataFromExamination(Chambre)
+	 * @see RoomFunction#resetRoomDataToDefault(Chambre)
+	 * @see RoomFunction#updadeExaminationListForBooking(JList, ArrayList)
+	 * @see RoomFunction#printRoomInList(JList, Chambre)
+	 */
 	public static void deleteBookedRoom(JList switchRoomAndExaminationList, JList bookedList,ArrayList<Examen> arrayExamination,ArrayList<Chambre> arrayRoom ) {
 		
 		int ligneNumbre = bookedList.getSelectedIndex();
@@ -237,6 +318,23 @@ public class RoomFunction
 		printRoomInList(bookedList, room);
 	}
 	
+	/**
+	 * <b>this function is used to update the information of a Chambre object</b>
+	 * </br> 
+	 *The function used is related to the state of the withoutRoomRButton
+	 * 		if the withoutRoomRButton is selected noBookingRoom() is put in action
+	 * 		else bookingRoom() is used
+	 * </br>
+	 * @param list : switch between temporaryListExamination informations and temporaryListRoom
+	 * @param examination : a specific Examen Object
+	 * @param room : a specific Chambre Object
+	 * @param entryDateField : the user can choose the entry date from a pre determined range 
+	 * @param releaseDateField : the minimum available release date is set to be the current date
+	 * @param withoutRoomRButton : Radio Button if selected return true
+	 * </br>
+	 * @see RoomFunction#noBookingRoom(JList, Examen, Chambre)
+	 * @see RoomFunction#bookingRoom(Examen, Chambre, JDateChooser, JDateChooser)
+	 */
 	private static void updateRoomInformation(JList list, Examen examination, Chambre room, JDateChooser entryDateField, JDateChooser releaseDateField,
 			  JRadioButton withoutRoomRButton) {
 
@@ -247,6 +345,26 @@ public class RoomFunction
 		}
 	}
 	
+	/**
+	 * <b>this function is used to filter the available Chambre object with the informations selected by the user</b>
+	 * </br> 
+	 *The function used is related to the state of the withAccompangyingRButton and LengthOfStaySelectionBox
+	 * 		If withAccompangyingRButton and the first index of LengthOfStaySelectionBox are selected selectRoomShorStaytAccompanying() is put in action
+	 * 		Else if withAccompangyingRButton and the Second index of LengthOfStaySelectionBox are selected selectRoomLongStaytAccompanying() is put in action
+	 * 		Else if withoutAccompanyingRButton and the first index of LengthOfStaySelectionBox are selected selectRoomShorStayAlone() is put in action
+	 * 		Else if withoutAccompanyingRButton and the Second index of LengthOfStaySelectionBox are selected selectRoomLongStayAlone() is put in action
+	 * </br>
+	 * @param list : switch between temporaryListExamination informations and temporaryListRoom
+	 * @param arrayRoom : used to store the Chambre object extracted from external file or updated by the user 
+	 * @param LengthOfStaySelectionBox : several values are available for the user to select 
+	 * @param withAccompangyingRButton : Radio Button if selected return true
+	 * @param withoutAccompangyingRButton : Radio Button if selected return true
+	 * </br>
+	 * @see RoomFunction#selectRoomShorStaytAccompanying(JList, ArrayList)
+	 * @see RoomFunction#selectRoomLongStaytAccompanying(JList, ArrayList)
+	 * @see RoomFunction#selectRoomShorStayAlone(JList, ArrayList)
+	 * @see RoomFunction#selectRoomLongStayAlone(JList, ArrayList)
+	 */
 	private static void filterRoomWithSelection(JList list,ArrayList<Chambre> arrayRoom,JComboBox LengthOfStaySelectionBox,JRadioButton withAccompangyingRButton,JRadioButton withoutAccompanyingRButton) {
 		
 		int selection = LengthOfStaySelectionBox.getSelectedIndex();
@@ -268,6 +386,20 @@ public class RoomFunction
 		}
 	}
 	
+	/**
+	 * <b>this function is used to reduce the number of available Chambre with the choices of the user</b>
+	 * </br> 
+	 * This function can only be used through filterRoomWithSelection()
+	 * TemporaryListRoom must be cleared at the beginning of this function
+	 * In a loop all the available Chambre objects are checked
+	 * All Chambre Object matching the choices of the user are add to TemporaryListRoom
+	 * Then they are shown through the JList
+	 * </br>
+	 * @param list : switch between temporaryListExamination informations and temporaryListRoom
+	 * @param arrayRoom : used to store the Chambre object extracted from external file or updated by the user 
+	 * </br>
+	 * @see RoomFunction#filterRoomWithSelection(JList, ArrayList, JComboBox, JRadioButton, JRadioButton)
+	 */
 	private static void selectRoomShorStaytAccompanying(JList list,ArrayList<Chambre> arrayRoom) {
 		
 		Chambre room = null;
@@ -286,6 +418,20 @@ public class RoomFunction
 		list.setListData(temporaryListRoom.toArray());
 	}
 	
+	/**
+	 * <b>this function is used to reduce the number of available Chambre with the choices of the user</b>
+	 * </br> 
+	 * This function can only be used through filterRoomWithSelection()
+	 * TemporaryListRoom must be cleared at the beginning of this function
+	 * In a loop all the available Chambre objects are checked
+	 * All Chambre Object matching the choices of the user are add to TemporaryListRoom
+	 * Then they are shown through the JList
+	 * </br>
+	 * @param list : switch between temporaryListExamination informations and temporaryListRoom
+	 * @param arrayRoom : used to store the Chambre object extracted from external file or updated by the user 
+	 * </br>
+	 * @see RoomFunction#filterRoomWithSelection(JList, ArrayList, JComboBox, JRadioButton, JRadioButton)
+	 */
 	private static void selectRoomLongStaytAccompanying(JList list,ArrayList<Chambre> arrayRoom) {
 		
 		Chambre room = null;
@@ -304,6 +450,20 @@ public class RoomFunction
 		list.setListData(temporaryListRoom.toArray());
 	}
 	
+	/**
+	 * <b>this function is used to reduce the number of available Chambre with the choices of the user</b>
+	 * </br> 
+	 * This function can only be used through filterRoomWithSelection()
+	 * TemporaryListRoom must be cleared at the beginning of this function
+	 * In a loop all the available Chambre objects are checked
+	 * All Chambre Object matching the choices of the user are add to TemporaryListRoom
+	 * Then they are shown through the JList
+	 * </br>
+	 * @param list : switch between temporaryListExamination informations and temporaryListRoom
+	 * @param arrayRoom : used to store the Chambre object extracted from external file or updated by the user 
+	 * </br>
+	 * @see RoomFunction#filterRoomWithSelection(JList, ArrayList, JComboBox, JRadioButton, JRadioButton)
+	 */
 	private static void selectRoomShorStayAlone(JList list,ArrayList<Chambre> arrayRoom) {
 		
 		Chambre room = null;
@@ -322,6 +482,20 @@ public class RoomFunction
 		list.setListData(temporaryListRoom.toArray());
 	}
 	
+	/**
+	 * <b>this function is used to reduce the number of available Chambre with the choices of the user</b>
+	 * </br> 
+	 * This function can only be used through filterRoomWithSelection()
+	 * TemporaryListRoom must be cleared at the beginning of this function
+	 * In a loop all the available Chambre objects are checked
+	 * All Chambre Object matching the choices of the user are add to TemporaryListRoom
+	 * Then they are shown through the JList
+	 * </br>
+	 * @param list : switch between temporaryListExamination informations and temporaryListRoom
+	 * @param arrayRoom : used to store the Chambre object extracted from external file or updated by the user 
+	 * </br>
+	 * @see RoomFunction#filterRoomWithSelection(JList, ArrayList, JComboBox, JRadioButton, JRadioButton)
+	 */
 	private static void selectRoomLongStayAlone(JList list,ArrayList<Chambre> arrayRoom) {
 		
 		Chambre room = null;
@@ -340,6 +514,19 @@ public class RoomFunction
 		list.setListData(temporaryListRoom.toArray());
 	}
 	
+	/**
+	 * <b>this function is used to dispatch the information of an Examen from arrayExamination in the related fields</b>
+	 * </br> 
+	 * This function can only be used through showInformationRoomAndExamination()
+	 * If the result of the selected index equals -1 the function isn't executed
+	 * Then the Examen is extracted from the temporaryListExamination and the id of the Patient Object is displayed in the specific field
+	 * </br> 
+	 * @param list : switch between temporaryListExamination informations and temporaryListRoom
+	 * @param arrayExamination : used to keep the Examen object extracted from external file or created by the user 
+	 * @param patientNumberBookingRoomPanelField : store the id of the Patient for whom the Examen has been registered
+	 * </br>
+	 * @see RoomFunction#showInformationRoomAndExamination(JList, ArrayList, ArrayList, JTextField, JTextField)
+	 */
 	private static void showInformationFromArrayExamination(JList list,ArrayList<Examen> arrayExamination,JTextField patientNumberBookingRoomPanelField) {
 		
 		int idExamination = list.getSelectedIndex();
@@ -351,11 +538,25 @@ public class RoomFunction
 		patientNumberBookingRoomPanelField.setText(""+examination.getPatient().getId());
 	}
 	
+	/**
+	 * <b>this function is used to dispatch the information of a Chambre object in the related fields</b>
+	 * </br> 
+	 * This function can only be used through showInformationRoomAndExamination()
+	 * If the result of the selected index equals -1 the function isn't executed
+	 * Then if temporaryListRoom is empty the Chambre is extracted from the arrayRoom and the room number is displayed in the specific field
+	 * Else the Chambre is extracted from the temporaryListRoom and the room number is displayed in the specific field
+	 * </br> 
+	 * @param list : switch between temporaryListExamination informations and temporaryListRoom
+	 * @param bedRoomNumberField : store the number allocated for a specific room
+	 * @param arrayRoom : used to store the Chambre object extracted from external file or updated by the user 
+	 * </br>
+	 * @see RoomFunction#showInformationRoomAndExamination(JList, ArrayList, ArrayList, JTextField, JTextField)
+	 */
 	private static void showInformationFromTemporaryListRoom(JList list,JTextField bedRoomNumberField,ArrayList<Chambre> arrayRoom) {
 		int idRoom = list.getSelectedIndex();
-		
 			if(idRoom == -1) 
 				return;
+			
 		if(temporaryListRoom.isEmpty()) {
 			Chambre room = arrayRoom.get(idRoom);
 			bedRoomNumberField.setText(""+room.getRoomNumber());
@@ -365,6 +566,18 @@ public class RoomFunction
 		}
 	}
 	
+	/**
+	 * <b>this function is used to extract an Examen from temporaryListExamination</b>
+	 * </br>
+	 * A loop is used to check for each Examen the status of the boolean isBookingRoom (parameter of Examen)
+	 * The loop is broken avec the first occurence of the boolean with a true value
+	 * </br>
+	 * @param list : switch between temporaryListExamination informations and temporaryListRoom
+	 * </br>
+	 * @see Examen#isBookingRoom()
+	 * </br> 
+	 * @return an Examen Object
+	 */
 	private static Examen extractExaminationFromList (JList list) {
 		Examen examination = null;
 		
@@ -377,6 +590,16 @@ public class RoomFunction
 		return examination;
 	}
 	
+	/**
+	 * <b>this function is used to extract a Chambre from temporaryListRoom</b>
+	 * </br>
+	 * If the result of the selected index equals -1 the function isn't executed
+	 * The Chambre is extracted from the temporaryListRoom 
+	 * </br>
+	 * @param  list : switch between temporaryListExamination informations and temporaryListRoom
+	 * </br> 
+	 * @return a Chambre Object
+	 */
 	private static Chambre extractRoomFromArray(JList list) {
 		
 		Chambre room = null;
@@ -389,6 +612,20 @@ public class RoomFunction
 		return room;
 	}
 	
+	/**
+	 * <b>this function is used to update the information of a Chambre and Examen object</b>
+	 * </br> 
+	 * This function can only be used through updateRoomInformation
+	 * The Parameter bookingRoom of the specific Examen is updated
+	 * A Chambre object is instantiate with specific values
+	 * The Examen update its Chambre parameter Object with those new informations
+	 * </br>
+	 * @param list : switch between temporaryListExamination informations and temporaryListRoom
+	 * @param examination : a specific Examen Object
+	 * @param room : a specific Chambre Object
+	 * </br>
+	 * @see RoomFunction#updateRoomInformation(JList, Examen, Chambre, JDateChooser, JDateChooser, JRadioButton)
+	 */
 	private static void noBookingRoom (JList list, Examen examination, Chambre room) {
 		
 		examination.setBookingRoom(true);
@@ -396,6 +633,21 @@ public class RoomFunction
 		examination.setChambre(room);
 	}
 	
+	/**
+	 * <b>this function is used to update the information of a Chambre and Examen object</b>
+	 * </br> 
+	 * This function can only be used through updateRoomInformation
+	 * The values writen by the user are registered in the specific Chambre Object
+	 * The values of the Examen object related to this booking are updated
+	 * </br>
+	 * @param examination : a specific Examen Object
+	 * @param room : a specific Chambre Object
+	 * @param entryDateField : the user can choose the entry date from a pre determined range 
+	 * @param releaseDateField : the minimum available release date is set to be the current date
+	 * </br>
+	 * @see RoomFunction#updateRoomInformation(JList, Examen, Chambre, JDateChooser, JDateChooser, JRadioButton)
+	 * @see ParseFunctions#dateFormating(JDateChooser)
+	 */
 	private static void bookingRoom(Examen examination, Chambre room, JDateChooser entryDateField, JDateChooser releaseDateField) {
 		room.setEntryDate(ParseFunctions.dateFormating(entryDateField.getDate()));
 		room.setReleaseDate(ParseFunctions.dateFormating(releaseDateField.getDate()));
@@ -405,6 +657,18 @@ public class RoomFunction
 		examination.setBookingRoom(true);
 	}
 
+	/**
+	 * <b>this function is used to update the temporaryListExamination</b>
+	 * </br> 
+	 * At the beginning of this function the temporaryListExamination must be cleared
+	 * A loop is used to check all the Examen Object stored in arrayExamination
+	 * If the parameter booking of the Examen is put to false
+	 * Then Examen is add to the temporaryListExamination
+	 * Finally the temporaryListExamination updated is shown through the JList
+	 * </br>
+	 * @param list : switch between temporaryListExamination informations and temporaryListRoom
+	 * @param arrayExamination : used to keep the Examen object extracted from external file or created by the user 
+	 */
 	public static void updadeExaminationListForBooking(JList list,ArrayList<Examen> arrayExamination) {
 		
 		Examen examination = null;
@@ -419,6 +683,19 @@ public class RoomFunction
 		list.setListData(temporaryListExamination.toArray());
 	}
 	
+	/**
+	 * <b>this function is used to clear the fields related of a Chambre information in the application</b>
+	 * </br> 
+	 * All the fields are cleared and no informations remains
+	 * </br>
+	 * @param patientNumberBookingRoomPanelField : store the id of the Patient for whom the Examen has been registered
+	 * @param accompanyingGroup : store the selection result of a JRadioButton group with boolean type 
+	 * @param LengthOfStaySelectionBox : several values are available for the user to select 
+	 * @param entryDateField : the user can choose the entry date from a pre determined range 
+	 * @param releaseDateField : the minimum available release date is set to be the current date
+	 * @param bedRoomNumberField : store the number allocated for a specific room
+	 * @param bookingGroup : store the selection result of a JRadioButton group with boolean type 
+	 */
 	private static void clearInformationOnPannel(JTextField patientNumberBookingRoomPanelField,ButtonGroup accompanyingGroup,JComboBox LengthOfStaySelectionBox, 
 												 JDateChooser entryDateField, JDateChooser releaseDateField,JTextField bedRoomNumberField,ButtonGroup bookingGroup) {
 		patientNumberBookingRoomPanelField.setText("");
@@ -430,6 +707,18 @@ public class RoomFunction
 		LengthOfStaySelectionBox.setSelectedIndex(0);
 	}
 	
+	/**
+	 * <b>this function is used to show only the booked Chambre information in the specific JList</b>
+	 * </br> 
+	 * At the beginning of this function the bookedRoomList must be cleared
+	 * A loop is used to check all the Chambre Object stored in arrayRoom
+	 * If the parameter examination of the Chambre is not null
+	 * The Chambre is store in bookedRoomList
+	 * Finally the Chambre stored in bookedRoomList are shown through the JList 
+	 * </br>
+	 * @param list : Graphic list componant displaying the informations from the booked Chambre object
+	 * @param arrayRoom : used to store the Chambre object extracted from external file or updated by the user 
+	 */
 	private static void printRoomInList(JList list,ArrayList<Chambre> arrayRoom) {
 		Chambre room = null;
 		
@@ -445,6 +734,16 @@ public class RoomFunction
 		list.setListData(bookedRoomList.toArray());
 	}
 	
+	/**
+	 * <b>this function is used to remove the booked Chambre from bookedRoomList</b>
+	 * </br> 
+	 * A loop is used to check all the Chambre Object stored in arrayRoom
+	 * When the specific Chambre object is found, it is removed from the bookedRoomList
+	 * Finally the bookedRoomList updated is shown through the JList 
+	 * </br>
+	 * @param list : Graphic list componant displaying the informations from the booked Chambre object
+	 * @param room : a specific Chambre Object selected by the user
+	 */
 	public static void printRoomInList(JList list, Chambre room) {
 		
 		for(int i = 0; i < bookedRoomList.size(); i++) {
@@ -457,6 +756,18 @@ public class RoomFunction
 		list.setListData(bookedRoomList.toArray());
 	}
 	
+	/**
+	 * <b>This function is used to reset to default the values of a specific Chambre object</b>
+	 * </br>
+	 * One of the following funtions is used if it matches the parameters of the Chambre object
+	 * </br>
+	 * @param room : a specific Chambre Object selected by the user
+	 * </br>
+	 * @see RoomFunction#defaultDataShorStaytAccompanying(Chambre)
+	 * @see RoomFunction#defaultDataLongStaytAccompanying(Chambre)
+	 * @see RoomFunction#defaultDataShorStayAlone(Chambre)
+	 * @see RoomFunction#defaultDataLongStayAlone(Chambre)
+	 */
 	public static void resetRoomDataToDefault(Chambre room) {
 		
 		if(room.isAccompanying() == true && room.getRoomNumber() > 200) {
@@ -473,6 +784,15 @@ public class RoomFunction
 		}
 	}
 	
+	/**
+	 * <b>This function is used to reset to default the values of a specific Chambre object</b>
+	 * </br>
+	 * This function can only be used through resetRoomDataToDefault
+	 * </br>
+	 * @param room : a specific Chambre Object selected by the user
+	 * </br>
+	 * @see RoomFunction#resetRoomDataToDefault(Chambre)
+	 */
 	private static void defaultDataShorStaytAccompanying(Chambre room) {
 		room.setAccompanying(true);
 		room.setAlone(false);
@@ -483,6 +803,15 @@ public class RoomFunction
 		room.setExamination(null);
 	}
 	
+	/**
+	 * <b>This function is used to reset to default the values of a specific Chambre object</b>
+	 * </br>
+	 * This function can only be used through resetRoomDataToDefault
+	 * </br>
+	 * @param room : a specific Chambre Object selected by the user
+	 * </br>
+	 * @see RoomFunction#resetRoomDataToDefault(Chambre)
+	 */
 	private static void defaultDataLongStaytAccompanying(Chambre room) {	
 		room.setAccompanying(true);
 		room.setAlone(false);
@@ -493,6 +822,15 @@ public class RoomFunction
 		room.setExamination(null);
 	}
 	
+	/**
+	 * <b>This function is used to reset to default the values of a specific Chambre object</b>
+	 * </br>
+	 * This function can only be used through resetRoomDataToDefault
+	 * </br>
+	 * @param room : a specific Chambre Object selected by the user
+	 * </br>
+	 * @see RoomFunction#resetRoomDataToDefault(Chambre)
+	 */
 	private static void defaultDataShorStayAlone(Chambre room) {
 		room.setAccompanying(false);
 		room.setAlone(true);
@@ -503,6 +841,15 @@ public class RoomFunction
 		room.setExamination(null);
 	}
 	
+	/**
+	 * <b>This function is used to reset to default the values of a specific Chambre object</b>
+	 * </br>
+	 * This function can only be used through resetRoomDataToDefault
+	 * </br>
+	 * @param room : a specific Chambre Object selected by the user
+	 * </br>
+	 * @see RoomFunction#resetRoomDataToDefault(Chambre)
+	 */
 	private static void defaultDataLongStayAlone(Chambre room) {
 		room.setAccompanying(false);
 		room.setAlone(true);
@@ -513,15 +860,26 @@ public class RoomFunction
 		room.setExamination(null);
 	}
 	
+	/**
+	 * <b>This function is used to reset to default the values of a specific Examen object</b>
+	 * </br>
+	 * @param room : a specific Chambre Object selected by the user
+	 * </br>
+	 * @see RoomFunction#deleteBookedRoom(JList, JList, ArrayList, ArrayList)
+	 */
 	private static void deleteDataFromExamination(Chambre room) {
 		
 		Examen examination = room.getExamination();
 		examination.setBookingRoom(false);
 		examination.setChambre(null);
 	}
-	
+	/**
+	 * <b>This function is used to reset to default the values of a specific Examen object</b>
+	 * A loop is used to check the parameter of each Examen object stored in temporaryListExamination
+	 * If the Examen is found its bookingRoom value is update to false and the loop is broken
+	  */
 	private static void deleteDataFromExamination() {
-			
+		
 		Examen examination = null;
 		
 		for(int i = 0; i < temporaryListExamination.size(); i++) {

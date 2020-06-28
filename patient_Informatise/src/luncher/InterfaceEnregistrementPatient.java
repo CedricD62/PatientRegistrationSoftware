@@ -165,17 +165,20 @@ public class InterfaceEnregistrementPatient {
 		arrayRoom 		 = new ArrayList<Chambre>();
 		
 		frame = new JFrame();
-		frame.getContentPane().setBackground(Color.WHITE);
+		frame.getContentPane().setBackground(Color.LIGHT_GRAY);
 		frame.setBounds(100, 100, 1230, 600);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
 		tabbedPane = new JTabbedPane(JTabbedPane.TOP);
+		tabbedPane.setBackground(Color.LIGHT_GRAY);
 		tabbedPane.setBounds(10, 283, 1197, 254);
 		frame.getContentPane().add(tabbedPane);
 		
 		addExaminationPanel = new JPanel();
+		addExaminationPanel.setBackground(Color.LIGHT_GRAY);
 		tabbedPane.addTab("Ajouter examen", null, addExaminationPanel, null);
+		tabbedPane.setBackgroundAt(0, Color.LIGHT_GRAY);
 		addExaminationPanel.setLayout(null);
 		
 		patientNumberTextExam = new JLabel("N\u00B0 Patient");
@@ -191,11 +194,13 @@ public class InterfaceEnregistrementPatient {
 		addExaminationPanel.add(examinationDateText);
 		
 		patientNumberExamPanelField = new JTextField();
+		patientNumberExamPanelField.setBackground(Color.WHITE);
 		patientNumberExamPanelField.setColumns(10);
 		patientNumberExamPanelField.setBounds(137, 54, 135, 20);
 		addExaminationPanel.add(patientNumberExamPanelField);
 		
 		examinationTypeSelection = new JComboBox();
+		examinationTypeSelection.setBackground(Color.WHITE);
 		examinationTypeSelection.setModel(new DefaultComboBoxModel(new String[] {"Liste d'examens ", "Arthroscopie", "Alcool\u00E9mie", "Appendicectomie", "Arthroscanner", "Audiogramme", "Avortement", "Bact\u00E9riologique", "Biopsie", 
 																				 "C\u00E9sarienne", "Coelioscopie", "ECG", "Endoscopie", "F\u00E9condation in vitro", "Fibroscopie", "IRM", "Mammographie", "Radiographie", "S\u00E9rodiagnostic", 
 																				 "Tension art\u00E9rielle ", "Urographie", "Ventriculographie", "Volum\u00E9trique "}));
@@ -226,6 +231,7 @@ public class InterfaceEnregistrementPatient {
 		addExaminationPanel.add(scrollPane_3);
 		
 		examinationList = new JList();
+		examinationList.setBackground(Color.WHITE);
 		scrollPane_3.setViewportView(examinationList);
 		examinationList.addMouseListener(new MouseAdapter() {
 			@Override
@@ -241,6 +247,7 @@ public class InterfaceEnregistrementPatient {
 		addExaminationPanel.add(searchExaminationListButton);
 		
 		serchExaminationField = new JTextField();
+		serchExaminationField.setBackground(Color.WHITE);
 		serchExaminationField.setColumns(10);
 		serchExaminationField.setBounds(497, 17, 507, 23);
 		addExaminationPanel.add(serchExaminationField);
@@ -270,7 +277,9 @@ public class InterfaceEnregistrementPatient {
 		bookingGroup = new ButtonGroup();
 		
 		bookRoomPanel = new JPanel();
+		bookRoomPanel.setBackground(Color.LIGHT_GRAY);
 		tabbedPane.addTab("R\u00E9servation chambre", null, bookRoomPanel, null);
+		tabbedPane.setBackgroundAt(1, Color.LIGHT_GRAY);
 		bookRoomPanel.setLayout(null);
 		
 		lengthOfStayText = new JLabel("Hospitalisation");
@@ -310,10 +319,12 @@ public class InterfaceEnregistrementPatient {
 		bookRoomPanel.add(patientNumberBookingRoomPanelField);
 		
 		withoutAccompanyingRButton = new JRadioButton("Sans");
+		withoutAccompanyingRButton.setBackground(Color.LIGHT_GRAY);
 		withoutAccompanyingRButton.setBounds(259, 105, 62, 24);
 		bookRoomPanel.add(withoutAccompanyingRButton);
 		
 		withAccompangyingRButton = new JRadioButton("Avec");
+		withAccompangyingRButton.setBackground(Color.LIGHT_GRAY);
 		withAccompangyingRButton.setBounds(172, 105, 71, 24);
 		bookRoomPanel.add(withAccompangyingRButton);
 		accompanyingGroup.add(withAccompangyingRButton);
@@ -356,6 +367,7 @@ public class InterfaceEnregistrementPatient {
 		
 		
 		withRoomRButton = new JRadioButton("Oui");
+		withRoomRButton.setBackground(Color.LIGHT_GRAY);
 		withRoomRButton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -366,6 +378,7 @@ public class InterfaceEnregistrementPatient {
 		bookRoomPanel.add(withRoomRButton);
 		
 		withoutRoomRButton = new JRadioButton("Non");
+		withoutRoomRButton.setBackground(Color.LIGHT_GRAY);
 		withoutRoomRButton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -387,6 +400,7 @@ public class InterfaceEnregistrementPatient {
 		bookRoomPanel.add(scrollPane_2);
 		
 		switchRoomAndExaminationList = new JList();
+		switchRoomAndExaminationList.setBackground(Color.WHITE);
 		scrollPane_2.setViewportView(switchRoomAndExaminationList);
 		switchRoomAndExaminationList.addMouseListener(new MouseAdapter() {
 			@Override
@@ -399,18 +413,23 @@ public class InterfaceEnregistrementPatient {
 		bookRoomPanel.add(scrollPane_5);
 		
 		listOfBookedRoom = new JList();
+		listOfBookedRoom.setBackground(Color.WHITE);
 		scrollPane_5.setViewportView(listOfBookedRoom);
 		
 		staySummaryPanel = new JPanel();
+		staySummaryPanel.setBackground(Color.LIGHT_GRAY);
 		tabbedPane.addTab("Historique patient", null, staySummaryPanel, null);
 		staySummaryPanel.setLayout(null);
 		
 		patientInformationPanel = new JPanel();
+		patientInformationPanel.setBackground(Color.LIGHT_GRAY);
+		patientInformationPanel.setForeground(Color.WHITE);
 		patientInformationPanel.setBounds(10, 11, 488, 261);
 		frame.getContentPane().add(patientInformationPanel);
 		patientInformationPanel.setLayout(null);
 		
 		showPatientPanel = new JPanel();
+		showPatientPanel.setBackground(Color.LIGHT_GRAY);
 		showPatientPanel.setBounds(508, 11, 699, 261);
 		frame.getContentPane().add(showPatientPanel);
 		showPatientPanel.setLayout(null);
@@ -433,6 +452,7 @@ public class InterfaceEnregistrementPatient {
 		showPatientPanel.add(scrollPane_1);
 		
 		patientList = new JList();
+		patientList.setBackground(Color.WHITE);
 		scrollPane_1.setViewportView(patientList);
 		patientList.addMouseListener(new MouseAdapter() {
 			@Override
@@ -549,6 +569,7 @@ public class InterfaceEnregistrementPatient {
 		staySummaryPanel.add(scrollPane);
 		
 		summaryExaminationList = new JList();
+		summaryExaminationList.setBackground(Color.WHITE);
 		scrollPane.setViewportView(summaryExaminationList);
 		
 		scrollPane_4 = new JScrollPane();
@@ -556,6 +577,7 @@ public class InterfaceEnregistrementPatient {
 		staySummaryPanel.add(scrollPane_4);
 		
 		summaryBookingroomList = new JList();
+		summaryBookingroomList.setBackground(Color.WHITE);
 		scrollPane_4.setViewportView(summaryBookingroomList);
 		
 		cancelPatientButton = new JButton("Effacer");
@@ -590,11 +612,13 @@ public class InterfaceEnregistrementPatient {
 		patientInformationPanel.add(genderText);
 		
 		maleRButton = new JRadioButton("Homme");
+		maleRButton.setBackground(Color.LIGHT_GRAY);
 		maleRButton.setBounds(342, 184, 69, 24);
 		patientInformationPanel.add(maleRButton);
 		genderGroup.add(maleRButton);
 		
 		femaleRButton = new JRadioButton("Femme");
+		femaleRButton.setBackground(Color.LIGHT_GRAY);
 		femaleRButton.setBounds(413, 184, 69, 24);
 		patientInformationPanel.add(femaleRButton);
 		genderGroup.add(femaleRButton);

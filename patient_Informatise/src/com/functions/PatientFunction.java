@@ -558,7 +558,7 @@ public class PatientFunction
 			Patient patient = arrayPatient.get(idPatient);
 			
 			patient.setId(ParseFunctions.numericConversion(idField.getText()));
-			patient.setMasculin(maleRButton.isSelected());
+			patient.setMale(maleRButton.isSelected());
 			patient.setFemale(femaleRButton.isSelected());
 			patient.setName(nameField.getText());
 			patient.setFirstName(fNameField.getText());
@@ -626,7 +626,7 @@ public class PatientFunction
 			Patient patient = temporaryList.get(idPatient);
 			
 			patient.setId(ParseFunctions.numericConversion(idField.getText()));
-			patient.setMasculin(maleRButton.isSelected());
+			patient.setMale(maleRButton.isSelected());
 			patient.setFemale(femaleRButton.isSelected());
 			patient.setName(nameField.getText());
 			patient.setFirstName(fNameField.getText());
