@@ -14,7 +14,7 @@ import com.toedter.calendar.JDateChooser;
 /**
  * <b>PatientControler class contains all functions needed to certify the information sent by the user to the Patient Object</b>
  * </br>
- * This class contains 1 public functions and 9 private functions
+ * This class contains 1 public functions and 10 private functions
  * </br>
  * @author C.DEBAISIEUX
  * @version 1.0
@@ -48,6 +48,7 @@ public class PatientControler {
 	 * @see PatientControler#checkUpAvailableEmail(JTextField)
 	 * @see PatientControler#checkUpJTextFieldIntInput(JTextField)
 	 * @see PatientControler#checkUpAvailablePhoneNumber(JTextField)
+	 * @see PatientControler#checkUpAvailableCellphoneNumber(JTextField)
 	 * @see PatientControler#checkUpAvailableAreaCode(JTextField)
 	 * @see PatientControler#checkUpJTextFieldLongInput(JTextField)
 	 * @see PatientControler#checkUpSsnLength(JTextField)
@@ -88,7 +89,7 @@ public class PatientControler {
 		if(checkUpJTextFieldIntInput(cellphoneField) == false) {
 			fieldOk = false; 
 		}else {
-			if(checkUpAvailablePhoneNumber(cellphoneField) == false) {
+			if(checkUpAvailableCellphoneNumber(cellphoneField) == false) {
 				fieldOk = false;
 			}
 		}
@@ -278,9 +279,21 @@ public class PatientControler {
 		return email;
 	}
 	
+	/**
+	 * <b>this function is used to certify that the phone number is correct</b>
+	 * </br>
+	 * If the phone number start with one of the beginning number of the array
+	 * boolean phoneNumber is set on true 
+	 * </br> 
+	 * @param text : a String information writen by the user
+	 * </br>
+	 * @return a true or false boolean
+	 * </br>
+	 * @see String#startsWith(String)
+	 */
 	private static boolean checkUpAvailablePhoneNumber(JTextField text) {
 		boolean phoneNumber = false;
-		String [] phoneBegin = {"01","02","03","04","05","06","07","09"};	
+		String [] phoneBegin = {"01","02","03","04","05","09"};	
 		String patientPhoneNumber = text.getText();
 		
 		if(patientPhoneNumber.length() == 10) {
@@ -299,6 +312,52 @@ public class PatientControler {
 		return phoneNumber;
 	}
 	
+	/**
+	 * <b>this function is used to certify that the cellphone number is correct</b>
+	 * </br>
+	 * If the phone number start with one of the beginning number of the array
+	 * If it matches phoneNumber is set on true 
+	 * </br> 
+	 * @param text : a String information writen by the user
+	 * </br>
+	 * @return a true or false boolean
+	 * </br>
+	 * @see String#startsWith(String)
+	 */
+	private static boolean checkUpAvailableCellphoneNumber(JTextField text) {
+		boolean phoneNumber = false;
+		String [] phoneBegin = {"06","07"};	
+		String patientPhoneNumber = text.getText();
+		
+		if(patientPhoneNumber.length() == 10) {
+			for(int i = 0; i < phoneBegin.length; i++) {
+				if( patientPhoneNumber.startsWith(phoneBegin[i]) == true) {
+					phoneNumber = true;
+					break;
+				}
+			}
+		}
+		
+		if(phoneNumber == false) {
+			text.setText("erreur");	
+		}	
+		
+		return phoneNumber;
+	}
+	
+	/**
+	 * <b>this function is used to certify that the area code is correct</b>
+	 * </br>
+	 * A loop is used to compare the area code written by the user to the area code in arrayAreaCode
+	 * If it matches codeOk is set on true 
+	 * </br> 
+	 * @param text : a String information writen by the user
+	 * </br>
+	 * @return a true or false boolean
+	 * </br>
+	 * @see ReadExternalFiles#areaCode()
+	 * @see String#contentEquals(StringBuffer)
+	 */
 	private static boolean checkUpAvailableAreaCode(JTextField text) {
 		boolean codeOk = false;
 		String patientAreaCode = text.getText();
@@ -315,6 +374,17 @@ public class PatientControler {
 		return codeOk;
 	}
 	
+	/**
+	 * <b>this function is used to certify that the social security number is correct</b>
+	 * </br>
+	 * If the length of the String is aquals to 15 
+	 * ssnLength is set on true 
+	 * else an error warning is sent to the user
+	 * </br> 
+	 * @param text : a String information writen by the user
+	 * </br>
+	 * @return a true or false boolean
+	 */
 	private static boolean checkUpSsnLength(JTextField text) {
 		boolean ssnLength = false;
 		

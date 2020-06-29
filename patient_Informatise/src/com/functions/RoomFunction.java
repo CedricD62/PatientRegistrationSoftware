@@ -155,26 +155,30 @@ public class RoomFunction
 	public static void updateListOfAvailableRoom(JList list,ArrayList<Chambre> arrayRoom,JTextField patientNumberBookingRoomPanelField,JRadioButton withRoomRButton,JRadioButton withoutRoomRButton, JRadioButton withAccompangyingRButton, 
 										   JRadioButton withoutAccompangyingRButton, JComboBox LengthOfStaySelectionBox,JDateChooser entryDateField, 
 											 JDateChooser releaseDateField) {
-		if(RoomControler.inputFieldControlerBookingRoomRButton(withoutRoomRButton,withRoomRButton,patientNumberBookingRoomPanelField) == true) {
-			Examen examination = null;
+		
+		int ligneNumber = list.getSelectedIndex();
+		
+		if(ligneNumber == -1)
+			return ;
+		
+		Examen examination = null;
+		
+		if(withoutRoomRButton.isSelected()) {
+			examination = temporaryListExamination.get(ligneNumber);	
+			examination.setBookingRoom(true);
+		
+		}else {	
+			if(RoomControler.inputFieldControlerBookingRoomRButton(withoutRoomRButton,withRoomRButton,patientNumberBookingRoomPanelField) == true) {
 			
-			int ligneNumber = list.getSelectedIndex();
-			
-				if(ligneNumber == -1)
-					return ;
-				if(withoutRoomRButton.isSelected()) {
-					examination = temporaryListExamination.get(ligneNumber);	
+				if(RoomControler.inputFieldControlerBeforeRoomSelection(withoutRoomRButton, withRoomRButton, withAccompangyingRButton, withoutAccompangyingRButton, LengthOfStaySelectionBox) == true) {
+					
+					examination = temporaryListExamination.get(ligneNumber);
 					examination.setBookingRoom(true);
-				}else {				
-					if(RoomControler.inputFieldControlerBeforeRoomSelection(withoutRoomRButton, withRoomRButton, withAccompangyingRButton, withoutAccompangyingRButton, LengthOfStaySelectionBox) == true) {
-						
-						examination = temporaryListExamination.get(ligneNumber);
-						examination.setBookingRoom(true);
-						DefaultValueLuncher.setDefaultRangeForBookingRoomDate(entryDateField,releaseDateField,examination);
-						filterRoomWithSelection(list, arrayRoom, LengthOfStaySelectionBox, withAccompangyingRButton, withAccompangyingRButton);
-					}
+					DefaultValueLuncher.setDefaultRangeForBookingRoomDate(entryDateField,releaseDateField,examination);
+					filterRoomWithSelection(list, arrayRoom, LengthOfStaySelectionBox, withAccompangyingRButton, withAccompangyingRButton);
 				}
 			}
+		}
 	}
 	
 	/**
@@ -219,16 +223,17 @@ public class RoomFunction
 		Examen examination = extractExaminationFromList(list);
 		if(withoutRoomRButton.isSelected() == false) {
 			room = extractRoomFromArray(list);
-		}
-		if(RoomControler.inputFieldControlerGlobalCheckUp(withoutRoomRButton,withRoomRButton,patientNumberBookingRoomPanelField,withAccompangyingRButton,withoutAccompangyingRButton,LengthOfStaySelectionBox,
-														  entryDateField,releaseDateField,bedRoomNumberField) == true) {	
-			if(RoomControler.inputFieldControlerBeforeRoomBooking(entryDateField, releaseDateField, bedRoomNumberField)== true) {
-				
-				updateRoomInformation(list, examination, room, entryDateField, releaseDateField, withoutRoomRButton);
-				updadeExaminationListForBooking(list, arrayExamination);
-				clearInformationOnPannel(patientNumberBookingRoomPanelField, accompanyingGroup, LengthOfStaySelectionBox, entryDateField, releaseDateField, bedRoomNumberField,bookingGroup);
-				printRoomInList(bookedRoomList,arrayRoom);
-				temporaryListRoom.clear();
+		}else {
+			if(RoomControler.inputFieldControlerGlobalCheckUp(withoutRoomRButton,withRoomRButton,patientNumberBookingRoomPanelField,withAccompangyingRButton,withoutAccompangyingRButton,LengthOfStaySelectionBox,
+															  entryDateField,releaseDateField,bedRoomNumberField) == true) {	
+				if(RoomControler.inputFieldControlerBeforeRoomBooking(entryDateField, releaseDateField, bedRoomNumberField)== true) {
+					
+					updateRoomInformation(list, examination, room, entryDateField, releaseDateField, withoutRoomRButton);
+					updadeExaminationListForBooking(list, arrayExamination);
+					clearInformationOnPannel(patientNumberBookingRoomPanelField, accompanyingGroup, LengthOfStaySelectionBox, entryDateField, releaseDateField, bedRoomNumberField,bookingGroup);
+					printRoomInList(bookedRoomList,arrayRoom);
+					temporaryListRoom.clear();
+				}
 			}
 		}
 	}
