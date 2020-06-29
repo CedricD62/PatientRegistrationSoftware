@@ -113,7 +113,7 @@ public class ReadExternalFiles {
 	private static void mailEndings() {
 		
 		try {
-			file = new File("C:/Users/final/Desktop/externalFiles/mailTerminaisons.csv");
+			file = new File("externalFiles/mailTerminaisons.csv");
 			fileR = new FileReader(file); 
 			buffer = new BufferedReader(fileR);
 			String line;
@@ -160,7 +160,7 @@ public class ReadExternalFiles {
 	private static void areaCode() {
 		
 		try {
-			file = new File("C:/Users/final/Desktop/externalFiles/areaCode.csv");
+			file = new File("externalFiles/areaCode.csv");
 			fileR = new FileReader(file); 
 			buffer = new BufferedReader(fileR);
 			String line;
