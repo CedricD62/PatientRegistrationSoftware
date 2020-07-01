@@ -3,6 +3,7 @@ package com.treatment;
 import java.util.Date;
 import java.util.InputMismatchException;
 import javax.swing.JComboBox;
+import javax.swing.JLabel;
 import javax.swing.JTextField;
 
 import com.functions.ParseFunctions;
@@ -38,10 +39,10 @@ public class ExaminationControler {
 	 * @see ExaminationControler#checkUpJDateChooserDateInput(JDateChooser)
 	 * @see ExaminationControler#checkUpJComboBoxInput(JComboBox)
 	 */
-	public static boolean inputFieldControler(JTextField patientNumberExamPanelField,JComboBox examinationTypeSelection,JDateChooser examinationDateField) {
+	public static boolean inputFieldControler( JLabel patientNumberExamPanelLabeld,JComboBox examinationTypeSelection,JDateChooser examinationDateField) {
 		boolean fieldOk = true;
 		
-		if(checkUpJTextFieldIntInput(patientNumberExamPanelField) == false) {
+		if(checkUpJTextFieldIntInput(patientNumberExamPanelLabeld) == false) {
 			fieldOk = false; 
 		}
 		if(checkUpJDateChooserDateInput(examinationDateField) == false) {
@@ -102,6 +103,28 @@ public class ExaminationControler {
 		return fieldOk;
 	}
 
+	/**
+	 * <b>this function is used to certify that the information sent by the user is correct</b>
+	 * </br>
+	 * If the ExceptionControler.numericException return true
+	 * The information isn't correct the boolean fieldOk is set on false 
+	 * An error message is sent to the user 
+	 * </br> 
+	 * @param text : a String information writen by the user
+	 * </br>
+	 * @return a true or false boolean
+	 * </br>
+	 * @see ExceptionControler#numericException(JTextField)
+	 */
+	private static boolean checkUpJTextFieldIntInput(JLabel text) {
+		boolean fieldOk = true;
+		
+		if(ExceptionControler.numericException(text) == true) {
+			fieldOk = false;
+			text.setText("erreur");
+		}	
+		return fieldOk;
+	}
 	
 	/**
 	 * <b>this function is used to certify that the information sent by the user is correct</b>

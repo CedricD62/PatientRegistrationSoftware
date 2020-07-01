@@ -6,6 +6,8 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import javax.swing.JLabel;
+
 import com.functions.RoomFunction;
 import com.objectsPackage.Chambre;
 import com.objectsPackage.Examen;

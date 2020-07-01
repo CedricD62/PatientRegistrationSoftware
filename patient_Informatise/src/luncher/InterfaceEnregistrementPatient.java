@@ -57,12 +57,16 @@ public class InterfaceEnregistrementPatient {
 	private JScrollPane scrollPane_4;
 	private JScrollPane scrollPane_5;
 	private JScrollPane scrollPane;
+	private JLabel patientNumberBookingRoomPanelLabel;
+	private JLabel patientNumberExamPanelLabel;
+	private JLabel bedRoomNumberLabel;
 	private JLabel nameText;
 	private JLabel fNameText;
 	private JLabel addressText;
 	private JLabel areaCodeText;
 	private JLabel townText;
 	private JLabel emailText;
+	private	JLabel idLabel;
 	private JLabel idPatientText;
 	private JLabel lblNTelephoneFixe;
 	private JLabel lblNTlphonePortable;
@@ -83,7 +87,6 @@ public class InterfaceEnregistrementPatient {
 	private JDateChooser birthDateField;
 	private JDateChooser entryDateField;
 	private JDateChooser releaseDateField;
-	private JTextField idField;
 	private JTextField nameField;
 	private JTextField fNameField;
 	private JTextField addressField;
@@ -94,9 +97,6 @@ public class InterfaceEnregistrementPatient {
 	private JTextField cellphoneField;
 	private JTextField ssnField;
 	private JTextField searchFiel;
-	private JTextField patientNumberExamPanelField;
-	private JTextField bedRoomNumberField;
-	private JTextField patientNumberBookingRoomPanelField;
 	private JTextField serchExaminationField;
 	private JComboBox examinationTypeSelection;
 	private JComboBox LengthOfStaySelectionBox;
@@ -131,6 +131,8 @@ public class InterfaceEnregistrementPatient {
 	private ArrayList<Examen>arrayExamination;
 
 	
+
+	
 	/**
 	 * Launch the application.
 	 */
@@ -158,7 +160,7 @@ public class InterfaceEnregistrementPatient {
 	/**
 	 * Initialize the contents of the frame.
 	 */
-	private void initialize() {
+	private void initialize() { 
 		
 		arrayPatient 	 = new ArrayList<Patient>();
 		arrayExamination = new ArrayList<Examen>();
@@ -193,24 +195,12 @@ public class InterfaceEnregistrementPatient {
 		examinationDateText.setBounds(10, 165, 90, 24);
 		addExaminationPanel.add(examinationDateText);
 		
-		patientNumberExamPanelField = new JTextField();
-		patientNumberExamPanelField.setBackground(Color.WHITE);
-		patientNumberExamPanelField.setColumns(10);
-		patientNumberExamPanelField.setBounds(137, 54, 135, 20);
-		addExaminationPanel.add(patientNumberExamPanelField);
-		
-		examinationTypeSelection = new JComboBox();
-		examinationTypeSelection.setBackground(Color.WHITE);
-		examinationTypeSelection.setModel(new DefaultComboBoxModel(new String[] {"Liste d'examens ", "Arthroscopie", "Alcool\u00E9mie", "Appendicectomie", "Arthroscanner", "Audiogramme", "Avortement", "Bact\u00E9riologique", "Biopsie", 
-																				 "C\u00E9sarienne", "Coelioscopie", "ECG", "Endoscopie", "F\u00E9condation in vitro", "Fibroscopie", "IRM", "Mammographie", "Radiographie", "S\u00E9rodiagnostic", 
-																				 "Tension art\u00E9rielle ", "Urographie", "Ventriculographie", "Volum\u00E9trique "}));
-		examinationTypeSelection.setBounds(137, 111, 135, 20);
-		addExaminationPanel.add(examinationTypeSelection);
+
 		
 		addExaminationButton = new JButton("Ajouter Examen");
 		addExaminationButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				ExaminationFunction.creatExamination(examinationList,switchRoomAndExaminationList,arrayPatient,arrayExamination,patientNumberExamPanelField,examinationTypeSelection,
+				ExaminationFunction.creatExamination(examinationList,switchRoomAndExaminationList,arrayPatient,arrayExamination,patientNumberExamPanelLabel,examinationTypeSelection,
 													 examinationDateField);
 				WriteInExternalFiles.writeExaminationFile(arrayExamination);
 			}});
@@ -220,7 +210,7 @@ public class InterfaceEnregistrementPatient {
 		changeExaminationButton = new JButton("Modifier Examen");
 		changeExaminationButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {	
-				ExaminationFunction.changeInfoExamination(examinationList,arrayExamination,arrayPatient,patientNumberExamPanelField,examinationTypeSelection,examinationDateField);
+				ExaminationFunction.changeInfoExamination(examinationList,arrayExamination,arrayPatient,patientNumberExamPanelLabel,examinationTypeSelection,examinationDateField);
 				WriteInExternalFiles.writeExaminationFile(arrayExamination);
 			}});
 		changeExaminationButton.setBounds(321, 166, 136, 23);
@@ -236,7 +226,7 @@ public class InterfaceEnregistrementPatient {
 		examinationList.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {	
-				ExaminationFunction.showExamination(examinationList,arrayExamination,patientNumberExamPanelField,examinationTypeSelection,examinationDateField);
+				ExaminationFunction.showExamination(examinationList,arrayExamination,patientNumberExamPanelLabel,examinationTypeSelection,examinationDateField);
 			}});
 		searchExaminationListButton = new JButton("Rechercher");
 		searchExaminationListButton.addActionListener(new ActionListener() {
@@ -255,7 +245,7 @@ public class InterfaceEnregistrementPatient {
 		cancelExaminationButton = new JButton("Effacer");
 		cancelExaminationButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				ExaminationFunction.cancelInformationBeforeAddExamination(examinationDateField,patientNumberExamPanelField,examinationTypeSelection);
+				ExaminationFunction.cancelInformationBeforeAddExamination(examinationDateField,patientNumberExamPanelLabel,examinationTypeSelection);
 			}});
 		cancelExaminationButton.setBounds(321, 111, 136, 23);
 		addExaminationPanel.add(cancelExaminationButton);
@@ -263,7 +253,7 @@ public class InterfaceEnregistrementPatient {
 		deleteExaminationButton = new JButton("Supprimer");
 		deleteExaminationButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				ExaminationFunction.deleteExamination(examinationList,arrayExamination,patientNumberExamPanelField,examinationTypeSelection,
+				ExaminationFunction.deleteExamination(examinationList,arrayExamination,patientNumberExamPanelLabel,examinationTypeSelection,
 													  examinationDateField,switchRoomAndExaminationList, listOfBookedRoom);
 				WriteInExternalFiles.writeExaminationFile(arrayExamination);
 				}});
@@ -306,18 +296,6 @@ public class InterfaceEnregistrementPatient {
 		bookingRoomPatientNumberText.setBounds(10, 15, 90, 20);
 		bookRoomPanel.add(bookingRoomPatientNumberText);
 		
-		bedRoomNumberField = new JTextField();
-		bedRoomNumberField.setEnabled(false);
-		bedRoomNumberField.setColumns(10);
-		bedRoomNumberField.setBounds(782, 39, 110, 20);
-		bookRoomPanel.add(bedRoomNumberField);
-		
-		patientNumberBookingRoomPanelField = new JTextField();
-		patientNumberBookingRoomPanelField.setEnabled(false);
-		patientNumberBookingRoomPanelField.setColumns(10);
-		patientNumberBookingRoomPanelField.setBounds(143, 15, 201, 20);
-		bookRoomPanel.add(patientNumberBookingRoomPanelField);
-		
 		withoutAccompanyingRButton = new JRadioButton("Sans");
 		withoutAccompanyingRButton.setBackground(Color.LIGHT_GRAY);
 		withoutAccompanyingRButton.setBounds(259, 105, 62, 24);
@@ -333,7 +311,7 @@ public class InterfaceEnregistrementPatient {
 		showRoomButton = new JButton("Afficher Chambres");
 		showRoomButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				RoomFunction.updateListOfAvailableRoom(switchRoomAndExaminationList, arrayRoom, patientNumberBookingRoomPanelField,withRoomRButton, withoutRoomRButton, 
+				RoomFunction.updateListOfAvailableRoom(switchRoomAndExaminationList, arrayRoom, patientNumberBookingRoomPanelLabel,withRoomRButton, withoutRoomRButton, 
 													   withAccompangyingRButton, withoutAccompanyingRButton, LengthOfStaySelectionBox,entryDateField,releaseDateField);
 				WriteInExternalFiles.writeExaminationFile(arrayExamination);
 			}});
@@ -343,8 +321,8 @@ public class InterfaceEnregistrementPatient {
 		bookingRoomButton = new JButton("Valider");
 		bookingRoomButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				RoomFunction.bookingAvailableRoom(switchRoomAndExaminationList, entryDateField, releaseDateField, withoutRoomRButton, arrayExamination, patientNumberBookingRoomPanelField, 
-												  withRoomRButton, accompanyingGroup, LengthOfStaySelectionBox, bedRoomNumberField, arrayRoom, listOfBookedRoom,bookingGroup,
+				RoomFunction.bookingAvailableRoom(switchRoomAndExaminationList, entryDateField, releaseDateField, withoutRoomRButton, arrayExamination, patientNumberBookingRoomPanelLabel, 
+												  withRoomRButton, accompanyingGroup, LengthOfStaySelectionBox, bedRoomNumberLabel, arrayRoom, listOfBookedRoom,bookingGroup,
 												  withAccompangyingRButton,withoutAccompanyingRButton);
 				WriteInExternalFiles.writeRoomFile(arrayRoom);
 				WriteInExternalFiles.writeExaminationFile(arrayExamination);
@@ -355,8 +333,8 @@ public class InterfaceEnregistrementPatient {
 		cancelRoomDataButton = new JButton("Annuler");
 		cancelRoomDataButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				RoomFunction.cancelDataBeforeBookingRoom(switchRoomAndExaminationList,patientNumberBookingRoomPanelField,accompanyingGroup,bookingGroup,LengthOfStaySelectionBox,
-														 bedRoomNumberField,entryDateField,releaseDateField);
+				RoomFunction.cancelDataBeforeBookingRoom(switchRoomAndExaminationList, patientNumberBookingRoomPanelLabel,accompanyingGroup,bookingGroup,LengthOfStaySelectionBox,
+														 bedRoomNumberLabel,entryDateField,releaseDateField);
 				}});
 		cancelRoomDataButton.setBounds(789, 192, 110, 23);
 		bookRoomPanel.add(cancelRoomDataButton);	
@@ -371,7 +349,7 @@ public class InterfaceEnregistrementPatient {
 		withRoomRButton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				RoomControler.ableActionOnJRadio(withoutAccompanyingRButton, LengthOfStaySelectionBox, withAccompangyingRButton, withRoomRButton, bedRoomNumberField, entryDateField,
+				RoomControler.ableActionOnJRadio(withoutAccompanyingRButton, LengthOfStaySelectionBox, withAccompangyingRButton, withRoomRButton, entryDateField,
 												 releaseDateField,showRoomButton, bookingRoomButton, cancelRoomDataButton);
 			}});
 		withRoomRButton.setBounds(172, 57, 48, 24);
@@ -382,7 +360,7 @@ public class InterfaceEnregistrementPatient {
 		withoutRoomRButton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				RoomControler.disableActionOnJRadio(withoutAccompanyingRButton, LengthOfStaySelectionBox, withAccompangyingRButton, withoutRoomRButton, bedRoomNumberField, 
+				RoomControler.disableActionOnJRadio(withoutAccompanyingRButton, LengthOfStaySelectionBox, withAccompangyingRButton, withoutRoomRButton, 
 												   entryDateField, releaseDateField, showRoomButton, bookingRoomButton, cancelRoomDataButton);
 			}});
 		withoutRoomRButton.setBounds(259, 57, 56, 24);
@@ -390,10 +368,7 @@ public class InterfaceEnregistrementPatient {
 		bookingGroup.add(withRoomRButton);
 		bookingGroup.add(withoutRoomRButton);
 					
-		LengthOfStaySelectionBox = new JComboBox();
-		LengthOfStaySelectionBox.setModel(new DefaultComboBoxModel(new String[] {"- choix", "courte", "longue"}));
-		LengthOfStaySelectionBox.setBounds(143, 151, 201, 20);
-		bookRoomPanel.add(LengthOfStaySelectionBox);
+
 		
 		scrollPane_2 = new JScrollPane();
 		scrollPane_2.setBounds(365, 15, 253, 156);
@@ -405,8 +380,8 @@ public class InterfaceEnregistrementPatient {
 		switchRoomAndExaminationList.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				RoomFunction.showInformationRoomAndExamination(switchRoomAndExaminationList, arrayRoom, arrayExamination, patientNumberBookingRoomPanelField, 
-															   bedRoomNumberField);
+				RoomFunction.showInformationRoomAndExamination(switchRoomAndExaminationList, arrayRoom, arrayExamination, patientNumberBookingRoomPanelLabel, 
+															   bedRoomNumberLabel);
 			}});
 		scrollPane_5 = new JScrollPane();
 		scrollPane_5.setBounds(929, 15, 253, 156);
@@ -457,14 +432,15 @@ public class InterfaceEnregistrementPatient {
 		patientList.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				PatientFunction.showPatient(patientList,arrayPatient,arrayExamination,idField,maleRButton,femaleRButton,nameField,fNameField,addressField,areaCodeField,townField,
-											ssnField,eMailField,phoneField,cellphoneField,birthDateField,patientNumberExamPanelField,summaryExaminationList,summaryBookingroomList);
+				PatientFunction.showPatient(patientList,arrayPatient,arrayExamination,idLabel,maleRButton,femaleRButton,nameField,fNameField,addressField,areaCodeField,townField,
+											ssnField,eMailField,phoneField,cellphoneField,birthDateField,patientNumberExamPanelLabel,summaryExaminationList,summaryBookingroomList);
 			}});
 		deletePatientButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				PatientFunction.deletePatient(patientList,arrayPatient,idField,genderGroup,nameField,fNameField,addressField,areaCodeField,townField,ssnField,eMailField,phoneField,cellphoneField,
+				PatientFunction.deletePatient(patientList,arrayPatient,idLabel,genderGroup,nameField,fNameField,addressField,areaCodeField,townField,ssnField,eMailField,phoneField,cellphoneField,
 											  birthDateField);			
 				WriteInExternalFiles.writePatientFile(arrayPatient);
+				idLabel.setText(""+(arrayPatient.size()+1));
 			}});
 		searchPatientListButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -509,11 +485,6 @@ public class InterfaceEnregistrementPatient {
 		ssnNumberField = new JLabel("N\u00B0 S\u00E9curit\u00E9 social");
 		ssnNumberField.setBounds(10, 184, 104, 24);
 		patientInformationPanel.add(ssnNumberField);
-		
-		idField = new JTextField();
-		idField.setBounds(120, 13, 104, 20);
-		patientInformationPanel.add(idField);
-		idField.setColumns(10);
 		
 		nameField = new JTextField();
 		nameField.setColumns(10);
@@ -583,8 +554,9 @@ public class InterfaceEnregistrementPatient {
 		cancelPatientButton = new JButton("Effacer");
 		cancelPatientButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {	
-				PatientFunction.cancelInformationBeforeAddPatient(idField,nameField,fNameField,addressField,areaCodeField,townField,ssnField,eMailField,phoneField,cellphoneField,
+				PatientFunction.cancelInformationBeforeAddPatient(idLabel,nameField,fNameField,addressField,areaCodeField,townField,ssnField,eMailField,phoneField,cellphoneField,
 																  birthDateField,genderGroup);
+				idLabel.setText(""+(arrayPatient.size()+1));
 			}});
 		cancelPatientButton.setBounds(242, 219, 104, 23);
 		patientInformationPanel.add(cancelPatientButton);
@@ -592,9 +564,10 @@ public class InterfaceEnregistrementPatient {
 		addPatientButton = new JButton("Ajouter");
 		addPatientButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {	
-				PatientFunction.creatPatient(patientList,arrayPatient,idField,maleRButton,femaleRButton,nameField,fNameField,addressField,areaCodeField,
+				PatientFunction.creatPatient(patientList,arrayPatient,idLabel,maleRButton,femaleRButton,nameField,fNameField,addressField,areaCodeField,
 											townField,ssnField,eMailField,phoneField,cellphoneField,birthDateField,genderGroup,examinationDateField);
 				WriteInExternalFiles.writePatientFile(arrayPatient);
+				idLabel.setText(""+(arrayPatient.size()+1));
 			}});
 		addPatientButton.setBounds(120, 219, 104, 23);
 		patientInformationPanel.add(addPatientButton);
@@ -628,9 +601,10 @@ public class InterfaceEnregistrementPatient {
 		patientInformationPanel.add(birthDateField);
 		changePatientInfoButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {		
-				PatientFunction.changeInfoPatient(patientList,arrayPatient,idField,maleRButton,femaleRButton,nameField,fNameField,addressField,areaCodeField,
+				PatientFunction.changeInfoPatient(patientList,arrayPatient,idLabel,maleRButton,femaleRButton,nameField,fNameField,addressField,areaCodeField,
 												  townField,ssnField,eMailField,phoneField,cellphoneField,birthDateField);
 				WriteInExternalFiles.writePatientFile(arrayPatient);
+				idLabel.setText(""+(arrayPatient.size()+1));
 			}});
 		deleteBookedRoom = new JButton("Supprimer");
 		deleteBookedRoom.addActionListener(new ActionListener() {
@@ -651,5 +625,33 @@ public class InterfaceEnregistrementPatient {
 		
 		DefaultValueLuncher.defaultValuesStartSoftware(birthDateField,patientList,examinationList,switchRoomAndExaminationList,arrayExamination,arrayPatient,arrayRoom,
 													   examinationDateField,listOfBookedRoom);
+		
+		idLabel = new JLabel("");
+		idLabel.setBounds(120, 16, 104, 20);
+		patientInformationPanel.add(idLabel);
+		
+		examinationTypeSelection = new JComboBox();
+		examinationTypeSelection.setBackground(Color.WHITE);
+		examinationTypeSelection.setModel(new DefaultComboBoxModel(ReadExternalFiles.arrayExaminationType.toArray()));
+		examinationTypeSelection.setBounds(137, 111, 135, 20);
+		addExaminationPanel.add(examinationTypeSelection);
+		
+		patientNumberExamPanelLabel = new JLabel("");
+		patientNumberExamPanelLabel.setBounds(137, 54, 135, 20);
+		addExaminationPanel.add(patientNumberExamPanelLabel);
+		
+		LengthOfStaySelectionBox = new JComboBox();
+		LengthOfStaySelectionBox.setModel(new DefaultComboBoxModel(ReadExternalFiles.arrayLengthOfStay.toArray()));
+		LengthOfStaySelectionBox.setBounds(143, 151, 201, 20);
+		bookRoomPanel.add(LengthOfStaySelectionBox);
+		
+		patientNumberBookingRoomPanelLabel = new JLabel("");
+		patientNumberBookingRoomPanelLabel.setBounds(143, 15, 201, 20);
+		bookRoomPanel.add(patientNumberBookingRoomPanelLabel);
+		
+		bedRoomNumberLabel = new JLabel("");
+		bedRoomNumberLabel.setBounds(782, 39, 110, 20);
+		bookRoomPanel.add(bedRoomNumberLabel);
+		idLabel.setText(""+(arrayPatient.size()+1));
 	}
 }

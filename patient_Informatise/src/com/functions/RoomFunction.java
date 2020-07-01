@@ -2,9 +2,10 @@ package com.functions;
 
 import java.util.ArrayList;
 import java.util.Date;
+
 import javax.swing.ButtonGroup;
-import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
@@ -12,9 +13,7 @@ import javax.swing.JTextField;
 import com.filesActions.WriteInExternalFiles;
 import com.objectsPackage.Chambre;
 import com.objectsPackage.Examen;
-import com.objectsPackage.Patient;
 import com.toedter.calendar.JDateChooser;
-import com.treatment.ExaminationControler;
 import com.treatment.RoomControler;
 
 /**
@@ -152,7 +151,7 @@ public class RoomFunction
 	 * @see DefaultValueLuncher#setDefaultRangeForBookingRoomDate(JDateChooser, JDateChooser, Examen)
 	 * @see RoomFunction#filterRoomWithSelection(JList, ArrayList, JComboBox, JRadioButton, JRadioButton)
 	 */
-	public static void updateListOfAvailableRoom(JList list,ArrayList<Chambre> arrayRoom,JTextField patientNumberBookingRoomPanelField,JRadioButton withRoomRButton,JRadioButton withoutRoomRButton, JRadioButton withAccompangyingRButton, 
+	public static void updateListOfAvailableRoom(JList list,ArrayList<Chambre> arrayRoom,JLabel patientNumberBookingRoomPanelLabel,JRadioButton withRoomRButton,JRadioButton withoutRoomRButton, JRadioButton withAccompangyingRButton, 
 										   JRadioButton withoutAccompangyingRButton, JComboBox LengthOfStaySelectionBox,JDateChooser entryDateField, 
 											 JDateChooser releaseDateField) {
 		
@@ -166,9 +165,11 @@ public class RoomFunction
 		if(withoutRoomRButton.isSelected()) {
 			examination = temporaryListExamination.get(ligneNumber);	
 			examination.setBookingRoom(true);
+			Chambre room = null;
+			updateRoomInformation(list, examination, room, entryDateField, releaseDateField, withoutRoomRButton);
 		
 		}else {	
-			if(RoomControler.inputFieldControlerBookingRoomRButton(withoutRoomRButton,withRoomRButton,patientNumberBookingRoomPanelField) == true) {
+			if(RoomControler.inputFieldControlerBookingRoomRButton(withoutRoomRButton,withRoomRButton,patientNumberBookingRoomPanelLabel) == true) {
 			
 				if(RoomControler.inputFieldControlerBeforeRoomSelection(withoutRoomRButton, withRoomRButton, withAccompangyingRButton, withoutAccompangyingRButton, LengthOfStaySelectionBox) == true) {
 					
@@ -215,22 +216,23 @@ public class RoomFunction
 	 * @see RoomFunction#clearInformationOnPannel(JTextField, ButtonGroup, JComboBox, JDateChooser, JDateChooser, JTextField, ButtonGroup)
 	 * @see RoomFunction#printRoomInList(JList, ArrayList)
 	 */
-	public static void bookingAvailableRoom(JList list,JDateChooser entryDateField,JDateChooser releaseDateField, JRadioButton withoutRoomRButton, ArrayList<Examen> arrayExamination,JTextField patientNumberBookingRoomPanelField,
-											JRadioButton withRoomRButton,ButtonGroup accompanyingGroup,JComboBox LengthOfStaySelectionBox,JTextField bedRoomNumberField, ArrayList<Chambre> arrayRoom, JList bookedRoomList,
+	public static void bookingAvailableRoom(JList list,JDateChooser entryDateField,JDateChooser releaseDateField, JRadioButton withoutRoomRButton, ArrayList<Examen> arrayExamination,JLabel patientNumberBookingRoomPanelLabel,
+											JRadioButton withRoomRButton,ButtonGroup accompanyingGroup,JComboBox LengthOfStaySelectionBox,JLabel bedRoomNumberLabel, ArrayList<Chambre> arrayRoom, JList bookedRoomList,
 											ButtonGroup bookingGroup,JRadioButton withAccompangyingRButton,JRadioButton withoutAccompangyingRButton) {
 		Chambre room = null;
 		
 		Examen examination = extractExaminationFromList(list);
-		if(withoutRoomRButton.isSelected() == false) {
+		if(withoutRoomRButton.isSelected()) {
 			room = extractRoomFromArray(list);
+			updateRoomInformation(list, examination, room, entryDateField, releaseDateField, withoutRoomRButton);
 		}else {
-			if(RoomControler.inputFieldControlerGlobalCheckUp(withoutRoomRButton,withRoomRButton,patientNumberBookingRoomPanelField,withAccompangyingRButton,withoutAccompangyingRButton,LengthOfStaySelectionBox,
-															  entryDateField,releaseDateField,bedRoomNumberField) == true) {	
-				if(RoomControler.inputFieldControlerBeforeRoomBooking(entryDateField, releaseDateField, bedRoomNumberField)== true) {
-					
+			if(RoomControler.inputFieldControlerGlobalCheckUp(withoutRoomRButton,withRoomRButton,patientNumberBookingRoomPanelLabel,withAccompangyingRButton,withoutAccompangyingRButton,LengthOfStaySelectionBox,
+															  entryDateField,releaseDateField,bedRoomNumberLabel) == true) {	
+				if(RoomControler.inputFieldControlerBeforeRoomBooking(entryDateField, releaseDateField, bedRoomNumberLabel)== true) {
+					room = extractRoomFromArray(list);
 					updateRoomInformation(list, examination, room, entryDateField, releaseDateField, withoutRoomRButton);
 					updadeExaminationListForBooking(list, arrayExamination);
-					clearInformationOnPannel(patientNumberBookingRoomPanelField, accompanyingGroup, LengthOfStaySelectionBox, entryDateField, releaseDateField, bedRoomNumberField,bookingGroup);
+					clearInformationOnPannel(patientNumberBookingRoomPanelLabel, accompanyingGroup, LengthOfStaySelectionBox, entryDateField, releaseDateField, bedRoomNumberLabel,bookingGroup);
 					printRoomInList(bookedRoomList,arrayRoom);
 					temporaryListRoom.clear();
 				}
@@ -254,12 +256,12 @@ public class RoomFunction
 	 * @see RoomFunction#showInformationFromArrayExamination(JList, ArrayList, JTextField)
 	 * @see RoomFunction#showInformationFromTemporaryListRoom(JList, JTextField, ArrayList)
 	 */
-	public static void showInformationRoomAndExamination(JList list,ArrayList<Chambre> arrayRoom,ArrayList<Examen> arrayExamination,JTextField patientNumberBookingRoomPanelField,
-														 JTextField bedRoomNumberField) {
+	public static void showInformationRoomAndExamination(JList list,ArrayList<Chambre> arrayRoom,ArrayList<Examen> arrayExamination,JLabel patientNumberBookingRoomPanelLabel,
+														 JLabel bedRoomNumberLabel) {
 		if(temporaryListRoom.isEmpty()) {
-			showInformationFromArrayExamination(list,arrayExamination,patientNumberBookingRoomPanelField);
+			showInformationFromArrayExamination(list,arrayExamination,patientNumberBookingRoomPanelLabel);
 		}else {
-			showInformationFromTemporaryListRoom(list, bedRoomNumberField, arrayRoom);
+			showInformationFromTemporaryListRoom(list, bedRoomNumberLabel, arrayRoom);
 		}
 	}
 	
@@ -277,14 +279,14 @@ public class RoomFunction
 	 * @param entryDateField : the user can choose the entry date from a pre determined range 
 	 * @param releaseDateField : the minimum available release date is set to be the current date
 	 */
-	public static void cancelDataBeforeBookingRoom(JList list,JTextField patientNumberBookingRoomPanelField,ButtonGroup accompanyingGroup,ButtonGroup bookingGroup, JComboBox lengthOfStayTypeSelection,
-												   JTextField bedRoomNumberField,JDateChooser entryDateField,JDateChooser releaseDateField) {
+	public static void cancelDataBeforeBookingRoom(JList list,JLabel patientNumberBookingRoomPanelLabel,ButtonGroup accompanyingGroup,ButtonGroup bookingGroup, JComboBox lengthOfStayTypeSelection,
+												   JLabel bedRoomNumberLabel,JDateChooser entryDateField,JDateChooser releaseDateField) {
 	
-		patientNumberBookingRoomPanelField.setText("");
+		patientNumberBookingRoomPanelLabel.setText("");
 		accompanyingGroup.clearSelection();
 		accompanyingGroup.clearSelection();
 		lengthOfStayTypeSelection.setSelectedIndex(0);
-		bedRoomNumberField.setText("");
+		bedRoomNumberLabel.setText("");
 		entryDateField.setDate(new Date());
 		releaseDateField.setDate(new Date());
 		temporaryListRoom.clear();
@@ -532,7 +534,7 @@ public class RoomFunction
 	 * </br>
 	 * @see RoomFunction#showInformationRoomAndExamination(JList, ArrayList, ArrayList, JTextField, JTextField)
 	 */
-	private static void showInformationFromArrayExamination(JList list,ArrayList<Examen> arrayExamination,JTextField patientNumberBookingRoomPanelField) {
+	private static void showInformationFromArrayExamination(JList list,ArrayList<Examen> arrayExamination,JLabel patientNumberBookingRoomPanelLabel) {
 		
 		int idExamination = list.getSelectedIndex();
 		
@@ -540,7 +542,7 @@ public class RoomFunction
 				return;
 		
 		Examen examination = temporaryListExamination.get(idExamination);
-		patientNumberBookingRoomPanelField.setText(""+examination.getPatient().getId());
+		patientNumberBookingRoomPanelLabel.setText(""+examination.getPatient().getId());
 	}
 	
 	/**
@@ -557,17 +559,17 @@ public class RoomFunction
 	 * </br>
 	 * @see RoomFunction#showInformationRoomAndExamination(JList, ArrayList, ArrayList, JTextField, JTextField)
 	 */
-	private static void showInformationFromTemporaryListRoom(JList list,JTextField bedRoomNumberField,ArrayList<Chambre> arrayRoom) {
+	private static void showInformationFromTemporaryListRoom(JList list,JLabel bedRoomNumberLabel,ArrayList<Chambre> arrayRoom) {
 		int idRoom = list.getSelectedIndex();
 			if(idRoom == -1) 
 				return;
 			
 		if(temporaryListRoom.isEmpty()) {
 			Chambre room = arrayRoom.get(idRoom);
-			bedRoomNumberField.setText(""+room.getRoomNumber());
+			bedRoomNumberLabel.setText(""+room.getRoomNumber());
 		}else {			
 			Chambre room = temporaryListRoom.get(idRoom);
-			bedRoomNumberField.setText(""+room.getRoomNumber());
+			bedRoomNumberLabel.setText(""+room.getRoomNumber());
 		}
 	}
 	
@@ -701,12 +703,12 @@ public class RoomFunction
 	 * @param bedRoomNumberField : store the number allocated for a specific room
 	 * @param bookingGroup : store the selection result of a JRadioButton group with boolean type 
 	 */
-	private static void clearInformationOnPannel(JTextField patientNumberBookingRoomPanelField,ButtonGroup accompanyingGroup,JComboBox LengthOfStaySelectionBox, 
-												 JDateChooser entryDateField, JDateChooser releaseDateField,JTextField bedRoomNumberField,ButtonGroup bookingGroup) {
-		patientNumberBookingRoomPanelField.setText("");
+	private static void clearInformationOnPannel(JLabel patientNumberBookingRoomPanelLabel,ButtonGroup accompanyingGroup,JComboBox LengthOfStaySelectionBox, 
+												 JDateChooser entryDateField, JDateChooser releaseDateField,JLabel bedRoomNumberLabel,ButtonGroup bookingGroup) {
+		patientNumberBookingRoomPanelLabel.setText("");
 		bookingGroup.clearSelection();
 		accompanyingGroup.clearSelection();
-		bedRoomNumberField.setText("");
+		bedRoomNumberLabel.setText("");
 		entryDateField.setDate(new Date());
 		releaseDateField.setDate(new Date());
 		LengthOfStaySelectionBox.setSelectedIndex(0);

@@ -2,6 +2,7 @@ package com.treatment;
 
 import java.util.InputMismatchException;
 
+import javax.swing.JLabel;
 import javax.swing.JTextField;
 
 /**
@@ -26,6 +27,30 @@ public class ExceptionControler {
 	 * @return a boolean true or false 
 	 */
 	public static boolean numericException(JTextField text) {
+		boolean error = false;
+			try {
+				
+				int value = Integer.parseInt(text.getText()); 
+				error = false; 
+				
+			} catch (InputMismatchException e) {
+				error = true; 
+			} catch (NumberFormatException e) {
+				error = true; 
+			}	
+		return error;
+	}
+	
+	/**
+	 * this function check if the field contains an int
+	 * </br>
+	 * The text is parsed in int if an error occur it is catched   	 
+	 * </br>
+	 * @param text contains an unknown type of value needed to be checked with a try / catch
+	 * </br>
+	 * @return a boolean true or false 
+	 */
+	public static boolean numericException(JLabel text) {
 		boolean error = false;
 			try {
 				

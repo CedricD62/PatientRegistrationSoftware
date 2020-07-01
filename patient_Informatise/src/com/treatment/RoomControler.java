@@ -4,6 +4,7 @@ import java.util.Date;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JLabel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
@@ -47,15 +48,15 @@ public class RoomControler {
 	 * @see RoomControler#checkUpJTextFieldIntInput(JTextField)
 	 * @see RoomControler#ifExist(JTextField)
 	 */
-	public static boolean inputFieldControlerGlobalCheckUp(JRadioButton withoutRoomRButton,JRadioButton withRoomRButton,JTextField patientNumberBookingRoomPanelField,JRadioButton withAccompangyingRButton,
+	public static boolean inputFieldControlerGlobalCheckUp(JRadioButton withoutRoomRButton,JRadioButton withRoomRButton,JLabel patientNumberBookingRoomPanelLabel,JRadioButton withAccompangyingRButton,
 														   JRadioButton withoutAccompangyingRButton,JComboBox LengthOfStaySelectionBox,JDateChooser entryDateField,JDateChooser releaseDateField,
-														   JTextField bedRoomNumberField) {
+														   JLabel bedRoomNumberLabel) {
 		boolean fieldOk = true;
 		
 		if(checkUpJRadioButtonInput(withRoomRButton, withoutRoomRButton) == false) {
 			fieldOk = false;
 		}
-		if(checkUpJTextFieldIntInput(patientNumberBookingRoomPanelField) == false) {
+		if(checkUpJTextFieldIntInput(patientNumberBookingRoomPanelLabel) == false) {
 			fieldOk = false; 
 		}
 		if(checkUpJRadioButtonInput(withAccompangyingRButton, withoutAccompangyingRButton) == false) {
@@ -70,10 +71,10 @@ public class RoomControler {
 		if(checkUpJDateChooserDateInput(releaseDateField) == false) {
 			fieldOk = false;
 		}
-		if(checkUpJTextFieldIntInput(bedRoomNumberField) == false) {
+		if(checkUpJTextFieldIntInput(bedRoomNumberLabel) == false) {
 			fieldOk = false; 
 		}else {
-			if(ifExist(bedRoomNumberField) == false) {
+			if(ifExist(bedRoomNumberLabel) == false) {
 				fieldOk = false;
 			}
 		}
@@ -95,13 +96,13 @@ public class RoomControler {
 	 * @see RoomControler#checkUpJRadioButtonInput(JRadioButton, JRadioButton)
 	 * @see RoomControler#checkUpJTextFieldIntInput(JTextField)
 	 */
-	public static boolean inputFieldControlerBookingRoomRButton(JRadioButton withoutRoomRButton,JRadioButton withRoomRButton,JTextField patientNumberBookingRoomPanelField) {
+	public static boolean inputFieldControlerBookingRoomRButton(JRadioButton withoutRoomRButton,JRadioButton withRoomRButton,JLabel patientNumberBookingRoomPanelLabel) {
 		boolean fieldOk = true;
 		
 		if(checkUpJRadioButtonInput(withRoomRButton, withoutRoomRButton) == false) {
 			fieldOk = false;
 		}
-		if(checkUpJTextFieldIntInput(patientNumberBookingRoomPanelField) == false) {
+		if(checkUpJTextFieldIntInput(patientNumberBookingRoomPanelLabel) == false) {
 			fieldOk = false; 
 		}
 		
@@ -155,7 +156,7 @@ public class RoomControler {
 	 * @see RoomControler#checkUpJTextFieldIntInput(JTextField)
 	 * @see RoomControler#ifExist(JTextField)
 	 */
-	public static boolean inputFieldControlerBeforeRoomBooking(JDateChooser entryDateField,JDateChooser releaseDateField,JTextField bedRoomNumberField) {
+	public static boolean inputFieldControlerBeforeRoomBooking(JDateChooser entryDateField,JDateChooser releaseDateField,JLabel bedRoomNumberLabel) {
 		
 		boolean fieldOk = true;
 		
@@ -165,10 +166,10 @@ public class RoomControler {
 		if(checkUpJDateChooserDateInput(releaseDateField) == false) {
 			fieldOk = false;
 		}
-		if(checkUpJTextFieldIntInput(bedRoomNumberField) == false) {
+		if(checkUpJTextFieldIntInput(bedRoomNumberLabel) == false) {
 			fieldOk = false; 
 		}else {
-			if(ifExist(bedRoomNumberField) == false) {
+			if(ifExist(bedRoomNumberLabel) == false) {
 				fieldOk = false;
 			}
 		}
@@ -250,6 +251,36 @@ public class RoomControler {
 	/**
 	 * <b>this function is used to certify that the information sent by the user is correct</b>
 	 * </br>
+	 * If the text is null or void
+	 * An error message is sent to the user , fieldOk is set on false 
+	 * If the ExceptionControler.numericException return true
+	 * The information isn't correct the boolean fieldOk is set on false 
+	 * An error message is sent to the user 
+	 * </br> 
+	 * @param text : a String information written by the user
+	 * </br>
+	 * @return a true or false boolean
+	 * </br>
+	 * @see ExceptionControler#numericException(JTextField)
+	 */
+	private static boolean checkUpJTextFieldIntInput(JLabel text) {
+		boolean fieldOk = true;
+		
+		if(text.getText().equals(null) || text.getText().equals("")) {
+			text.setText("erreur");
+			fieldOk = false;
+		}
+		
+		if(ExceptionControler.numericException(text) == true) {
+			fieldOk = false;
+			text.setText("erreur");
+		}	
+		return fieldOk;
+	}
+	
+	/**
+	 * <b>this function is used to certify that the information sent by the user is correct</b>
+	 * </br>
 	 * In a try / catch block the date selected in the JDateChooser field is stored in a Date Object
 	 * If the Date isn't null boolean fieldOk is set on true
 	 * if an error occurs, the catch block set the examination date to default date at today 
@@ -290,15 +321,13 @@ public class RoomControler {
 	 * @param deleteBookingRoomButton : button activating the functions needed to delete a Chambre Object
 	 */
 	public static void disableActionOnJRadio (JRadioButton withoutAccompanyingRButton, JComboBox lengthOfStayTypeSelection, JRadioButton withAccompangyingRButton,JRadioButton withoutRoomRButton,
-			  JTextField bedRoomNumberField,JDateChooser entryDateField,JDateChooser releaseDateField,JButton showRoomButton,JButton bookingRoomButton, 
-			  JButton deleteBookingRoomButton) {
+											  JDateChooser entryDateField,JDateChooser releaseDateField,JButton showRoomButton,JButton bookingRoomButton,JButton deleteBookingRoomButton) {
 
 		if(withoutRoomRButton.isSelected()) {
 		
 			lengthOfStayTypeSelection.setEnabled(false);
 			withAccompangyingRButton.setEnabled(false);
 			withoutAccompanyingRButton.setEnabled(false);
-			bedRoomNumberField.setEnabled(false);
 			entryDateField.setEnabled(false);
 			releaseDateField.setEnabled(false);
 			showRoomButton.setEnabled(false);
@@ -324,15 +353,13 @@ public class RoomControler {
 	 * @param deleteBookingRoomButton : button activating the functions needed to delete a Chambre Object
 	 */
 	public static void ableActionOnJRadio (JRadioButton withoutAccompanyingRButton, JComboBox lengthOfStayTypeSelection, JRadioButton withAccompangyingRButton,JRadioButton withRoomRButton,
-			   JTextField bedRoomNumberField,JDateChooser entryDateField,JDateChooser releaseDateField,JButton showRoomButton,JButton bookingRoomButton, 
-			   JButton deleteBookingRoomButton) {
+			  							   JDateChooser entryDateField,JDateChooser releaseDateField,JButton showRoomButton,JButton bookingRoomButton, JButton deleteBookingRoomButton) {
 	
 		if(withRoomRButton.isSelected()){
 			
 			lengthOfStayTypeSelection.setEnabled(true);
 			withAccompangyingRButton.setEnabled(true);
 			withoutAccompanyingRButton.setEnabled(true);
-			bedRoomNumberField.setEnabled(true);
 			entryDateField.setEnabled(true);
 			releaseDateField.setEnabled(true);
 			showRoomButton.setEnabled(true);
@@ -352,10 +379,10 @@ public class RoomControler {
 	 * @return a true or false boolean
 	 * </br>
 	 */
-	private static boolean ifExist(JTextField text){
+	private static boolean ifExist(JLabel bedRoomNumberLabel){
 		boolean fieldOk = false;
 		
-		int roomNumber = ParseFunctions.numericConversion(text.getText());
+		int roomNumber = ParseFunctions.numericConversion(bedRoomNumberLabel.getText());
 		Chambre room;
 		
 		for(int i = 0; i < RoomFunction.temporaryListRoom.size(); i++) {
@@ -368,7 +395,7 @@ public class RoomControler {
 			}
 		}
 		if(fieldOk == false) {
-			text.setText("erreur");	
+			bedRoomNumberLabel.setText("erreur");	
 		}	
 		
 		return fieldOk;

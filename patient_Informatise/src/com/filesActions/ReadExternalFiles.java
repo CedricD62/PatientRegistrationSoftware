@@ -47,6 +47,40 @@ public class ReadExternalFiles {
 	public static ArrayList<String> arrayAreaCode = new  ArrayList<String>();
 	
 	/**
+	 * arrayExaminationType ArrayList type collection used to keep the areaCode extracted from external file 
+	 * </br>
+	 * <ul>
+	 * <li> @see areaCode </li>  
+	 * <li> @see checkUpAvailableAreaCode </li>  
+	 * </ul>   
+	 */
+	public static ArrayList<String> arrayExaminationType = new  ArrayList<String>();
+	
+	/**
+	 * arrayLengthOfStay ArrayList type collection used to keep the length of stay in the hospital extracted from external file 
+	 * </br>
+	 * @see areaCode  
+	 * @see checkUpAvailableAreaCode 
+	 */
+	public static ArrayList<String> arrayLengthOfStay = new  ArrayList<String>();
+	
+	/**
+	 * arrayCellphoneNumber ArrayList type collection used to keep the two first number of a cellphone number  extracted from external file 
+	 * </br>
+	 * @see areaCode  
+	 * @see checkUpAvailableAreaCode 
+	 */
+	public static ArrayList<String> arrayCellphoneNumber = new  ArrayList<String>();
+	
+	/**
+	 * arrayPhoneNumber ArrayList type collection used to keep the two first number of phone number  extracted from external file 
+	 * </br>
+	 * @see areaCode  
+	 * @see checkUpAvailableAreaCode 
+	 */
+	public static ArrayList<String> arrayPhoneNumber = new  ArrayList<String>();
+	
+	/**
 	 * arrayMail ArrayList type collection used to keep the mail extracted from external file 
 	 * this Array is used for checking available email endings 
 	 * </br>
@@ -97,6 +131,10 @@ public class ReadExternalFiles {
 		
 		areaCode();
 		mailEndings();
+		examinationTypeFromFile();
+		lengthOfStayFromFile();
+		cellphoneNumberFromFile();
+		phoneNumberFromFile();
 	}
 	
 	/**
@@ -105,10 +143,6 @@ public class ReadExternalFiles {
 	 * The first line for the csv file is ignored by the extraction function
 	 * If a problem occur it is shoulder by the catch part
 	 * The function ends with the finally block in which the buffer is closed
-	 * </br>
-	 * The following URL needs to be parametized before <b>jar compilation</b> for the extraction to be working 
-	 * {@code file = new File("C:/Users/final/Desktop/externalFiles/mailTerminaisons.csv") }
-	 * </br>
 	 */
 	private static void mailEndings() {
 		
@@ -125,6 +159,154 @@ public class ReadExternalFiles {
 					arrayMail.add(line);
 				}
 				counter++;
+			}
+			
+			if(buffer != null) {
+				buffer.close();
+			}			
+		}catch(IOException ex) {
+			ex.printStackTrace();
+			System.err.println("erreur d'impression");
+		}finally {
+			try {
+				if(buffer != null) {
+					buffer.close();
+				}
+			} catch (IOException e) {
+				e.printStackTrace();
+				System.err.println("erreur d'impression");
+			}			
+		}
+	}
+	
+	/**
+	 * <b>This function extract examination type from csv file and add it to {@code ArrayList<String> arrayExaminationType}</b>
+	 * </br>
+	 * If a problem occur it is shoulder by the catch part
+	 * The function ends with the finally block in which the buffer is closed
+	 */
+	private static void examinationTypeFromFile() {
+		
+		try {
+			file = new File("C:/externalFiles/examinationType.csv");
+			fileR = new FileReader(file); 
+			buffer = new BufferedReader(fileR);
+			String line;
+			int counter = 0;
+			
+			while((line = buffer.readLine()) != null) {
+				arrayExaminationType.add(line);
+			}
+			
+			if(buffer != null) {
+				buffer.close();
+			}			
+		}catch(IOException ex) {
+			ex.printStackTrace();
+			System.err.println("erreur d'impression");
+		}finally {
+			try {
+				if(buffer != null) {
+					buffer.close();
+				}
+			} catch (IOException e) {
+				e.printStackTrace();
+				System.err.println("erreur d'impression");
+			}			
+		}
+	}
+	
+	/**
+	 * <b>This function extract length of stay from csv file and add it to {@code ArrayList<String> arrayLengthOfStay}</b>
+	 * </br>
+	 * If a problem occur it is shoulder by the catch part
+	 * The function ends with the finally block in which the buffer is closed
+	 */
+	private static void lengthOfStayFromFile() {
+		
+		try {
+			file = new File("C:/externalFiles/lengthOfStay.csv");
+			fileR = new FileReader(file); 
+			buffer = new BufferedReader(fileR);
+			String line;
+			int counter = 0;
+			
+			while((line = buffer.readLine()) != null) {
+				arrayLengthOfStay.add(line);
+			}
+			
+			if(buffer != null) {
+				buffer.close();
+			}			
+		}catch(IOException ex) {
+			ex.printStackTrace();
+			System.err.println("erreur d'impression");
+		}finally {
+			try {
+				if(buffer != null) {
+					buffer.close();
+				}
+			} catch (IOException e) {
+				e.printStackTrace();
+				System.err.println("erreur d'impression");
+			}			
+		}
+	}
+	
+	/**
+	 * <b>This function extract teh two first number of cellphone number available in France from csv file and add it to {@code ArrayList<String> arrayCellphoneNumber}</b>
+	 * </br>
+	 * If a problem occur it is shoulder by the catch part
+	 * The function ends with the finally block in which the buffer is closed
+	 */
+	private static void cellphoneNumberFromFile() {
+		
+		try {
+			file = new File("C:/externalFiles/cellphoneNumber.txt");
+			fileR = new FileReader(file); 
+			buffer = new BufferedReader(fileR);
+			String line;
+			int counter = 0;
+			
+			while((line = buffer.readLine()) != null) {
+				arrayCellphoneNumber.add(line);
+			}
+			
+			if(buffer != null) {
+				buffer.close();
+			}			
+		}catch(IOException ex) {
+			ex.printStackTrace();
+			System.err.println("erreur d'impression");
+		}finally {
+			try {
+				if(buffer != null) {
+					buffer.close();
+				}
+			} catch (IOException e) {
+				e.printStackTrace();
+				System.err.println("erreur d'impression");
+			}			
+		}
+	}
+	
+	/**
+	 * <b>This function extract teh two first number of phone number available in France from csv file and add it to {@code ArrayList<String> arrayCellphoneNumber}</b>
+	 * </br>
+	 * If a problem occur it is shoulder by the catch part
+	 * The function ends with the finally block in which the buffer is closed
+	 */
+	private static void phoneNumberFromFile() {
+		
+		try {
+			file = new File("C:/externalFiles/phoneNumber.txt");
+			fileR = new FileReader(file); 
+			buffer = new BufferedReader(fileR);
+			String line;
+			int counter = 0;
+			
+			while((line = buffer.readLine()) != null) {
+				arrayPhoneNumber.add(line);
 			}
 			
 			if(buffer != null) {

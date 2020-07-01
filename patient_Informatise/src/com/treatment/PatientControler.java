@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.InputMismatchException;
 
 import javax.swing.JComboBox;
+import javax.swing.JLabel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
@@ -55,7 +56,7 @@ public class PatientControler {
 	 * @see PatientControler#checkUpJRadioButtonInput(JRadioButton, JRadioButton)
 	 * @see PatientControler#checkUpJDateChooserDateInput(JDateChooser)
 	 */
-	public static boolean inputFieldControler(JTextField idField,JRadioButton maleRButton, JRadioButton femaleRButton,JTextField nameField, JTextField fNameField,
+	public static boolean inputFieldControler(JLabel idLabel,JRadioButton maleRButton, JRadioButton femaleRButton,JTextField nameField, JTextField fNameField,
 											  JTextField addressField, JTextField areaCodeField, JTextField townField,JTextField ssnField,JTextField eMailField, JTextField phoneField, 
 											  JTextField cellphoneField, JDateChooser birthdateField) {
 		boolean fieldOk = true;
@@ -93,7 +94,7 @@ public class PatientControler {
 				fieldOk = false;
 			}
 		}
-		if(checkUpJTextFieldIntInput(idField) == false) {
+		if(checkUpJTextFieldIntInput(idLabel) == false) {
 			fieldOk = false; 
 		}
 		if(checkUpJTextFieldIntInput(areaCodeField) == false) {
@@ -162,6 +163,29 @@ public class PatientControler {
 	 * @see ExceptionControler#numericException(JTextField)
 	 */
 	private static boolean checkUpJTextFieldIntInput(JTextField text) {
+		boolean fieldOk = true;
+		
+		if(ExceptionControler.numericException(text) == true) {
+			fieldOk = false;
+			text.setText("erreur");
+		}	
+		return fieldOk;
+	}
+	
+	/**
+	 * <b>this function is used to certify that the information sent by the user is correct</b>
+	 * </br>
+	 * If the ExceptionControler.numericException return true
+	 * The information isn't correct the boolean fieldOk is set on false 
+	 * An error message is sent to the user 
+	 * </br> 
+	 * @param text : a String information written by the user
+	 * </br>
+	 * @return a true or false boolean
+	 * </br>
+	 * @see ExceptionControler#numericException(JTextField)
+	 */
+	private static boolean checkUpJTextFieldIntInput(JLabel text) {
 		boolean fieldOk = true;
 		
 		if(ExceptionControler.numericException(text) == true) {
@@ -293,12 +317,11 @@ public class PatientControler {
 	 */
 	private static boolean checkUpAvailablePhoneNumber(JTextField text) {
 		boolean phoneNumber = false;
-		String [] phoneBegin = {"01","02","03","04","05","09"};	
 		String patientPhoneNumber = text.getText();
 		
 		if(patientPhoneNumber.length() == 10) {
-			for(int i = 0; i < phoneBegin.length; i++) {
-				if( patientPhoneNumber.startsWith(phoneBegin[i]) == true) {
+			for(int i = 0; i < ReadExternalFiles.arrayPhoneNumber.size(); i++) {
+				if( patientPhoneNumber.startsWith(ReadExternalFiles.arrayPhoneNumber.get(i)) == true) {
 					phoneNumber = true;
 					break;
 				}
@@ -330,8 +353,8 @@ public class PatientControler {
 		String patientPhoneNumber = text.getText();
 		
 		if(patientPhoneNumber.length() == 10) {
-			for(int i = 0; i < phoneBegin.length; i++) {
-				if( patientPhoneNumber.startsWith(phoneBegin[i]) == true) {
+			for(int i = 0; i < ReadExternalFiles.arrayCellphoneNumber.size(); i++) {
+				if( patientPhoneNumber.startsWith(ReadExternalFiles.arrayCellphoneNumber.get(i)) == true) {
 					phoneNumber = true;
 					break;
 				}
