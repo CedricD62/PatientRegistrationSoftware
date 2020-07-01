@@ -397,7 +397,7 @@ public class ReadExternalFiles {
 		
 		try {
 			
-			file = new File("Patient.txt");
+			file = new File("C:/externalFiles/Patient.txt");
 			fileR = new FileReader(file);
 			buffer = new BufferedReader(fileR);
 			String line;
@@ -457,7 +457,7 @@ public class ReadExternalFiles {
 		
 		try {
 			
-			file = new File("Examen.txt");
+			file = new File("C:/externalFiles/Examen.txt");
 			fileR = new FileReader(file);
 			buffer = new BufferedReader(fileR);
 			String line;
@@ -512,7 +512,7 @@ public class ReadExternalFiles {
 		
 		try {
 			
-			file = new File("Chambre.txt");
+			file = new File("C:/externalFiles/Chambre.txt");
 			fileR = new FileReader(file);
 			buffer = new BufferedReader(fileR);
 			String line;

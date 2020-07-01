@@ -61,7 +61,7 @@ public class WriteInExternalFiles {
 		 	bufferW 	= null;
 		
 		try {
-			file = new File("Patient.txt");
+			file = new File("C:/externalFiles/Patient.txt");
 			fileW = new FileWriter(file, false);
 			bufferW = new BufferedWriter(fileW);
 			
@@ -119,7 +119,7 @@ public class WriteInExternalFiles {
 		 	bufferW 	= null;
 		
 		try {
-			file = new File("Examen.txt");
+			file = new File("C:/externalFiles/Examen.txt");
 			fileW = new FileWriter(file, false);
 			bufferW = new BufferedWriter(fileW);
 			
@@ -177,7 +177,7 @@ public class WriteInExternalFiles {
 		 	bufferW 	= null;
 		
 		try {
-			file = new File("Chambre.txt");
+			file = new File("C:/externalFiles/Chambre.txt");
 			fileW = new FileWriter(file, false);
 			bufferW = new BufferedWriter(fileW);
 			

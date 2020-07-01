@@ -23,7 +23,7 @@ public class FileControler {
 	public static boolean filePatientExist() {
 		boolean exist = false;
 		
-			File file = new File("Patient.txt");
+			File file = new File("C:/externalFiles/Patient.txt");
 			exist = file.exists();
 		
 		return exist;
@@ -37,7 +37,7 @@ public class FileControler {
 	public static boolean fileExamenExist() {
 		boolean exist = false;
 		
-		File file = new File("Examen.txt");
+		File file = new File("C:/externalFiles/Examen.txt");
 		exist = file.exists();
 		
 		return exist;
@@ -51,7 +51,7 @@ public class FileControler {
 	public static boolean fileRoomExist() {
 		boolean exist = false;
 		
-		File file = new File("Chambre.txt");
+		File file = new File("C:/externalFiles/Chambre.txt");
 		exist = file.exists();
 		
 		return exist;
